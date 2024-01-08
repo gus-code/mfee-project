@@ -1,0 +1,47 @@
+.mfee-category-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mfee-category {
+  list-style: none;
+  display: flex;
+  padding: 0;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    width: 95%;
+  }
+
+  &__item {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    cursor: pointer;
+
+    &:last-of-type {
+      border-bottom: 1px solid #ccc;
+    }
+
+    @media (min-width: 767px) {
+      border-right: none;
+      border-bottom: 1px solid #ccc;
+
+      &:first-of-type {
+        border-top-left-radius: 0.2rem;
+        border-bottom-left-radius: 0.2rem;
+      }
+
+      &:last-of-type {
+        border-right: 1px solid #ccc;
+        border-top-right-radius: 0.2rem;
+        border-bottom-right-radius: 0.2rem;
+      }
+    }
+
+    &--active,
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
