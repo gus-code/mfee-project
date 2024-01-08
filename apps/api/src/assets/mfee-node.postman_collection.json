@@ -1,0 +1,749 @@
+{
+	"info": {
+		"_postman_id": "1da88308-b3c9-4a8a-b86e-909049c8ae89",
+		"name": "MFEE - Node.js",
+		"description": "API endpoints for MFEE - Node.js sessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32164865"
+	},
+	"item": [
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Create category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set('test_category_id', result._id);\r",
+									"\r",
+									"pm.test('Status code is 201', function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate name', function () {\r",
+									"    pm.expect(result.name).to.eql('Other');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('test_category_create', 'Other');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{test_category_create}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('New category in response', function () {\r",
+									"    const newCategoryId = pm.collectionVariables.get('test_category_id');\r",
+									"    const index = result.findIndex(c => c._id === newCategoryId);\r",
+									"\r",
+									"    pm.expect(index).to.not.equal(-1);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Update category name', function () {\r",
+									"    pm.expect(result.name).to.eql('New Name');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('test_category_name', 'New Name');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{test_category_name}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{test_category_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{test_category_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get category by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 404', function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{test_category_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Create post",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: `${pm.collectionVariables.get('url')}/categories`,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json',\r",
+									"        'Accept': \"*/*\"\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: {\r",
+									"            name: 'Other'\r",
+									"        }\r",
+									"    }\r",
+									"}, (error, response) => {\r",
+									"    if (error) {\r",
+									"        console.log(error);\r",
+									"    }\r",
+									"\r",
+									"    pm.test('Response should be okay to process', (done) => {\r",
+									"        const json = response.json();\r",
+									"\r",
+									"        pm.expect(error).to.equal(null);\r",
+									"        pm.expect(json.name).to.equal('Other');\r",
+									"        pm.collectionVariables.set('test_post_category_id', json._id);\r",
+									"\r",
+									"        pm.collectionVariables.set('test_post_title', 'Post Test Postman');\r",
+									"        pm.collectionVariables.set('test_post_image', 'https://images.unsplash.com/photo-1556276797-5086e6b45ff9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=800');\r",
+									"        pm.collectionVariables.set('test_post_description', 'Description from Postman');\r",
+									"        pm.collectionVariables.set('test_post_category', json._id);\r",
+									"\r",
+									"        done();\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set('test_post_id', result._id);\r",
+									"\r",
+									"pm.test('Status code is 201', function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate response', function () {\r",
+									"    pm.expect(result.title).to.equal('Post Test Postman');\r",
+									"    pm.expect(result.image).to.equal('https://images.unsplash.com/photo-1556276797-5086e6b45ff9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=800');\r",
+									"    pm.expect(result.description).to.equal('Description from Postman');\r",
+									"    pm.expect(result.category).to.equal(pm.collectionVariables.get('test_post_category_id'));\r",
+									"    pm.expect(result.comments.length).to.equal(0);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{test_post_title}}\",\r\n    \"image\": \"{{test_post_image}}\",\r\n    \"description\": \"{{test_post_description}}\",\r\n    \"category\": \"{{test_post_category}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create post comment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('test_post_author', 'MFEE');\r",
+									"pm.collectionVariables.set('test_post_content', 'Good content');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.test('Status code is 201', function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate response', function () {\r",
+									"    pm.expect(result.author).to.equal('MFEE');\r",
+									"    pm.expect(result.content).to.equal('Good content');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"author\": \"{{test_post_author}}\",\r\n    \"content\": \"{{test_post_content}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts/:id/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								":id",
+								"comments"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{test_post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get post by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate response', function () {\r",
+									"    pm.expect(result.title).to.equal('Post Test Postman');\r",
+									"    pm.expect(result.image).to.equal('https://images.unsplash.com/photo-1556276797-5086e6b45ff9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=800');\r",
+									"    pm.expect(result.description).to.equal('Description from Postman');\r",
+									"    pm.expect(result.category._id).to.equal(pm.collectionVariables.get('test_post_category_id'));\r",
+									"    pm.expect(result.comments.length).to.equal(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{test_post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update post",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('test_post_title_update', 'Test Postman New');"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate response', function () {\r",
+									"    pm.expect(result.title).to.equal('Test Postman New');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{test_post_title_update}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{test_post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate new content in response', function () {\r",
+									"    const newPostId = pm.collectionVariables.get('test_post_id');\r",
+									"    const index = result.findIndex(c => c._id === newPostId);\r",
+									"    const post = result[index];\r",
+									"\r",
+									"    pm.expect(index).to.not.equal(-1);\r",
+									"    pm.expect(post.title).to.equal('Test Postman New');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 204', function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/:id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{test_post_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get posts by category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = pm.response.json();\r",
+									"\r",
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Validate response without posts', function () {\r",
+									"    pm.expect(result.length).to.equal(0);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: `${pm.collectionVariables.get('url')}/categories/${pm.collectionVariables.get('test_post_category_id')}`,\r",
+									"    method: 'DELETE',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json',\r",
+									"        'Accept': \"*/*\"\r",
+									"    }\r",
+									"}, (error, response) => {\r",
+									"    if (error) {\r",
+									"        console.log(error);\r",
+									"    }\r",
+									"\r",
+									"    pm.test('Response should be okay to process', (done) => {\r",
+									"        pm.expect(error).to.equal(null);\r",
+									"\r",
+									"        done();\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/category/:category",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"category",
+								":category"
+							],
+							"variable": [
+								{
+									"key": "category",
+									"value": "{{test_post_category_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		},
+		{
+			"key": "test_category_create",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_category_id",
+			"value": ""
+		},
+		{
+			"key": "test_category_name",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_post_title",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_post_image",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_post_description",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_post_category",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_post_id",
+			"value": ""
+		},
+		{
+			"key": "test_post_category_id",
+			"value": ""
+		},
+		{
+			"key": "test_post_author",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_post_content",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "test_post_title_update",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
