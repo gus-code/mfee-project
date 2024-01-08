@@ -2,7 +2,11 @@
   "name": "@mfee-project/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start:angular": "nx serve angular-app",
+    "start:react": "nx serve react-app",
+    "start:api": "nx serve api"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~17.0.0",
