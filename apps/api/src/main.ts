@@ -4,6 +4,7 @@ const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const app = express();
+const router = express.Router();
 
 app.use(express.json());
 
@@ -11,13 +12,13 @@ app.use(express.json());
 const categories = [];
 
 // Get all categories
-app.get('/api/categories', (req, res) => {
+router.get('/', (req, res) => {
   // Return all the categories with a 200 status code
   res.status(200).json(categories);
 });
 
 // Get category by id
-app.get('/api/categories/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Check if we have a category with that id
@@ -35,7 +36,7 @@ app.get('/api/categories/:id', (req, res) => {
 });
 
 // Create category
-app.post('/api/categories', (req, res) => {
+router.post('/', (req, res) => {
   // Retrieve the name from the request body
   const { name } = req.body;
 
@@ -57,7 +58,7 @@ app.post('/api/categories', (req, res) => {
 });
 
 // Update category
-app.patch('/api/categories/:id', (req, res) => {
+router.patch('/:id', (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Retrieve the index of the category in the array
@@ -87,7 +88,7 @@ app.patch('/api/categories/:id', (req, res) => {
 });
 
 // Delete category
-app.delete('/api/categories/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Retrieve the index of the category in the array
@@ -105,6 +106,8 @@ app.delete('/api/categories/:id', (req, res) => {
   // Return a 204 status code
   res.status(204).send();
 });
+
+app.use('/api/categories', router);
 
 app.listen(port, host, () => {
   console.log(`[ ready ] http://${host}:${port}`);
