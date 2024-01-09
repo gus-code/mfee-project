@@ -6,7 +6,10 @@ interface ICategory extends Document {
 
 export const categorySchema = new Schema<ICategory>(
   {
-    name: String
+    name: {
+      type: String,
+      required: [true, 'Property is required']
+    }
   },
   {
     timestamps: true
