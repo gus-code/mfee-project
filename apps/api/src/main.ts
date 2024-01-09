@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 
-import { corsOptions } from '../config/corsConfig';
+import { corsOptions } from './config/corsConfig';
 import { verifyToken } from './middleware/auth';
 import auth from './routes/auth';
 import categories from './routes/categories';
