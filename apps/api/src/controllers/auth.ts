@@ -18,7 +18,7 @@ const register = async (req, res) => {
   // Check that we don't have duplicates
   const duplicate = users.find((u) => u.username === username);
   if (duplicate) {
-    return res.sendStatus(409);
+    return res.status(409).json({ message: 'User already exist' });
   }
 
   try {
