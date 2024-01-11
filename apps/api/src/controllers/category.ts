@@ -1,6 +1,10 @@
 // Initialize categories array to save data in memory
 const categories = [];
 
+export const getCategory = (id: string) => {
+  return categories.find((p) => p.id === id);
+};
+
 // Get all categories
 const getCategories = (req, res) => {
   // Return all the categories with a 200 status code
@@ -12,7 +16,7 @@ const getCategoryById = (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Check if we have a category with that id
-  const category = categories.find((p) => p.id === id);
+  const category = getCategory(id);
 
   if (!category) {
     // If we don't find the category return a 404 status code with a message
