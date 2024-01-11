@@ -1,5 +1,9 @@
 import express from 'express';
 
+export const getCategory = (id: string) => {
+  return categories.find((p) => p.id === id);
+};
+
 const router = express.Router();
 // Initialize categories array to save data in memory
 const categories = [];
@@ -15,7 +19,7 @@ router.get('/:id', (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Check if we have a category with that id
-  const category = categories.find((p) => p.id === id);
+  const category = getCategory(id);
 
   if (!category) {
     // If we don't find the category return a 404 status code with a message
