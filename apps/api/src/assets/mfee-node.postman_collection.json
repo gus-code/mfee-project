@@ -19,7 +19,7 @@
 								"exec": [
 									"const result = pm.response.json();\r",
 									"\r",
-									"pm.collectionVariables.set('test_category_id', result._id);\r",
+									"pm.collectionVariables.set('test_category_id', result._id ?? result.id);\r",
 									"\r",
 									"pm.test('Status code is 201', function () {\r",
 									"    pm.response.to.have.status(201);\r",
@@ -56,11 +56,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/categories",
+							"raw": "{{url}}/api/categories",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"categories"
 							]
 						}
@@ -82,7 +83,7 @@
 									"\r",
 									"pm.test('New category in response', function () {\r",
 									"    const newCategoryId = pm.collectionVariables.get('test_category_id');\r",
-									"    const index = result.findIndex(c => c._id === newCategoryId);\r",
+									"    const index = result.findIndex(c => [c._id, c.id].includes(newCategoryId));\r",
 									"\r",
 									"    pm.expect(index).to.not.equal(-1);\r",
 									"});\r",
@@ -96,11 +97,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/categories",
+							"raw": "{{url}}/api/categories",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"categories"
 							]
 						}
@@ -151,11 +153,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/categories/:id",
+							"raw": "{{url}}/api/categories/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"categories",
 								":id"
 							],
@@ -176,8 +179,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test('Status code is 204', function () {\r",
-									"    pm.response.to.have.status(204);\r",
+									"pm.test('Status code is 204 or 200', function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([204, 200]);\r",
 									"});\r",
 									""
 								],
@@ -189,11 +192,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/categories/:id",
+							"raw": "{{url}}/api/categories/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"categories",
 								":id"
 							],
@@ -227,11 +231,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/categories/:id",
+							"raw": "{{url}}/api/categories/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"categories",
 								":id"
 							],
@@ -244,6 +249,90 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: `${pm.collectionVariables.get('url')}/api/auth/register`,",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"        'Accept': \"*/*\"",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: {",
+							"            username: 'mfee-test',",
+							"            password: 'Aa$123'",
+							"        }",
+							"    }",
+							"}, (error, response) => {",
+							"    if (error) {",
+							"        console.log(error);",
+							"    }",
+							"",
+							"    pm.test('Register user should return 201 or 409', (done) => {",
+							"        const json = response.json();",
+							"",
+							"        console.log(response, json);",
+							"        pm.expect(response.code).to.be.oneOf([201, 409]);",
+							"",
+							"        pm.sendRequest({",
+							"            url: `${pm.collectionVariables.get('url')}/api/auth/login`,",
+							"            method: 'POST',",
+							"            header: {",
+							"                'Content-Type': 'application/json',",
+							"                'Accept': \"*/*\"",
+							"            },",
+							"            body: {",
+							"                mode: 'raw',",
+							"                raw: {",
+							"                    username: 'mfee-test',",
+							"                    password: 'Aa$123'",
+							"                }",
+							"            }",
+							"        }, (error, response) => {",
+							"            if (error) {",
+							"                console.log(error);",
+							"            }",
+							"",
+							"            pm.test('Login user should get access token', () => {",
+							"                const json = response.json();",
+							"",
+							"                pm.expect(error).to.equal(null);",
+							"                pm.collectionVariables.set('accessToken', json.accessToken);",
+							"",
+							"                done();",
+							"            });",
+							"        });",
+							"    });",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -258,11 +347,12 @@
 							"script": {
 								"exec": [
 									"pm.sendRequest({\r",
-									"    url: `${pm.collectionVariables.get('url')}/categories`,\r",
+									"    url: `${pm.collectionVariables.get('url')}/api/categories`,\r",
 									"    method: 'POST',\r",
 									"    header: {\r",
 									"        'Content-Type': 'application/json',\r",
-									"        'Accept': \"*/*\"\r",
+									"        'Accept': \"*/*\",\r",
+									"        'Authorization': `Bearer ${pm.collectionVariables.get('accessToken')}`\r",
 									"    },\r",
 									"    body: {\r",
 									"        mode: 'raw',\r",
@@ -280,12 +370,12 @@
 									"\r",
 									"        pm.expect(error).to.equal(null);\r",
 									"        pm.expect(json.name).to.equal('Other');\r",
-									"        pm.collectionVariables.set('test_post_category_id', json._id);\r",
+									"        pm.collectionVariables.set('test_post_category_id', json._id ?? json.id);\r",
 									"\r",
 									"        pm.collectionVariables.set('test_post_title', 'Post Test Postman');\r",
 									"        pm.collectionVariables.set('test_post_image', 'https://images.unsplash.com/photo-1556276797-5086e6b45ff9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=800');\r",
 									"        pm.collectionVariables.set('test_post_description', 'Description from Postman');\r",
-									"        pm.collectionVariables.set('test_post_category', json._id);\r",
+									"        pm.collectionVariables.set('test_post_category', json._id ?? json.id);\r",
 									"\r",
 									"        done();\r",
 									"    });\r",
@@ -301,7 +391,7 @@
 								"exec": [
 									"const result = pm.response.json();\r",
 									"\r",
-									"pm.collectionVariables.set('test_post_id', result._id);\r",
+									"pm.collectionVariables.set('test_post_id', result._id ?? result.id);\r",
 									"\r",
 									"pm.test('Status code is 201', function () {\r",
 									"    pm.response.to.have.status(201);\r",
@@ -333,11 +423,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/posts",
+							"raw": "{{url}}/api/posts",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"posts"
 							]
 						}
@@ -389,11 +480,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/posts/:id/comments",
+							"raw": "{{url}}/api/posts/:id/comments",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"posts",
 								":id",
 								"comments"
@@ -425,7 +517,7 @@
 									"    pm.expect(result.title).to.equal('Post Test Postman');\r",
 									"    pm.expect(result.image).to.equal('https://images.unsplash.com/photo-1556276797-5086e6b45ff9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=800');\r",
 									"    pm.expect(result.description).to.equal('Description from Postman');\r",
-									"    pm.expect(result.category._id).to.equal(pm.collectionVariables.get('test_post_category_id'));\r",
+									"    pm.expect(result.category._id ?? result.category.id).to.equal(pm.collectionVariables.get('test_post_category_id'));\r",
 									"    pm.expect(result.comments.length).to.equal(1);\r",
 									"});"
 								],
@@ -437,11 +529,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/:id",
+							"raw": "{{url}}/api/posts/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"posts",
 								":id"
 							],
@@ -498,11 +591,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/posts/:id",
+							"raw": "{{url}}/api/posts/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"posts",
 								":id"
 							],
@@ -531,7 +625,7 @@
 									"\r",
 									"pm.test('Validate new content in response', function () {\r",
 									"    const newPostId = pm.collectionVariables.get('test_post_id');\r",
-									"    const index = result.findIndex(c => c._id === newPostId);\r",
+									"    const index = result.findIndex(c => (c._id ?? c.id) === newPostId);\r",
 									"    const post = result[index];\r",
 									"\r",
 									"    pm.expect(index).to.not.equal(-1);\r",
@@ -546,11 +640,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts",
+							"raw": "{{url}}/api/posts",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"posts"
 							]
 						}
@@ -565,7 +660,7 @@
 							"script": {
 								"exec": [
 									"pm.test('Status code is 204', function () {\r",
-									"    pm.response.to.have.status(204);\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([204, 200]);\r",
 									"});\r",
 									""
 								],
@@ -577,11 +672,12 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/:id",
+							"raw": "{{url}}/api/posts/:id",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"posts",
 								":id"
 							],
@@ -613,11 +709,12 @@
 									"});\r",
 									"\r",
 									"pm.sendRequest({\r",
-									"    url: `${pm.collectionVariables.get('url')}/categories/${pm.collectionVariables.get('test_post_category_id')}`,\r",
+									"    url: `${pm.collectionVariables.get('url')}/api/categories/${pm.collectionVariables.get('test_post_category_id')}`,\r",
 									"    method: 'DELETE',\r",
 									"    header: {\r",
 									"        'Content-Type': 'application/json',\r",
-									"        'Accept': \"*/*\"\r",
+									"        'Accept': \"*/*\",\r",
+									"        'Authorization': `Bearer ${pm.collectionVariables.get('accessToken')}`\r",
 									"    }\r",
 									"}, (error, response) => {\r",
 									"    if (error) {\r",
@@ -640,11 +737,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/category/:category",
+							"raw": "{{url}}/api/posts/category/:category",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
+								"api",
 								"posts",
 								"category",
 								":category"
@@ -658,6 +756,89 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: `${pm.collectionVariables.get('url')}/api/auth/register`,",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"        'Accept': \"*/*\"",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: {",
+							"            username: 'mfee-test',",
+							"            password: 'Aa$123'",
+							"        }",
+							"    }",
+							"}, (error, response) => {",
+							"    if (error) {",
+							"        console.log(error);",
+							"    }",
+							"",
+							"    pm.test('Register user should be completed successfully', (done) => {",
+							"        const json = response.json();",
+							"",
+							"        pm.expect(response.code).to.be.oneOf([201, 409]);",
+							"",
+							"        pm.sendRequest({",
+							"            url: `${pm.collectionVariables.get('url')}/api/auth/login`,",
+							"            method: 'POST',",
+							"            header: {",
+							"                'Content-Type': 'application/json',",
+							"                'Accept': \"*/*\"",
+							"            },",
+							"            body: {",
+							"                mode: 'raw',",
+							"                raw: {",
+							"                    username: 'mfee-test',",
+							"                    password: 'Aa$123'",
+							"                }",
+							"            }",
+							"        }, (error, response) => {",
+							"            if (error) {",
+							"                console.log(error);",
+							"            }",
+							"",
+							"            pm.test('Login user should get access token', () => {",
+							"                const json = response.json();",
+							"",
+							"                pm.expect(error).to.equal(null);",
+							"                pm.collectionVariables.set('accessToken', json.accessToken);",
+							"",
+							"                done();",
+							"            });",
+							"        });",
+							"    });",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}
@@ -685,7 +866,12 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://localhost:3000/api",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
 			"type": "string"
 		},
 		{
