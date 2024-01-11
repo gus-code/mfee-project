@@ -55,17 +55,15 @@ const updateCategory = async (req, res) => {
 
   try {
     // Check and update if we have a category with that id
-    const category = await Category.findByIdAndUpdate(id, req.body);
+    const category = await Category.findByIdAndUpdate(id, req.body, { new: true });
 
     // If we don't find the category return a 404 status code with a message
     if (!category) {
       return res.status(404).json({ message: 'Category not found' });
     }
 
-    // Get the new values of the category
-    const updatedCategory = await Category.findById(id);
     // Return the updated category with a 200 status code
-    res.status(200).json(updatedCategory);
+    res.status(200).json(category);
   } catch (error) {
     const { message } = error;
     res.status(500).json({ message });
