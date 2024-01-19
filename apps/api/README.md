@@ -46,6 +46,10 @@
     - author: string
     - content: string
 
+### Session 02
+
+- Refactor the code from last session to add a post controller
+
 ## How to
 
 ### Run postman collection
