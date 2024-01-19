@@ -5,18 +5,20 @@ import helmet from 'helmet';
 import { corsOptions } from './config/corsConfig';
 
 import categories from './routes/categories';
+import posts from './routes/posts';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
-const app = express();
+const server = express();
 
-app.use(express.json());
-app.use(helmet());
-app.use(cors(corsOptions));
+server.use(express.json());
+server.use(helmet());
+server.use(cors(corsOptions));
 
-app.use('/api/categories', categories);
+server.use('/api/categories', categories);
+server.use('/api/posts', posts);
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
+server.listen(port, host, () => {
+  console.log(`Express Server started... [ ready ] http://${host}:${port}`);
 });
