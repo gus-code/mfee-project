@@ -29,7 +29,7 @@ const isPostValid = (postObj: { title: string; description: string; category: st
 
 const createNewPost = (post: Post) => {
   const { title, description, category, image, comments } = post;
-  console.log(post);
+
   const postCategory = {
     id: category,
     name: 'some category'
