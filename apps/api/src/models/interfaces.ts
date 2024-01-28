@@ -19,7 +19,7 @@ export interface IPostResponse {
     title: string,
     image: string,
     description: string,
-    category: ICategory[],
+    category: ICategory,
     comments: IPostComment[];
 }
 

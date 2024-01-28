@@ -1,9 +1,6 @@
+import { getArrayItemByField } from './utils';
 // Initialize categories array to save data in memory
 export const categories = [];
-
-export const getCategory = (id: string) => {
-  return categories.find((p) => p.id === id);
-};
 
 // Get all categories
 const getCategories = (req, res) => {
@@ -16,7 +13,7 @@ const getCategoryById = (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Check if we have a category with that id
-  const category = getCategory(id);
+  const category = getArrayItemByField(categories, 'id', id);
 
   if (!category) {
     // If we don't find the category return a 404 status code with a message
