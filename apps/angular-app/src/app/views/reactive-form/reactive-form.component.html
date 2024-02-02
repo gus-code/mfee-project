@@ -1,0 +1,11 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <div>
+    <p>Nombre:</p>
+    <input type="text" formControlName="nombre" />
+  </div>
+  <div>
+    <p>Edad:</p>
+     <input type="number" formControlName="edad" /> 
+  </div>
+   <input type="submit" value="Enviar" />
+</form>

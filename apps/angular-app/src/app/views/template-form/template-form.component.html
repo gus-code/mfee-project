@@ -1,0 +1,20 @@
+<p>Template form</p>
+<form #frm1="ngForm" (ngSubmit)="onSubmit(frm1)">
+  <p>
+    <label>Nombre:</label>
+    <br />
+    <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="empleado.nombre" required minlength="3" />
+    <span *ngIf="nombre.touched && !nombre.valid"> es necesario ingresar un nombre!!! </span>
+  </p>
+  <p>
+    <label>edad: </label>
+    <br />
+    <input type="text" name="edadform2" [(ngModel)]="empleado.edad" required />
+  </p>
+  <p>
+    <label>puesto: </label>
+    <br />
+    <input type="text" name="puestoform3" [(ngModel)]="empleado.puesto" required />
+  </p>
+  <input type="submit" value="Send" />
+</form>

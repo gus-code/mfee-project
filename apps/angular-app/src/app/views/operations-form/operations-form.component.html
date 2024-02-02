@@ -1,0 +1,26 @@
+<p>Operations form</p>
+<form #frm1="ngForm" (ngSubmit)="onSubmit(frm1)">
+  <p>
+    <label>num1:</label>
+    <br />
+    <input type="number" name="num1" #nombre="ngModel" [(ngModel)]="num1" required minlength="3" />
+    <span *ngIf="nombre.touched && !nombre.valid"> es necesario ingresar un nombre!!! </span>
+  </p>
+  <p>
+    <label>num2: </label>
+    <br />
+    <input type="number" name="num2" [(ngModel)]="num2" required />
+  </p>
+  <select type="text" name="operationSelected" [(ngModel)]="operationSelected" >
+    <option value=""></option>
+    <option value="add">add</option>
+    <option value="substract">substract</option>
+    <option value="multiply">multiply</option>
+    <option value="divide">divide</option>
+  </select>
+  <p>
+    <label>result: {{result}}</label>
+    <br />
+  </p>
+  <input type="submit" value="Send" />
+</form>
