@@ -3,7 +3,8 @@ import express from 'express';
 import helmet from 'helmet';
 
 import { corsOptions } from './config/corsConfig';
-
+import { verifyToken } from './middleware/auth';
+import auth from './routes/auth';
 import categories from './routes/categories';
 import posts from './routes/posts';
 const host = process.env.HOST ?? 'localhost';
@@ -15,6 +16,9 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors(corsOptions));
 
+app.use('/api/auth', auth);
+
+app.use(verifyToken);
 app.use('/api/categories', categories);
 app.use('/api/posts', posts);
 
