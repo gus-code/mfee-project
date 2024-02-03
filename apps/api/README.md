@@ -54,6 +54,10 @@
 
 - N/A
 
+### Session 04
+
+- N/A
+
 ## How to
 
 ### Run postman collection
