@@ -92,6 +92,7 @@ const deleteCategory = async (req, res) => {
   }
 };
 
+
 export default {
   getCategories,
   getCategoryById,

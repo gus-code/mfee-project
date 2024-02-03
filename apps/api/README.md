@@ -50,6 +50,7 @@
 
 - Refactor the code from last session to add a post controller
 
+
 ### Session 03
 
 - N/A
@@ -67,6 +68,7 @@
     - *Tip: Use `populate` method to get data from reference id*
 - **Extra**
     - Remove post comments from database when you delete the post
+
 
 ## How to
 

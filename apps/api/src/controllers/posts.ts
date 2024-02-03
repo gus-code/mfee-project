@@ -77,6 +77,7 @@ const updatePost = async (req, res) => {
 
 // - `DELETE /posts/:id` Delete the post and return the deleted post with status code 200 or 204 if you decide to not return anything
 // * *Add 404 validation where needed*
+
 const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
