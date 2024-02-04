@@ -30,12 +30,17 @@ app.use(errorHandler);
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log(`\x1b[33mConnected to MongoDB \x1b[0m`);
 
     app.listen(port, host, () => {
-      console.log(`[ ready ] http://${host}:${port}`);
+      console.log(`\x1b[42m[ ready ] http://${host}:${port} \x1b[0m`);
     });
   })
   .catch((e) => {
     console.error(e);
   });
+
+mongoose.connection.on('error', (err) => {
+  console.log(`\x1b[31m DB connection runtime error \x1b[0m`);
+  console.log(err);
+});

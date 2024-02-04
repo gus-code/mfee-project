@@ -55,7 +55,7 @@ const updateCategory = async (req, res) => {
 
   try {
     // Check and update if we have a category with that id
-    const category = await Category.findByIdAndUpdate(id, req.body, { new: true });
+    const category = await Category.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
 
     // If we don't find the category return a 404 status code with a message
     if (!category) {
