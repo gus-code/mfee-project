@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import mongoose from 'mongoose';
 
 import { corsOptions } from './config/corsConfig';
 
@@ -26,6 +27,12 @@ server.use('/api/categories', categories);
 server.use('/api/posts', posts);
 server.use(errorHandlerMiddleware);
 
-server.listen(port, host, () => {
-  console.log(`Express Server started... [ ready ] http://${host}:${port}`);
+mongoose.connect(process.env.MONGO_URL).then(()=>{
+  console.log('Connected to MongoDB');
+  server.listen(port, host, () => {
+    console.log(`Express Server started... [ ready ] http://${host}:${port}`);
+  });
+}).catch((e)=>{
+  console.log(e);
 });
+

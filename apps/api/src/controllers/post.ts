@@ -1,125 +1,117 @@
 import { RequestHandler, Request, Response } from 'express';
-import { categories } from './category';
-import { IPost, IPostComment, IPostRequest, IPostResponse } from '../models/interfaces';
-import { getArrayItemByField, getArrayItemIndexByField } from './utils';
+import Post from '../models/post';
+import PostComment from '../models/postComment';
 
-export const posts: IPost[] = [];
-const comments: IPostComment[] = [];
-
-const getPost = (req: Request, res: Response) => {
-    res.status(200).json(posts);
+const getPost = async (req: Request, res: Response) => {
+    try {
+        const posts = await Post.find().populate('category');
+        res.status(200).json(posts);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).json({ message });
+    }
 };
 
-const createPost: RequestHandler = (req: Request, res: Response) => {
-    const { title, image, description, category } = req.body;
-    if (!title) {
-        return res.status(400).json({ message: 'The title is required.' });
+const createPost: RequestHandler = async (req: Request, res: Response) => {
+    try {
+        const newPost = await Post.create(req.body);
+        res.status(201).json(newPost);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).json({ message });
     }
-    if (!image) {
-        return res.status(400).json({ message: 'The image is required.' });
-    }
-    if (!description) {
-        return res.status(400).json({ message: 'The description is required.' });
-    }
-    if (!category) {
-        return res.status(400).json({ message: 'The category is required.' });
-    }
-
-    const newPost: IPost = {
-        id: Date.now().toString(),
-        title,
-        image,
-        description,
-        category,
-        comments: []
-    };
-    posts.push(newPost);
-
-    res.status(201).json(newPost);
 };
 
-const getPostByCategory: RequestHandler = (req: Request, res: Response) => {
+const getPostByCategory: RequestHandler = async (req: Request, res: Response) => {
     const { categoryId } = req.params;
 
-    const postsByCategory: IPost[] = posts.filter(item => item.category === categoryId);
-    
-    postsByCategory.map(postItem => postItem.category = getArrayItemByField(categories, 'id', postItem.category));
-
-    res.status(200).json(postsByCategory);
+    try {
+        const posts = await Post.where('category').equals(categoryId).populate('category');
+        res.status(200).json(posts);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).json({ message });
+    }
 };
 
-const createPostComment: RequestHandler = (req: Request, res: Response) => {
+const createPostComment: RequestHandler = async (req: Request, res: Response) => {
     const { postId } = req.params;
-    const { author, content } = req.body;
-    const postIndex: number = getArrayItemIndexByField(posts, 'id', postId);
-    const updatedPost: IPost = { ...posts[postIndex] };
-    let newComment: IPostComment;
-
-    if (author && content) {
-        newComment = {
-            id: Date.now().toString(),
-            author,
-            content
-        };
-        updatedPost.comments.push(newComment.id);
-        comments.push(newComment);
+    try {
+        const currentPost = await Post.findById(postId);
+        const postComment = await PostComment.create(req.body);
+        currentPost.comments.push(postComment._id);
+        const updatedPost = await Post.findByIdAndUpdate(postId, currentPost, { new: true });
+        if (!updatedPost) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        res.status(201).json(postComment);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).json({ message });
     }
-    posts[postIndex] = updatedPost;
-
-    res.status(201).json(newComment);
 };
 
-const getPostById: RequestHandler = (req: IPostRequest, res: Response) => {
-    const { postItem } = req;
-    const postItemResponse: IPostResponse = {
-        id: postItem.id,
-        title: postItem.title,
-        image: postItem.image,
-        description: postItem.description,
-        category: getArrayItemByField(categories, 'id', postItem.category),
-        comments: postItem.comments.map(commentItem => getArrayItemByField(comments, 'id', commentItem))
-    };
-
-    res.status(200).json(postItemResponse)
-};
-
-const updatePost: RequestHandler = (req: Request, res: Response) => {
+const getPostById: RequestHandler = async (req: Request, res: Response) => {
     const { postId } = req.params;
-    const { title, image, description, category } = req.body;
-    const postIndex: number = getArrayItemIndexByField(posts, 'id', postId);
+    try {
+        const post = await Post.findById(postId).populate('category').populate('comments');
 
-    const updatedPost: IPost = { ...posts[postIndex] };
-
-    if (title) {
-        updatedPost.title = title;
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        res.status(200).json(post);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).json({ message });
     }
-    if (image) {
-        updatedPost.image = image;
-    }
-    if (description) {
-        updatedPost.description = description;
-    }
-    if (category) {
-        updatedPost.category = category;
-    }
-    posts[postIndex] = updatedPost;
-
-    res.status(200).json(updatedPost);
 };
 
-const deletePost: RequestHandler = (req: Request, res: Response) => {
+const getPostCommentByAuthor: RequestHandler = async (req: Request, res: Response) => {
+    const { author } = req.query;
+    try {
+        const postsCommentsByAuthor = await PostComment.findByAuthor(author.toString());
+        res.status(200).json(postsCommentsByAuthor);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).json({ message });
+    }
+};
+
+const updatePost: RequestHandler = async (req: Request, res: Response) => {
     const { postId } = req.params;
-    const postIndex: number = getArrayItemIndexByField(posts, 'id', postId);
 
-    posts.splice(postIndex, 1);
+    try {
+        const updatedPost = await Post.findByIdAndUpdate(postId, req.body, { new: true });
+        if (!updatedPost) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        res.status(200).json(updatedPost);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).json({ message });
+    }
+};
 
-    res.status(204).send();
+const deletePost: RequestHandler = async (req: Request, res: Response) => {
+    const { postId } = req.params;
+
+    try {
+        const post = await Post.findByIdAndDelete(postId);
+        if (!post) {
+            res.status(404).json({ message: 'Post not found' });
+        }
+        res.status(204).json(post);
+    } catch (error) {
+        const { message } = error;
+        res.status(500).send({ message });
+    }
 };
 
 export default {
     getPost,
     getPostByCategory,
     getPostById,
+    getPostCommentByAuthor,
     createPost,
     createPostComment,
     updatePost,
