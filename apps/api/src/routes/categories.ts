@@ -2,21 +2,21 @@ import express from 'express';
 
 import categoryController from '../controllers/category';
 
-const router = express.Router();
+const routerCatergories = express.Router();
 
 // Get all categories
-router.get('/', categoryController.getCategories);
+routerCatergories.get('/', categoryController.getCategories);
 
 // Get category by id
-router.get('/:id', categoryController.getCategoryById);
+routerCatergories.get('/:id', categoryController.getCategoryById);
 
 // Create category
-router.post('/', categoryController.createCategory);
+routerCatergories.post('/', categoryController.createCategory);
 
 // Update category
-router.patch('/:id', categoryController.updateCategory);
+routerCatergories.patch('/:id', categoryController.updateCategory);
 
 // Delete category
-router.delete('/:id', categoryController.deleteCategory);
+routerCatergories.delete('/:id', categoryController.deleteCategory);
 
-export default router;
+export default routerCatergories;
