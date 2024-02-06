@@ -4,6 +4,9 @@ import helmet from 'helmet';
 import { corsOptions } from './config/corsConfig';
 import routerCatergories from './routes/categories';
 import postsRouter from './routes/posts';
+import { verifyToken } from './middleware/auth';
+import auth from './routes/auth';
+import categories from './routes/categories';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
@@ -16,6 +19,9 @@ app.use(cors(corsOptions));
 
 app.use('/api/categories', routerCatergories);
 app.use('/api/posts', postsRouter);
+app.use('/api/auth', auth);
+
+app.use(verifyToken);
 
 app.listen(port, host, () => {
   console.log(`[ ready ] http://${host}:${port}`);

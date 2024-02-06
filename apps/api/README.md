@@ -50,6 +50,10 @@
 
 - Refactor the code from last session to add a post controller
 
+### Session 03
+
+- N/A
+
 ## How to
 
 ### Run postman collection
