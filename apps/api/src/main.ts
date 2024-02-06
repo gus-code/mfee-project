@@ -8,7 +8,6 @@ import postsRouter from './routes/posts';
 import { verifyToken } from './middleware/auth';
 import { errorHandler } from './middleware/errorHandler';
 import auth from './routes/auth';
-import categories from './routes/categories';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
