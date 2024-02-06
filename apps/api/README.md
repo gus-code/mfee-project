@@ -58,6 +58,16 @@
 
 - N/A
 
+### Session 05
+
+- Create MongoDB database
+- Connect to MongoDB database using mongoose
+- Create models for Post and Comment
+- Refactor the controller to retrieve information from database
+    - *Tip: Use `populate` method to get data from reference id*
+- **Extra**
+    - Remove post comments from database when you delete the post
+
 ## How to
 
 ### Run postman collection
