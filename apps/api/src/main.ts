@@ -1,3 +1,4 @@
+require('dotenv').config();
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
@@ -27,10 +28,8 @@ app.use(verifyToken);
 app.use(errorHandler);
 
 mongoose
-  .connect(process.env.MONGO_URL ? process.env.MONGO_URL : 'mongodb://localhost:27017')
+  .connect(process.env.MONGO_URL)
   .then(() => {
-    console.log('Connected to MongoDB');
-
     app.listen(port, host, () => {
       console.log(`[ ready ] http://${host}:${port}`);
     });

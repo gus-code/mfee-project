@@ -3,7 +3,7 @@ import ICategory from '../interfaces/category';
 
 export const categorySchema = new Schema<ICategory>(
   {
-    name: {
+    id: {
       type: String,
       required: [true, 'Property is required']
     }
