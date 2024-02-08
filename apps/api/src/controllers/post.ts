@@ -41,17 +41,6 @@ const getPostById = async (req, res) => {
   }
 };
 
-//* I'm gonna save this for future projects or references.
-// const validatePost = (postObj: Post) => {
-//   const { title, description, categoryID, img } = postObj;
-//   const isTitleValid = title?.trim()?.length > 0;
-//   const isDescValid = description?.trim()?.length > 0;
-//   const isCategoryValid = categoryID > 0 && categoryID;
-//   const isImgValid = img?.trim()?.length > 0;
-
-//   return isTitleValid && isDescValid && isCategoryValid && isImgValid;
-// };
-
 const createPost = async (req, res) => {
   try {
     const newPost = await PostModel.create(req.body);
