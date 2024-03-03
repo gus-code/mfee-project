@@ -1,5 +1,6 @@
-import { Title, Container } from "./Comments.styles";
+import { Title, Container, FormContainer } from "./Comments.styles";
 import CommentCard from "../CommentCard";
+import AddCommentForm from "../AddCommentForm";
 
 function Comments() {
   return (
@@ -11,6 +12,9 @@ function Comments() {
       {/* Activity 5 - Iterate comments */}
       {/* Activity 3 - Send comment prop */}
       <CommentCard />
+      <FormContainer item sm={8}>
+        <AddCommentForm />
+      </FormContainer>
     </Container>
   );
 }

@@ -1,19 +1,23 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CategoryButtonGroup from "../CategoryButtonGroup";
 import CreatePostButton from "../CreatePostButton";
 import PostList from "../PostList";
 import { Post } from "../../types";
 import { PostContext } from "../../context";
 import Loading from "../Loading";
+import Form from "../Form";
 
 function HomePage() {
   const {
     posts,
     // getPosts
   } = useContext(PostContext);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [open, setOpen] = useState(false);
 
   const handleOpenForm = (defaultValues?: Post) => {
-    console.log(defaultValues);
+    setOpen(true);
+    if (defaultValues) setSelectedPost(defaultValues);
   };
 
   // const handleSelectCategory = (category: string) => {
@@ -27,11 +31,16 @@ function HomePage() {
 
   return (
     <>
-      {/* Activity 3 - Send handleOpenForm prop */}
-      <CreatePostButton />
+      <CreatePostButton handleOpenForm={handleOpenForm} />
       {/* Activity 3 - Send categorySelected and handleSelectCategory props */}
       <CategoryButtonGroup />
       <PostList posts={posts} handleOpenForm={handleOpenForm} />
+      <Form
+        open={open}
+        post={selectedPost}
+        setOpen={setOpen}
+        setSelectedPost={setSelectedPost}
+      />
     </>
   );
 }

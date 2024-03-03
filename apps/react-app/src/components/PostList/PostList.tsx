@@ -29,7 +29,7 @@ function PostList({ posts, handleOpenForm }: PostListProps) {
         >
           <CardContainer>
             <CardContent>
-              <h1>{/* Activity 1 - Render post title */}</h1>
+            <h1>{/* Activity 1 - Render post title */}</h1>
               <h3>
                 {/* Activity 1 - Render comments length */}
                 {/* Activity 4 - Render the word "Comments" if it contains more than one comment and "Comment" if there is only one */}
