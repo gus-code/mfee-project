@@ -1,18 +1,28 @@
-import { Grid } from '@mui/material';
+import { Grid } from "@mui/material";
 
-import Header from './components/Header';
-import HomePage from './components/HomePage';
-import PostPage from './components/PostPage';
+import { PostProvider } from "./context"
+import Header from "./components/Header";
+import HomePage from "./components/HomePage";
+import PostPage from "./components/PostPage";
 
 function App() {
   return (
-    <Grid container id="app" direction="column" height="100vh" flexWrap="nowrap">
-      <Header />
-      <Grid item flexGrow={1}>
-        <HomePage />
-        <PostPage />
-      </Grid>
-    </Grid>
+    // Activity 7 - Render SnackbarProvider
+      <PostProvider>
+        <Grid
+          container
+          id="app"
+          direction="column"
+          height="100vh"
+          flexWrap="nowrap"
+        >
+          <Header />
+          <Grid item flexGrow={1}>
+            <HomePage />
+            <PostPage />
+          </Grid>
+        </Grid>
+      </PostProvider>
   );
 }
 
