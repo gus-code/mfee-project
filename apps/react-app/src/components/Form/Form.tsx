@@ -13,7 +13,9 @@ import {
   SelectChangeEvent,
   FormHelperText,
 } from "@mui/material";
+import { AxiosError, AxiosResponse } from "axios";
 
+import axios from "../../api/axios";
 import { Post } from "../../types";
 import { validator } from "../../utils";
 import { PostContext } from "../../context";
@@ -29,7 +31,7 @@ const emptyInputs: FormInputs = {
 interface FormProps {
   open: boolean;
   post?: Post | null;
-  // categorySelected: string;
+  categorySelected: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedPost: (value: React.SetStateAction<Post | null>) => void;
 }
@@ -37,15 +39,12 @@ interface FormProps {
 const Form = ({
   open,
   post,
-  // categorySelected,
+  categorySelected,
   setOpen,
   setSelectedPost,
 }: FormProps) => {
   const [formData, setFormData] = React.useState(emptyInputs);
-  const {
-    // getPosts,
-    createOrUpdatePost,
-  } = React.useContext(PostContext);
+  const { getPosts } = React.useContext(PostContext);
 
   React.useEffect(() => {
     if (!post) return;
@@ -80,9 +79,23 @@ const Form = ({
       comments: post?.comments ?? [],
     };
 
-    createOrUpdatePost({ method: post ? "patch" : "post", newPost });
-    // getPosts(categorySelected);
-    handleClose();
+    axios({
+      method: post ? "patch" : "post",
+      url: post ? `/${post.id}` : undefined,
+      signal: AbortSignal.timeout(5000),
+      data: newPost,
+    })
+      .then((response: AxiosResponse) => {
+        if (response.status === 200 || response.status === 201) {
+          getPosts(categorySelected);
+          handleClose();
+          // Activity 9 - Use createAlert function to show a notification with success message
+        }
+      })
+      .catch((error: AxiosError) => {
+        // Activity 9 - Use createAlert function to show a notification with error message
+        console.error(`${error}`);
+      });
   };
 
   const handleChange = (

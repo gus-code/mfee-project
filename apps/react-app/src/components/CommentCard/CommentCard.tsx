@@ -8,7 +8,7 @@ function CommentCard() {
     <Container item sm={8}>
       <AccountCircleIcon />
       <Content>
-        <Author>{/* Activity 1 - Render comment author */}</Author>
+      <Author>{/* Activity 1 - Render comment author */}</Author>
         <Typography>{/* Activity 1 - Render comment content */}</Typography>
       </Content>
     </Container>

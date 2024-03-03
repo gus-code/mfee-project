@@ -1,6 +1,7 @@
 import Banner from "../Banner";
 import Comments from "../Comments";
 import { Post } from "../../types";
+import Loading from "../Loading";
 import {
   Container,
   BannerContainer,
@@ -8,7 +9,11 @@ import {
   DescriptionContainer,
 } from "./PostPage.styles";
 
+const postId = "1.23"
+
 function PostPage() {
+  // Activity 9 - Call the API "/:postId" to get the post. To save the result use useState
+
   const post: Post = {
     id: "1.23",
     title: "A good place to camp",
@@ -32,6 +37,8 @@ function PostPage() {
       },
     ],
   };
+
+  if (!post || !postId) return <Loading />;
 
   return (
     <Container container>
