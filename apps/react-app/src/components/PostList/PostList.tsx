@@ -29,6 +29,7 @@ function PostList({ posts, handleOpenForm }: PostListProps) {
           key={post.id}
           image={post.image}
           md={posts.length === 1 ? 12 : 6}
+          // Activity 10 - Navigate to PostPage onClick event
         >
           <CardContainer>
             <CardContent>

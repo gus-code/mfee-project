@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import CategoryButtonGroup from "../CategoryButtonGroup";
-import CreatePostButton from "../CreatePostButton";
-import PostList from "../PostList";
-import { Post } from "../../types";
-import { PostContext } from "../../context";
-import Loading from "../Loading";
-import Form from "../Form";
+import CategoryButtonGroup from "../../CategoryButtonGroup";
+import CreatePostButton from "../../CreatePostButton";
+import PostList from "../../PostList";
+import { Post } from "../../../types";
+import { PostContext } from "../../../context";
+import Loading from "../../Loading";
+import Form from "../../Form";
 
 function HomePage() {
   const {

@@ -21,7 +21,7 @@ import { Container, StyledButton } from "./CategoryButtonGroup.styles";
 //   },
 // ];
 
-const categorySelected = "All"
+const categorySelected = "All";
 
 function CategoryButtonGroup() {
   return (
