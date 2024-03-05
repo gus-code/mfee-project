@@ -1,9 +1,12 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import mongoose from 'mongoose';
 
 import { corsOptions } from './config/corsConfig';
-
+import { verifyToken } from './middleware/auth';
+import { errorHandler } from './middleware/errorHandler';
+import auth from './routes/auth';
 import categories from './routes/categories';
 import posts from './routes/posts';
 
@@ -16,9 +19,28 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors(corsOptions));
 
+app.use('/api/auth', auth);
+
+app.use(verifyToken);
 app.use('/api/categories', categories);
 app.use('/api/posts', posts);
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
+app.use(errorHandler);
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log(`\x1b[33mConnected to MongoDB \x1b[0m`);
+
+    app.listen(port, host, () => {
+      console.log(`\x1b[42m[ ready ] http://${host}:${port} \x1b[0m`);
+    });
+  })
+  .catch((e) => {
+    console.error(e);
+  });
+
+mongoose.connection.on('error', (err) => {
+  console.log(`\x1b[31m DB connection runtime error \x1b[0m`);
+  console.log(err);
 });
