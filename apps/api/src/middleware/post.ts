@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+/* import { Request, Response } from 'express';
 import { posts } from '../controllers/post';
 import { IPost } from '../models/interfaces'
 
@@ -18,4 +18,4 @@ const postMiddleware = (req: Request, res: Response, next) => {
     return res.status(404).json({ message: 'Post not found' });
 };
 
-export default postMiddleware;
+export default postMiddleware; */
