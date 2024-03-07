@@ -59,14 +59,15 @@ function PostList() {
       <PostCard item xs={12} image={posts[0].image} md={6}>
         <CardContainer>
           <CardContent>
-            <h1>{/* Activity 1 - Render post title */}</h1>
+            <h1>
+              { posts[0].title }
+            </h1>
             <h3>
-              {/* Activity 1 - Render comments length */}
-              {" Comment"}
+              {" Comments[" + posts[0].comments.length + "]"}
             </h3>
             <h3>{shorten(posts[0].description, 70)}</h3>
             <Typography variant="overline">
-              {/* Activity 1 - Render post category */}
+              { posts[0].category }
             </Typography>
           </CardContent>
           <CardActions className="card-actions">
@@ -82,14 +83,15 @@ function PostList() {
       <PostCard item xs={12} image={posts[1].image} md={6}>
         <CardContainer>
           <CardContent>
-            <h1>{/* Activity 1 - Render post title */}</h1>
+            <h1>
+              { posts[1].title }
+            </h1>
             <h3>
-              {/* Activity 1 - Render comments length */}
-              {" Comment"}
+              {" Comments[" + posts[1].comments.length + "]"}
             </h3>
             <h3>{shorten(posts[1].description, 70)}</h3>
             <Typography variant="overline">
-              {/* Activity 1 - Render post category */}
+              { posts[1].category }
             </Typography>
           </CardContent>
           <CardActions className="card-actions">

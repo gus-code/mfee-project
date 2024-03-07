@@ -2,40 +2,40 @@ import { ButtonGroup } from "@mui/material";
 
 import { Container, StyledButton } from "./CategoryButtonGroup.styles";
 
-// const categoryOptions = [
-//   {
-//     key: "all",
-//     name: "All",
-//   },
-//   {
-//     key: "healt",
-//     name: "Health",
-//   },
-//   {
-//     key: "travel",
-//     name: "Travel",
-//   },
-//   {
-//     key: "sports",
-//     name: "Sports",
-//   },
-// ];
+const categoryOptions = [
+  {
+    key: "all",
+    name: "All",
+  },
+  {
+    key: "healt",
+    name: "Health",
+  },
+  {
+    key: "travel",
+    name: "Travel",
+  },
+  {
+    key: "sports",
+    name: "Sports",
+  },
+];
 
 function CategoryButtonGroup() {
   return (
     <Container item>
       <ButtonGroup aria-label="category button group" color="inherit">
         <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
+          { categoryOptions[0].name }
         </StyledButton>
         <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
+          { categoryOptions[1].name }
         </StyledButton>
         <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
+          { categoryOptions[2].name }
         </StyledButton>
         <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
+          { categoryOptions[3].name }
         </StyledButton>
       </ButtonGroup>
     </Container>
