@@ -1,3 +1,4 @@
+import CommentCard from "../CommentCard";
 import { Title, Container } from "./Comments.styles";
 
 function Comments() {
@@ -7,6 +8,7 @@ function Comments() {
         <h4>Comments</h4>
       </Title>
       {/* Activity 1 - Render CommentCard */}
+      <CommentCard></CommentCard>
     </Container>
   );
 }
