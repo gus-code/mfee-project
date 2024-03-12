@@ -21,6 +21,11 @@ const categoryOptions = [
   }
 ];
 
+interface Category {
+  key: string;
+  name: string;
+}
+
 interface CategoryButtonGroupProps {
   categorySelected: string;
   handleSelectCategory: (category: string) => void;
@@ -30,18 +35,20 @@ function CategoryButtonGroup({ categorySelected, handleSelectCategory }: Categor
   return (
     <Container item>
       <ButtonGroup aria-label="category button group" color="inherit">
-        <StyledButton type="button" selected={categoryOptions[0].name == categorySelected}>
-          {categoryOptions[0].name}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {categoryOptions[1].name}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {categoryOptions[2].name}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {categoryOptions[3].name}
-        </StyledButton>
+        {categoryOptions.map((category: Category) => {
+          return (
+            <StyledButton
+              key={category.key}
+              type="button"
+              selected={category.name == categorySelected}
+              onClick={() => {
+                handleSelectCategory(category.name);
+              }}
+            >
+              {category.name}
+            </StyledButton>
+          );
+        })}
       </ButtonGroup>
     </Container>
   );
