@@ -18,7 +18,7 @@ function PostList({posts, handleOpenForm}: PostListProps) {
         <CardContainer>
           <CardContent>
             <h1>{posts[0].title}</h1>
-            <h3>{`Comments [${posts[0].comments.length}]`}</h3>
+            <h3>{posts[0].comments.length > 1 ? `Comments [${posts[0].comments.length}]` : `Comment [${posts[0].comments.length}]`}</h3>
             <h3>{shorten(posts[0].description, 70)}</h3>
             <Typography variant="overline">{posts[0].category}</Typography>
           </CardContent>
@@ -36,7 +36,7 @@ function PostList({posts, handleOpenForm}: PostListProps) {
         <CardContainer>
           <CardContent>
             <h1>{posts[1].title}</h1>
-            <h3>{`Comments [${posts[1].comments.length}]`}</h3>
+            <h3>{posts[1].comments.length > 1 ? `Comments [${posts[1].comments.length}]` : `Comment [${posts[1].comments.length}]`}</h3>
             <h3>{shorten(posts[1].description, 70)}</h3>
             <Typography variant="overline">{posts[1].category}</Typography>
           </CardContent>

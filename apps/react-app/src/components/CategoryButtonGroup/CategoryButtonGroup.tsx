@@ -30,7 +30,7 @@ function CategoryButtonGroup({ categorySelected, handleSelectCategory }: Categor
   return (
     <Container item>
       <ButtonGroup aria-label="category button group" color="inherit">
-        <StyledButton type="button" selected={false}>
+        <StyledButton type="button" selected={categoryOptions[0].name == categorySelected}>
           {categoryOptions[0].name}
         </StyledButton>
         <StyledButton type="button" selected={false}>

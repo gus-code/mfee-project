@@ -12,7 +12,7 @@ function Comments({ comments }: Comments) {
       <Title item sm={8}>
         <h4>Comments</h4>
       </Title>
-      <CommentCard comment={comments[0]} />
+      {comments.length > 0 && <CommentCard comment={comments[0]} />}
     </Container>
   );
 }
