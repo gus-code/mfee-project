@@ -1,28 +1,20 @@
 import { Grid, Typography } from '@mui/material';
 
 import { Container } from './components/Header/Header.styles';
+import HomePage from './components/HomePage/HomePage';
+import PostPage from './components/PostPage';
+import Header from './components/Header';
 
 function App() {
   return (
     <Grid container id="app" direction="column" height="100vh" flexWrap="nowrap">
-      {/* Activity 2 - Move all Container content to Header component */}
       <Container container>
-        <Grid item flexGrow={1}>
-          <Typography variant="caption" color="primary" alignItems="center">
-            <span style={{ fontSize: '1.5rem' }}>[ </span>
-            Making your Life Easier
-            <span style={{ fontSize: '1.5rem' }}> ]</span>
-          </Typography>
-        </Grid>
-        <Grid item flexGrow={1}>
-          <Typography variant="h4" fontWeight="bold">
-            Discovering the World
-          </Typography>
-        </Grid>
+        <Header></Header>
       </Container>
 
       <Grid item flexGrow={1}>
-        {/* Activity 1 - Render HomePage and PostPage */}
+        <HomePage></HomePage>
+        <PostPage></PostPage>
       </Grid>
     </Grid>
   );

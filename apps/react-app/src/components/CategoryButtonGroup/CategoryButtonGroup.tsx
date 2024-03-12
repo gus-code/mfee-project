@@ -1,42 +1,54 @@
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup } from '@mui/material';
 
-import { Container, StyledButton } from "./CategoryButtonGroup.styles";
+import { Container, StyledButton } from './CategoryButtonGroup.styles';
 
-// const categoryOptions = [
-//   {
-//     key: "all",
-//     name: "All",
-//   },
-//   {
-//     key: "healt",
-//     name: "Health",
-//   },
-//   {
-//     key: "travel",
-//     name: "Travel",
-//   },
-//   {
-//     key: "sports",
-//     name: "Sports",
-//   },
-// ];
+const categoryOptions = [
+  {
+    key: 'all',
+    name: 'All'
+  },
+  {
+    key: 'healt',
+    name: 'Health'
+  },
+  {
+    key: 'travel',
+    name: 'Travel'
+  },
+  {
+    key: 'sports',
+    name: 'Sports'
+  }
+];
 
-function CategoryButtonGroup() {
+interface Category {
+  key: string;
+  name: string;
+}
+
+interface CategoryButtonGroupProps {
+  categorySelected: string;
+  handleSelectCategory: (category: string) => void;
+}
+
+function CategoryButtonGroup({ categorySelected, handleSelectCategory }: CategoryButtonGroupProps) {
   return (
     <Container item>
       <ButtonGroup aria-label="category button group" color="inherit">
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
+        {categoryOptions.map((category: Category) => {
+          return (
+            <StyledButton
+              key={category.key}
+              type="button"
+              selected={category.name == categorySelected}
+              onClick={() => {
+                handleSelectCategory(category.name);
+              }}
+            >
+              {category.name}
+            </StyledButton>
+          );
+        })}
       </ButtonGroup>
     </Container>
   );
