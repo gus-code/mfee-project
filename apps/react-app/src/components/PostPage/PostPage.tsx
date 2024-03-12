@@ -1,3 +1,4 @@
+import { Post } from "../../types";
 import Banner from "../Banner";
 import Comments from "../Comments";
 import {
@@ -7,7 +8,7 @@ import {
   DescriptionContainer,
 } from "./PostPage.styles";
 
-const post = {
+const post: Post = {
   id: "1.23",
   title: "A good place to camp",
   image:
@@ -35,7 +36,7 @@ function PostPage() {
   return (
     <Container container>
       <BannerContainer item>
-        <Banner></Banner>
+        <Banner title={post.title} image={post.image} />
       </BannerContainer>
       <DescriptionContainer item>
         <p>
@@ -43,7 +44,7 @@ function PostPage() {
         </p>
       </DescriptionContainer>
       <CommentsContainer item>
-        <Comments></Comments>
+        <Comments comments={post.comments} />
       </CommentsContainer>
     </Container>
   );

@@ -1,13 +1,18 @@
-import CommentCard from "../CommentCard";
-import { Title, Container } from "./Comments.styles";
+import { Comment } from '../../types';
+import CommentCard from '../CommentCard';
+import { Title, Container } from './Comments.styles';
 
-function Comments() {
+interface Comments {
+  comments: Comment[];
+}
+
+function Comments({ comments }: Comments) {
   return (
     <Container container>
       <Title item sm={8}>
         <h4>Comments</h4>
       </Title>
-      <CommentCard></CommentCard>
+      <CommentCard comment={comments[0]} />
     </Container>
   );
 }
