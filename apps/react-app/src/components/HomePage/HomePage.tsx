@@ -1,5 +1,13 @@
+import CategoryButtonGroup from "../CategoryButtonGroup";
+import CreatePostButton from "../CreatePostButton";
+import PostList from "../PostList";
+
 function HomePage() {
-  return <>{/* Activity 1 - Render CreatePostButton, CategoryButtonGroup and PostList */}</>;
+  return <>
+    <CreatePostButton/>
+    <CategoryButtonGroup />
+    <PostList/>
+  </>;
 }
 
 export default HomePage;

@@ -56,52 +56,30 @@ const posts = [
 function PostList() {
   return (
     <Grid container columns={{ md: 12, xs: 12 }}>
-      <PostCard item xs={12} image={posts[0].image} md={6}>
-        <CardContainer>
-          <CardContent>
-            <h1>{/* Activity 1 - Render post title */}</h1>
-            <h3>
-              {/* Activity 1 - Render comments length */}
-              {" Comment"}
-            </h3>
-            <h3>{shorten(posts[0].description, 70)}</h3>
-            <Typography variant="overline">
-              {/* Activity 1 - Render post category */}
-            </Typography>
-          </CardContent>
-          <CardActions className="card-actions">
-            <IconButton color="inherit">
-              <EditIcon />
-            </IconButton>
-            <IconButton color="inherit">
-              <DeleteIcon />
-            </IconButton>
-          </CardActions>
-        </CardContainer>
-      </PostCard>
-      <PostCard item xs={12} image={posts[1].image} md={6}>
-        <CardContainer>
-          <CardContent>
-            <h1>{/* Activity 1 - Render post title */}</h1>
-            <h3>
-              {/* Activity 1 - Render comments length */}
-              {" Comment"}
-            </h3>
-            <h3>{shorten(posts[1].description, 70)}</h3>
-            <Typography variant="overline">
-              {/* Activity 1 - Render post category */}
-            </Typography>
-          </CardContent>
-          <CardActions className="card-actions">
-            <IconButton color="inherit">
-              <EditIcon />
-            </IconButton>
-            <IconButton color="inherit">
-              <DeleteIcon />
-            </IconButton>
-          </CardActions>
-        </CardContainer>
-      </PostCard>
+      {posts.map((post) => (
+        <PostCard key={post.id} item xs={12} image={post.image} md={6}>
+          <CardContainer>
+            <CardContent>
+              <h1>{post.title}</h1>
+              <h3>
+                {post.comments.length} Comment{post.comments.length !== 1 ? 's' : ''}
+              </h3>
+              <h3>{shorten(post.description, 70)}</h3>
+              <Typography variant="overline">
+                {post.category}
+              </Typography>
+            </CardContent>
+            <CardActions className="card-actions">
+              <IconButton color="inherit">
+                <EditIcon />
+              </IconButton>
+              <IconButton color="inherit">
+                <DeleteIcon />
+              </IconButton>
+            </CardActions>
+          </CardContainer>
+        </PostCard>
+      ))}
     </Grid>
   );
 }
