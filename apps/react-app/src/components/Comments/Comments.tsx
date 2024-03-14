@@ -1,13 +1,22 @@
-import CommentCard from "../CommentCard";
-import { Title, Container } from "./Comments.styles";
+import CommentCard from '../CommentCard';
+import { Title, Container } from './Comments.styles';
+import { Comment } from '../../types';
 
-function Comments() {
+interface CommentsProps {
+  postComments: Comment[];
+}
+
+function Comments({ postComments }: CommentsProps) {
+  const tempComment: Comment = postComments[0];
+
   return (
     <Container container>
       <Title item sm={8}>
         <h4>Comments</h4>
       </Title>
-      <CommentCard/>
+      {/* Activity 4 - Render CommentCard only if comments array is greater than zero */}
+      {/* Activity 5 - Iterate comments */}
+      <CommentCard comment={tempComment} />
     </Container>
   );
 }

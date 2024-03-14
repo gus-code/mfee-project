@@ -7,9 +7,9 @@ import PostPage from './components/PostPage';
 function App() {
   return (
     <Grid container id="app" direction="column" height="100vh" flexWrap="nowrap">
-      <Header/>
+      <Header />
       <Grid item flexGrow={1}>
-        <HomePage/>
+        <HomePage />
         <PostPage />
       </Grid>
     </Grid>
