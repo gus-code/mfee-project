@@ -37,14 +37,14 @@ function PostPage() {
     <Container container>
       <BannerContainer item>
         {/* Activity 3 - Send postImage and postTitle props*/}
-        <Banner />
+        <Banner image={post.image} title={post.title}/>
       </BannerContainer>
       <DescriptionContainer item>
         <p>{post.description}</p>
       </DescriptionContainer>
       <CommentsContainer item>
         {/* Activity 3 - Send postComments prop*/}
-        <Comments />
+        <Comments postComments={post.comments} />
       </CommentsContainer>
     </Container>
   );

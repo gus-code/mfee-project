@@ -1,6 +1,12 @@
 import { ButtonGroup } from "@mui/material";
 
+import { Post } from "../../types";
+
 import { Container, StyledButton } from "./CategoryButtonGroup.styles";
+interface CategoryButtonGroupProps{
+  categorySelected: (defaultValues?: Post) => void;
+  handleSelectCategory: (defaultValues?: Post) => void;
+}
 
 const categoryOptions = [
   {
@@ -23,7 +29,7 @@ const categoryOptions = [
 
 const categorySelected = "All"
 
-function CategoryButtonGroup() {
+function CategoryButtonGroup({categorySelected,handleSelectCategory}:CategoryButtonGroupProps) {
   return (
     <Container item>
       <ButtonGroup aria-label="category button group" color="inherit">

@@ -29,15 +29,16 @@ function PostList({ posts, handleOpenForm }: PostListProps) {
         >
           <CardContainer>
             <CardContent>
-              <h1>{/* Activity 1 - Render post title */}</h1>
+              <h1>{post.title}</h1>
               <h3>
-                {/* Activity 1 - Render comments length */}
+                {posts.length}
                 {/* Activity 4 - Render the word "Comments" if it contains more than one comment and "Comment" if there is only one */}
                 {" Comment"}
               </h3>
               <h3>{shorten(post.description, 70)}</h3>
               <Typography variant="overline">
                 {/* Activity 1 - Render post category */}
+                {post.category}
               </Typography>
             </CardContent>
             <CardActions className="card-actions">
