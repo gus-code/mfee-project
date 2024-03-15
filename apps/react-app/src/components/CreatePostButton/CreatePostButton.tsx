@@ -6,7 +6,10 @@ import { Container } from "./CreatePostButton.styles";
 const CreatePostButton = () => {
   return (
     <Container item>
-      <IconButton color="primary">
+      <IconButton color="primary" onClick={() =>{
+        // Activity 3 - Uncomment next line
+        //handleOpenForm()
+      }}>
         <EditIcon />
       </IconButton>
     </Container>
