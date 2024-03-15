@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Comment,Post } from "../../types";
+import { Comment } from "../../types";
 
 import { Container, Content, Author } from "./CommentCard.styles";
 
@@ -10,7 +10,6 @@ interface CommentCardProps{
 
 
 function CommentCard({comment}:CommentCardProps) {
-  console.log(comment,"commenttttttt")
   return (
     <Container item sm={8}>
       <AccountCircleIcon />
