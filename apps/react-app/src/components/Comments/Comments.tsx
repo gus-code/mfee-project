@@ -2,11 +2,12 @@ import { Title, Container } from './Comments.styles';
 import CommentCard from '../CommentCard';
 import { Comment } from '../../types';
 
-interface CommentsProps{
-  postComments:Comment[];
-} 
+interface CommentsProps {
+  postComments: Comment[];
+}
 
-function Comments({ postComments }:CommentsProps) {
+function Comments({ postComments }: CommentsProps) {
+  console.log(postComments, 'postComments');
   return (
     <Container container>
       <Title item sm={8}>
@@ -15,8 +16,7 @@ function Comments({ postComments }:CommentsProps) {
       {/* Activity 4 - Render CommentCard only if comments array is greater than zero */}
       {/* Activity 5 - Iterate comments */}
       {/* Activity 3 - Send comment prop */}
-      {postComments.length>0 && <CommentCard comment={postComments[0]}/>}
-
+      {postComments.length > 0 && postComments.map((postComment) => <CommentCard comment={postComment} key={postComment.id}/>)}
 
       {/* <CommentCard comment={postComments[0]} /> */}
     </Container>
