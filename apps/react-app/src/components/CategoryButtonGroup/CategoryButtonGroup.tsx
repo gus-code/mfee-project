@@ -1,42 +1,55 @@
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup } from '@mui/material';
 
-import { Container, StyledButton } from "./CategoryButtonGroup.styles";
+import { Container, StyledButton } from './CategoryButtonGroup.styles';
+interface CategoryButtonGroupProps {
+  categorySelected: string;
+  handleSelectCategory: (string: string) => void;
+}
 
-// const categoryOptions = [
-//   {
-//     key: "all",
-//     name: "All",
-//   },
-//   {
-//     key: "healt",
-//     name: "Health",
-//   },
-//   {
-//     key: "travel",
-//     name: "Travel",
-//   },
-//   {
-//     key: "sports",
-//     name: "Sports",
-//   },
-// ];
+const categoryOptions = [
+  {
+    key: 'all',
+    name: 'All'
+  },
+  {
+    key: 'healt',
+    name: 'Health'
+  },
+  {
+    key: 'travel',
+    name: 'Travel'
+  },
+  {
+    key: 'sports',
+    name: 'Sports'
+  }
+];
 
-function CategoryButtonGroup() {
+function CategoryButtonGroup({ categorySelected, handleSelectCategory }: CategoryButtonGroupProps) {
   return (
     <Container item>
       <ButtonGroup aria-label="category button group" color="inherit">
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
+        {/* Activity 5 - Iterate categoryOptions */}
+        {categoryOptions.map((categoryOption) => (
+          <StyledButton
+          key={categoryOption.key}
+          type="button"
+          // Activity 4 - Set a condition so that the props selected is true only if the option is selected. This value can be hardcoded in the following way: categoryOptions[0].name
+          // Activity 5 - Replaces the hardcoded value "categoryOptions[0].name" with the variable obtained from the iteration and uses the variable "categorySelected" obtained from the props
+
+          selected={categoryOption.name === categorySelected}
+          onClick={() => {
+            handleSelectCategory(categoryOption.name)
+            //  Activity 5 - After you have iterated the "categoryOptions" array, send the "name" property as a parameter to the "handleSelectCategory" function
+          }}
+        >
+          {categoryOption.name}
         </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
+        ))}
+        
+
+      
+        
       </ButtonGroup>
     </Container>
   );
