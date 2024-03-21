@@ -5,7 +5,8 @@
   "scripts": {
     "start:angular": "nx serve angular-app",
     "start:react": "nx serve react-app",
-    "start:api": "nx serve api"
+    "start:api": "nx serve api",
+    "test:api": "nx test api"
   },
   "private": true,
   "dependencies": {
