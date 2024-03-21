@@ -17,10 +17,8 @@ describe('/api/auth', () => {
         password: 'Aa$123'
       })
       .then((response) => {
-        const jsonResponse = JSON.parse(response.text);
-
         expect(response.statusCode).toBe(201);
-        expect(jsonResponse.message).toEqual('User registered successfully');
+        expect(response.body.message).toEqual('User registered successfully');
 
         done();
       });
@@ -33,10 +31,34 @@ describe('/api/categories', () => {
       .get('/api/categories')
       .set('authorization', 'Bearer 12345')
       .then((response) => {
-        const jsonResponse = JSON.parse(response.text);
-
         expect(response.statusCode).toBe(200);
-        expect(jsonResponse).toEqual([]);
+        expect(response.body).toEqual([]);
+
+        done();
+      });
+  });
+
+  test('it should create a category', (done) => {
+    request(app)
+      .post('/api/categories')
+      .set('authorization', 'Bearer 12345')
+      .send({
+        name: 'Category'
+      })
+      .then((response) => {
+        expect(response.statusCode).toBe(201);
+        expect(response.body.name).toEqual('Category');
+
+        done();
+      });
+  });
+
+  test('it should return 404 trying getting a category by id', (done) => {
+    request(app)
+      .get('/api/categories/123')
+      .set('authorization', 'Bearer 12345')
+      .then((response) => {
+        expect(response.statusCode).toBe(404);
 
         done();
       });
