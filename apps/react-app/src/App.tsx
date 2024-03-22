@@ -8,18 +8,20 @@ import { PostProvider, SnackbarProvider } from './context';
 
 function App() {
   return (
-    <PostProvider>
-      <Grid container id="app" direction="column" height="100vh" flexWrap="nowrap">
-        <Container container>
-          <Header></Header>
-        </Container>
+    <SnackbarProvider>
+      <PostProvider>
+        <Grid container id="app" direction="column" height="100vh" flexWrap="nowrap">
+          <Container container>
+            <Header></Header>
+          </Container>
 
-        <Grid item flexGrow={1}>
-          <HomePage></HomePage>
-          <PostPage></PostPage>
+          <Grid item flexGrow={1}>
+            <HomePage></HomePage>
+            <PostPage></PostPage>
+          </Grid>
         </Grid>
-      </Grid>
-    </PostProvider>
+      </PostProvider>
+    </SnackbarProvider>
   );
 }
 

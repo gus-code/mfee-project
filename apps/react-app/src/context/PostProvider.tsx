@@ -1,6 +1,7 @@
-import React, { createContext, useState, useCallback } from 'react';
+import React, { createContext, useState, useCallback, useContext, useEffect } from 'react';
 
 import { Post } from '../types';
+import { SnackbarContext } from './SnackbarProvider';
 
 interface PostContextProps {
   posts: Post[] | null;
@@ -61,12 +62,14 @@ const postList = [
 export function PostProvider({ children }: PostProviderProps): React.JSX.Element {
   const [serverData, setServerData] = useState(postList);
   const [posts, setPosts] = useState<Post[] | null>(postList);
-
+  const { createAlert } = useContext(SnackbarContext);
+  
   const getPosts = useCallback(
     (category: string) => {
       const selectedCategory = serverData.filter((post: Post) => post.category === category);
       const newPosts = category === 'All' ? serverData : selectedCategory;
       setPosts(newPosts);
+      createAlert('success', 'Data uploaded!');
     },
     [serverData]
   );
