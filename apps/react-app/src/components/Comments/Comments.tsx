@@ -14,7 +14,7 @@ function Comments({ comments }: Comments) {
       </Title>
       {comments.length > 0 &&
         comments.map((comment: Comment) => {
-          return <CommentCard comment={comment} />;
+          return <CommentCard key={comment.id} comment={comment} />;
         })}
     </Container>
   );

@@ -7,49 +7,33 @@ import { CardActions, CardContainer, CardContent, PostCard } from './PostList.st
 import { Post } from '../../types';
 
 interface PostListProps {
-  posts: Post[];
+  posts: Post[] | null;
   handleOpenForm: (defaultValues?: Post) => void;
 }
 
-function PostList({posts, handleOpenForm}: PostListProps) {
+function PostList({ posts, handleOpenForm }: PostListProps) {
   return (
     <Grid container columns={{ md: 12, xs: 12 }}>
-      <PostCard item xs={12} image={posts[0].image} md={6}>
-        <CardContainer>
-          <CardContent>
-            <h1>{posts[0].title}</h1>
-            <h3>{posts[0].comments.length > 1 ? `Comments [${posts[0].comments.length}]` : `Comment [${posts[0].comments.length}]`}</h3>
-            <h3>{shorten(posts[0].description, 70)}</h3>
-            <Typography variant="overline">{posts[0].category}</Typography>
-          </CardContent>
-          <CardActions className="card-actions">
-            <IconButton color="inherit">
-              <EditIcon />
-            </IconButton>
-            <IconButton color="inherit">
-              <DeleteIcon />
-            </IconButton>
-          </CardActions>
-        </CardContainer>
-      </PostCard>
-      <PostCard item xs={12} image={posts[1].image} md={6}>
-        <CardContainer>
-          <CardContent>
-            <h1>{posts[1].title}</h1>
-            <h3>{posts[1].comments.length > 1 ? `Comments [${posts[1].comments.length}]` : `Comment [${posts[1].comments.length}]`}</h3>
-            <h3>{shorten(posts[1].description, 70)}</h3>
-            <Typography variant="overline">{posts[1].category}</Typography>
-          </CardContent>
-          <CardActions className="card-actions">
-            <IconButton color="inherit">
-              <EditIcon />
-            </IconButton>
-            <IconButton color="inherit">
-              <DeleteIcon />
-            </IconButton>
-          </CardActions>
-        </CardContainer>
-      </PostCard>
+      {posts?.map((post) => (
+        <PostCard key={post.id} item xs={12} image={post.image} md={6}>
+          <CardContainer>
+            <CardContent>
+              <h1>{post.title}</h1>
+              <h3>{post.comments.length > 1 ? `Comments [${post.comments.length}]` : `Comment [${post.comments.length}]`}</h3>
+              <h3>{shorten(post.description, 70)}</h3>
+              <Typography variant="overline">{post.category}</Typography>
+            </CardContent>
+            <CardActions className="card-actions">
+              <IconButton color="inherit">
+                <EditIcon />
+              </IconButton>
+              <IconButton color="inherit">
+                <DeleteIcon />
+              </IconButton>
+            </CardActions>
+          </CardContainer>
+        </PostCard>
+      ))}
     </Grid>
   );
 }
