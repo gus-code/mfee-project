@@ -4,7 +4,7 @@ import CommentCard from '../CommentCard';
 import { Title, Container, FormContainer } from './Comments.styles';
 
 interface Comments {
-  comments: Comment[];
+  comments?: Comment[];
 }
 
 function Comments({ comments }: Comments) {
@@ -13,8 +13,8 @@ function Comments({ comments }: Comments) {
       <Title item sm={8}>
         <h4>Comments</h4>
       </Title>
-      {comments.length > 0 &&
-        comments.map((comment: Comment) => {
+      {comments && comments.length > 0 &&
+        comments?.map((comment: Comment) => {
           return <CommentCard key={comment.id} comment={comment} />;
         })}
       <FormContainer item sm={8}>

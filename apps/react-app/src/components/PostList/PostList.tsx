@@ -5,6 +5,8 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { shorten } from '../../utils/index';
 import { CardActions, CardContainer, CardContent, PostCard } from './PostList.styles';
 import { Post } from '../../types';
+import { useContext } from 'react';
+import { PostContext } from '../../context';
 
 interface PostListProps {
   posts: Post[] | null;
@@ -12,6 +14,8 @@ interface PostListProps {
 }
 
 function PostList({ posts, handleOpenForm }: PostListProps) {
+  const { deletePost } = useContext(PostContext);
+
   return (
     <Grid container columns={{ md: 12, xs: 12 }}>
       {posts?.map((post) => (
@@ -24,10 +28,22 @@ function PostList({ posts, handleOpenForm }: PostListProps) {
               <Typography variant="overline">{post.category}</Typography>
             </CardContent>
             <CardActions className="card-actions">
-              <IconButton color="inherit">
+              <IconButton
+                color="inherit"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleOpenForm(post);
+                }}
+              >
                 <EditIcon />
               </IconButton>
-              <IconButton color="inherit">
+              <IconButton
+                color="inherit"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deletePost(post.id);
+                }}
+              >
                 <DeleteIcon />
               </IconButton>
             </CardActions>

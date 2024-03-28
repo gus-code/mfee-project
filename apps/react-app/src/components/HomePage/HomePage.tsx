@@ -4,15 +4,18 @@ import CategoryButtonGroup from '../CategoryButtonGroup';
 import CreatePostButton from '../CreatePostButton';
 import PostList from '../PostList';
 import { PostContext } from '../../context';
-import { Alert, Snackbar } from '@mui/material';
+import Form from '../Form';
 
 function HomePage() {
-  const { posts, getPosts, deletePost } = useContext(PostContext);
+  const { posts, getPosts } = useContext(PostContext);
 
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [open, setOpen] = useState(false);
   const [categorySelected, setCategorySelected] = useState('All');
 
   const handleOpenForm = (defaultValues?: Post) => {
-    console.log(defaultValues);
+    setOpen(true);
+    if (defaultValues) setSelectedPost(defaultValues);
   };
 
   const handleSelectCategory = (category: string) => {
@@ -25,14 +28,10 @@ function HomePage() {
 
   return (
     <>
-      {/* <Snackbar open={true} autoHideDuration={5000}>
-        <Alert severity={'success'} variant="filled" sx={{ width: '100%' }}>
-          Hola Mundo
-        </Alert>
-      </Snackbar> */}
       <CreatePostButton handleOpenForm={handleOpenForm} />
       <CategoryButtonGroup categorySelected={categorySelected} handleSelectCategory={handleSelectCategory} />
       <PostList posts={posts} handleOpenForm={handleOpenForm} />
+      <Form open={open} post={selectedPost} categorySelected={categorySelected} setOpen={setOpen} setSelectedPost={setSelectedPost} />
     </>
   );
 }

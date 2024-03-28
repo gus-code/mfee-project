@@ -3,8 +3,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { BannerContent, BannerTitle, Container } from './Banner.styles';
 
 interface BannerProps {
-  title: string;
-  image: string;
+  title?: string;
+  image?: string;
 }
 
 function Banner({ title, image }: BannerProps) {

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
-export const Container = styled(Box)<{ image: string }>`
+export const Container = styled(Box)<{ image?: string }>`
   display: flex;
   flex-grow: 1;
   height: 100%;
