@@ -1,16 +1,19 @@
 import { Grid } from '@mui/material';
 
 import { Container } from './components/Header/Header.styles';
-import HomePage from './components/HomePage/HomePage';
-import PostPage from './components/PostPage';
+import HomePage from './components/Page/HomePage/HomePage';
+import PostPage from './components/Page/PostPage';
 import Header from './components/Header';
 import { PostProvider, SnackbarProvider } from './context';
+import { RouterProvider } from 'react-router-dom';
+import Router from './components/Router';
 
 function App() {
   return (
     <SnackbarProvider>
       <PostProvider>
-        <Grid container id="app" direction="column" height="100vh" flexWrap="nowrap">
+        <RouterProvider router={Router} />
+        {/* <Grid container id="app" direction="column" height="100vh" flexWrap="nowrap">
           <Container container>
             <Header></Header>
           </Container>
@@ -19,7 +22,7 @@ function App() {
             <HomePage></HomePage>
             <PostPage></PostPage>
           </Grid>
-        </Grid>
+        </Grid>  */}
       </PostProvider>
     </SnackbarProvider>
   );

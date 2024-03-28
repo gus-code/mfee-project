@@ -1,14 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
-import Banner from '../Banner';
-import Comments from '../Comments';
+import Banner from '../../Banner';
+import Comments from '../../Comments';
 import { Container, BannerContainer, CommentsContainer, DescriptionContainer } from './PostPage.styles';
-import { PostContext } from '../../context';
+import { PostContext } from '../../../context';
+import { useParams } from 'react-router-dom';
 
 function PostPage() {
+  const { id } = useParams();
   const { post, getPost } = useContext(PostContext);
 
   useEffect(() => {
-    getPost('1.24');
+    getPost(id || '');
   }, []);
 
   return (

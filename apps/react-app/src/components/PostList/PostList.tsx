@@ -7,6 +7,7 @@ import { CardActions, CardContainer, CardContent, PostCard } from './PostList.st
 import { Post } from '../../types';
 import { useContext } from 'react';
 import { PostContext } from '../../context';
+import { useNavigate } from 'react-router-dom';
 
 interface PostListProps {
   posts: Post[] | null;
@@ -16,10 +17,17 @@ interface PostListProps {
 function PostList({ posts, handleOpenForm }: PostListProps) {
   const { deletePost } = useContext(PostContext);
 
+  let navigate = useNavigate();
+  const routeChange = (e: React.MouseEvent<HTMLDivElement>, id: string) => {
+    e.preventDefault();
+    let path = `/posts/${id}`;
+    navigate(path);
+  };
+
   return (
     <Grid container columns={{ md: 12, xs: 12 }}>
       {posts?.map((post) => (
-        <PostCard key={post.id} item xs={12} image={post.image} md={6}>
+        <PostCard key={post.id} item xs={12} image={post.image} md={6} onClick={(e) => routeChange(e, post.id)}>
           <CardContainer>
             <CardContent>
               <h1>{post.title}</h1>

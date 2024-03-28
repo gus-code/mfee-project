@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
-import { Post } from '../../types';
-import CategoryButtonGroup from '../CategoryButtonGroup';
-import CreatePostButton from '../CreatePostButton';
-import PostList from '../PostList';
-import { PostContext } from '../../context';
-import Form from '../Form';
+import { Post } from '../../../types';
+import CategoryButtonGroup from '../../CategoryButtonGroup';
+import CreatePostButton from '../../CreatePostButton';
+import PostList from '../../PostList';
+import { PostContext } from '../../../context';
+import Form from '../../Form';
 
 function HomePage() {
   const { posts, getPosts } = useContext(PostContext);
