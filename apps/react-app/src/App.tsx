@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import Header from './components/Header/Header';
 import HomePage from "./components/HomePage";
