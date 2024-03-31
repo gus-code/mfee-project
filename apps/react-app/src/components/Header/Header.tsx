@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 
-import { Container } from "./Header.styles"
+import { Container } from "./Header.styles";
 
 function Header() {
     return (
@@ -20,6 +20,6 @@ function Header() {
             </Grid>
         </Container>
     );
-}
+};
 
 export default Header;
