@@ -59,14 +59,16 @@ function PostList() {
       <PostCard item xs={12} image={posts[0].image} md={6}>
         <CardContainer>
           <CardContent>
-            <h1>{/* Activity 1 - Render post title */}</h1>
+            <h1>{posts[0].title}
+            </h1>
             <h3>
-              {/* Activity 1 - Render comments length */}
-              {" Comment"}
+              <p>{posts[0].comments[0].id}</p>
+              <p>{posts[0].comments[0].author}</p>
+              <p>{posts[0].comments[0].content}</p>
             </h3>
             <h3>{shorten(posts[0].description, 70)}</h3>
             <Typography variant="overline">
-              {/* Activity 1 - Render post category */}
+                <p>{posts[0].category}</p>
             </Typography>
           </CardContent>
           <CardActions className="card-actions">
@@ -82,14 +84,17 @@ function PostList() {
       <PostCard item xs={12} image={posts[1].image} md={6}>
         <CardContainer>
           <CardContent>
-            <h1>{/* Activity 1 - Render post title */}</h1>
+            <h1>
+            <p>{posts[1].title}</p>
+            </h1>
             <h3>
-              {/* Activity 1 - Render comments length */}
-              {" Comment"}
+              <p>{posts[1].comments[0].id}</p>
+              <p>{posts[1].comments[0].author}</p>
+              <p>{posts[1].comments[0].content}</p>
             </h3>
             <h3>{shorten(posts[1].description, 70)}</h3>
             <Typography variant="overline">
-              {/* Activity 1 - Render post category */}
+              <p>{posts[1].category}</p>
             </Typography>
           </CardContent>
           <CardActions className="card-actions">
