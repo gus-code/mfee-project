@@ -3,19 +3,25 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-const postImage = ""; // ACT 1 - Put some image URL
-// const postTitle = ""; //ACT 1 -  Write a title
+//✅ ACT 1 - Put some image URL
+//✅ ACT 1 -  Write a title
 
-function Banner() {
+interface Props {
+  postImage: string;
+  postTitle: string;
+}
+
+//✅ ACT 3 - Receive postImage and postTitle props
+function Banner( { postImage, postTitle }: Props ) {
   return (
-    <Container image={postImage}>
+    <Container image={ postImage }>
+      {/*✅ ACT 3 - Send postImage as image prop to Container component */}
       <BannerContent>
         <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}>
           View Posts
         </Button>
-        <BannerTitle variant="h3">
-          {/* ACT 1 - Render postTitle */}
-        </BannerTitle>
+        {/*✅ ACT 1 - Render postTitle */}
+        <BannerTitle variant="h3">{ postTitle }</BannerTitle>
       </BannerContent>
     </Container>
   );
