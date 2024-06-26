@@ -1,9 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { User } from '../models/user';
-
-const users: User[] = [];
+import User from '../models/user';
 
 const register = async (req, res) => {
   const { username, password } = req.body;
@@ -15,18 +13,19 @@ const register = async (req, res) => {
     });
   }
 
-  // Check that we don't have duplicates
-  const duplicate = users.find((u) => u.username === username);
-  if (duplicate) {
-    return res.status(409).json({ message: 'User already exist' });
-  }
-
   try {
+    // Check that we don't have duplicates
+    const user = await User.findOne({ username });
+
+    if (user) {
+      return res.status(409).json({ message: 'User already exist' });
+    }
+
     // Encrypt the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Store new user
-    users.push({ username, password: hashedPassword });
+    await User.create({ username, password: hashedPassword });
 
     res.status(201).json({ message: 'User registered successfully' });
   } catch (e) {
@@ -45,7 +44,7 @@ const login = async (req, res) => {
   }
 
   // Retrieve user
-  const user = users.find((u) => u.username === username);
+  const user = await User.findOne({ username }).exec();
 
   // Check if we found the user and the password matches
   if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -53,7 +52,7 @@ const login = async (req, res) => {
   }
 
   // Generate access token and refresh token
-  const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+  const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
   const refreshToken = jwt.sign({ username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
   // Save refresh token
@@ -79,7 +78,7 @@ const refresh = (req, res) => {
       return res.status(403).json({ message: 'Forbidden' });
     }
 
-    const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+    const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
     res.json({ accessToken });
   });
 };
