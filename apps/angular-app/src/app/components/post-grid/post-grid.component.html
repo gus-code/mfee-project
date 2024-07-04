@@ -1,0 +1,19 @@
+<section class="mfee-grid-container">
+  <div class="mfee-grid-post" *ngFor="let post of posts" [ngStyle]="{ 'background-image': 'url(' + post.image + ')' }" (click)="onClick($event, post.id)">
+    <h2 class="mfee-grid-post__title">{{ post.title }}</h2>
+    <span class="mfee-grid-post__comments">{{ post.comments.count }} Comments
+      <i class="material-icons">forum</i></span>
+    <p class="mfee-grid-post__description">{{ post.description }}</p>
+    <div class="mfee-grid-post__footer">
+      <label class="mfee-grid-post__tag">{{ post.category.name }}</label>
+      <ul class="mfee-grid-post__actions">
+        <li class="mfee-grid-post__actions-item" title="Edit" (click)="onEditPost(post.id)">
+          <i class="material-icons">edit</i>
+        </li>
+        <li class="mfee-grid-post__actions-item" title="Delete" (click)="onDeletePost(post.id)">
+          <i class="material-icons">delete</i>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
