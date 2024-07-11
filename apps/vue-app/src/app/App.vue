@@ -1,3 +1,13 @@
 <template>
-  <h1>VTS Template</h1>
+  <PostView />
 </template>
+
+<script>
+import PostView from './modules/posts/views/PostView.vue';
+
+export default {
+  components: {
+    PostView
+  }
+};
+</script>
