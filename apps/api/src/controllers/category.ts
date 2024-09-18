@@ -1,19 +1,20 @@
 import Category from '../models/category';
+import { Request, Response } from 'express';
 
 // Get all categories
-const getCategories = async (req, res) => {
+const getCategories = async (req: Request, res: Response) => {
   try {
     const categories = await Category.find();
     // Return all the categories with a 200 status code
     res.status(200).json(categories);
   } catch (error) {
-    const { message } = error;
-    res.status(500).json({ message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
 // Get category by id
-const getCategoryById = async (req, res) => {
+const getCategoryById = async (req: Request, res: Response) => {
   // Retrieve the id from the route params
   const { id } = req.params;
 
@@ -31,25 +32,25 @@ const getCategoryById = async (req, res) => {
     // Return the category with a 200 status code
     res.status(200).json(category);
   } catch (error) {
-    const { message } = error;
-    res.status(500).json({ message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
 // Create category
-const createCategory = async (req, res) => {
+const createCategory = async (req: Request, res: Response) => {
   try {
     const category = await Category.create(req.body);
     // Return the created category with a 201 status code
     res.status(201).json(category);
   } catch (error) {
-    const { message } = error;
-    res.status(500).json({ message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
 // Update category
-const updateCategory = async (req, res) => {
+const updateCategory = async (req: Request, res: Response) => {
   // Retrieve the id from the route params
   const { id } = req.params;
 
@@ -65,13 +66,13 @@ const updateCategory = async (req, res) => {
     // Return the updated category with a 200 status code
     res.status(200).json(category);
   } catch (error) {
-    const { message } = error;
-    res.status(500).json({ message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
 // Delete category
-const deleteCategory = async (req, res) => {
+const deleteCategory = async (req: Request, res: Response) => {
   // Retrieve the id from the route params
   const { id } = req.params;
 
@@ -87,8 +88,8 @@ const deleteCategory = async (req, res) => {
     // Return a 200 status code
     res.status(200).json(category);
   } catch (error) {
-    const { message } = error;
-    res.status(500).json({ message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 

@@ -1,0 +1,106 @@
+// //////////////////// //
+//      CATEGORIES      //
+// //////////////////// //
+
+### GET CATEGORIES
+GET http://localhost:3000/api/categories
+Authorization: Bearer [ACCESS_TOKEN]
+
+### GET NOT VALID ROUTE
+GET http://localhost:3000/api/not-valid-route
+
+### GET CATEGORIES BY ID
+PATCH http://localhost:3000/api/categories/cat_1
+Authorization: Bearer [ACCESS_TOKEN]
+Content-Type: application/json
+
+{
+  "name": "Other"
+}
+
+// //////////////////// //
+//         POSTS        //
+// //////////////////// //
+
+### 1. GET ALL POSTS
+GET http://localhost:3000/api/posts
+Authorization: Bearer [ACCESS_TOKEN]
+
+### 2. GET POSTS BY CATEGORY
+GET http://localhost:3000/api/posts/category/cat_1
+Authorization: Bearer [ACCESS_TOKEN]
+
+### 3. GET POST BY ID
+GET http://localhost:3000/api/posts/a47f5337-16f2-49a0-bc14-e97bb24b56a9
+Authorization: Bearer [ACCESS_TOKEN]
+
+### 4. CREATE POST
+POST http://localhost:3000/api/posts
+Authorization: Bearer [ACCESS_TOKEN]
+Content-Type: application/json
+
+{
+  "title": "Post Test Postman",
+  "image": "https://images.unsplash.com/photo-1556276797-5086e6b45ff9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixid=eyJhcHBfaWQiOjF9&ixlib=rb-1.2.1&q=80&w=800",
+  "description": "Description from Postman",
+  "category": "1"
+}
+
+### 5. CREATE POST COMMENT
+POST http://localhost:3000/api/posts/a47f5337-16f2-49a0-bc14-e97bb24b56a9/comments
+Authorization: Bearer [ACCESS_TOKEN]
+Content-Type: application/json
+
+{
+  "author": "MFEE",
+  "content": "Good content"
+}
+
+### 6. UPDATE POST
+PATCH http://localhost:3000/api/posts/a47f5337-16f2-49a0-bc14-e97bb24b56a9
+Authorization: Bearer [ACCESS_TOKEN]
+Content-Type: application/json
+
+{
+  "title": "Test Postman NEW",
+  "description": "Description NEW"
+}
+
+### 7. DELETE POST
+DELETE http://localhost:3000/api/posts/a47f5337-16f2-49a0-bc14-e97bb24b56a9
+Authorization: Bearer [ACCESS_TOKEN]
+
+// //////////////////// //
+//         AUTH         //
+// //////////////////// //
+
+### REGISTER
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "mfee-test",
+  "password": "Aa$123"
+}
+
+### LOGIN
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "mfee-test",
+  "password": "Aa$123"
+}
+
+### REFRESH
+POST http://localhost:3000/api/auth/refresh
+Content-Type: application/json
+
+{
+  "username": "mfee-test",
+  "password": "Aa$123"
+}
+
+### LOGOUT
+POST http://localhost:3000/api/auth/logout
+Content-Type: application/json
