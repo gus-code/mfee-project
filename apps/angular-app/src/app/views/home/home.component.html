@@ -1,0 +1,5 @@
+<mfee-add-post (clickAction)="onAddPost()"></mfee-add-post>
+<mfee-categories [selectedCategory]="selectedCategory$ | async" [categories]="categories$ | async" (categoryChange)="onCategoryChange($event)"></mfee-categories>
+<mfee-post-grid [posts]="posts$ | async" (editPost)="onEditPost($event)" (deletePost)="onDeletePost($event)"></mfee-post-grid>
+
+<mfee-post-modal></mfee-post-modal>
