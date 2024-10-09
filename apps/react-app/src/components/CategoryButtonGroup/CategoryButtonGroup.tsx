@@ -1,42 +1,28 @@
-import { ButtonGroup } from "@mui/material";
+import { ButtonGroup } from '@mui/material';
 
-import { Container, StyledButton } from "./CategoryButtonGroup.styles";
+import { Container, StyledButton } from './CategoryButtonGroup.styles';
+import { Category } from '../../types';
 
-// const categoryOptions = [
-//   {
-//     key: "all",
-//     name: "All",
-//   },
-//   {
-//     key: "healt",
-//     name: "Health",
-//   },
-//   {
-//     key: "travel",
-//     name: "Travel",
-//   },
-//   {
-//     key: "sports",
-//     name: "Sports",
-//   },
-// ];
+interface CategoryButtonGroupProps {
+  categories: Category[];
+  selectedCategory: Category | null;
+  handleSelectCategory: (category: Category) => void;
+}
 
-function CategoryButtonGroup() {
+function CategoryButtonGroup({ categories, selectedCategory, handleSelectCategory }: CategoryButtonGroupProps) {
   return (
     <Container item>
       <ButtonGroup aria-label="category button group" color="inherit">
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
-        <StyledButton type="button" selected={false}>
-          {/* Activity 1 - Render category name */}
-        </StyledButton>
+        {categories.map((category) => (
+          <StyledButton
+            type="button"
+            key={category.id}
+            selected={category.name === selectedCategory?.name}
+            onClick={() => handleSelectCategory(category)}
+          >
+            {category.name}
+          </StyledButton>
+        ))}
       </ButtonGroup>
     </Container>
   );

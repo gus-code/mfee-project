@@ -3,7 +3,6 @@ import { styled } from "@mui/system";
 
 export const Container = styled(Grid)`
   display: flex;
-  flex-grow: 1;
   justify-content: center;
   padding-bottom: 16px;
 `;

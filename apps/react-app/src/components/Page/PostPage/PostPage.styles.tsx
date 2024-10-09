@@ -2,7 +2,8 @@ import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const Container = styled(Grid)`
-  height: 100%;
+  flex-grow: 1;
+  flex-wrap: nowrap;
   flex-direction: column;
   background-color: #f0f0ff;
 `;
