@@ -5,7 +5,7 @@
     </form>
   </div>
   <div class="col-md-6">
-    <button class="btn btn-primary mt-2">Add</button>
+    <button class="btn btn-primary mt-2"  v-on:click="addNewComment()">Add</button>
   </div>
 </template>
 <script>
@@ -15,5 +15,8 @@ export default {
           newComment: ''
         };
     },
+    methods : {
+      addNewComment(){}
+    }
 };
 </script>
