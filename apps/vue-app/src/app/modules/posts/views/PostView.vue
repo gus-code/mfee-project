@@ -1,9 +1,9 @@
 <template>
   <HeaderPosts />
-  <div class="row pt-5">
+  <div class="row pt-5" v-if="thereArePosts">
     <PostItem v-for="(post, index) in posts" :key="index" />
   </div>
-  <div class="alert alert-warning m-3" role="alert">There are not results.</div>
+  <div class="alert alert-warning m-3" role="alert" v-if="!thereArePosts">There are not results.</div>
 </template>
 
 <script>
@@ -56,6 +56,11 @@ export default {
       ]
     };
   },
-  created() {}
+  created() {},
+  computed: {
+    thereArePosts() {
+      return this.posts.length > 0;
+    }
+  }
 };
 </script>
