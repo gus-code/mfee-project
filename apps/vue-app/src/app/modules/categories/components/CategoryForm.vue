@@ -39,5 +39,10 @@ export default {
         cancel(){},
         save(){},
     },
+    props: {
+    categorySelected: {
+      type: Object
+    }
+  },
 };
 </script>

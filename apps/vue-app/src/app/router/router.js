@@ -25,7 +25,23 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     component: () => import(/* webpackChunkName: "NotFoundView"*/ '../shared/views/NotFoundView.vue')
-  }
+  },
+  {
+    path: '/categories',
+    name: 'categories',
+    component: () => import(/* webpackChunkName: "CategoryView"*/ '..CategoryView.vue'),
+      
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "LoginView"*/ '..LoginView.vue'),
+  },
+  {
+    path: '/signup',
+    name: 'signUp',
+    component: () => import(/* webpackChunkName: "SignUpView"*/ '..SignUpView.vue'),
+  },
 ];
 
 const router = createRouter({

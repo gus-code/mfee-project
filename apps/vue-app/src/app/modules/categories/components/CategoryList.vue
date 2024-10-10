@@ -28,7 +28,7 @@
     </table>
     <div class="alert alert-warning m-3" role="alert" v-show="!thereAreCategories">There are not results!!!.</div>
 </div>
-<CategoryForm />
+<CategoryForm :category-selected="categorySelected" />
 </template>
 <script>
 import CategoryForm from './CategoryForm.vue';
@@ -40,23 +40,24 @@ export default {
   data(){
         return {
             categories: [
-            {
-                _id:'2',
-                name: 'Category 1'
-            } ,  
-            {
-                _id:'3',
-                name: 'Category 2'
-            } ,  
-            {
-                _id:'4',
-                name: 'Category 3'
-            } ,   
-            {
-                _id:'5',
-                name: 'Category 4'
-            } ,  
-            ]
+                {
+                    _id:'2',
+                    name: 'Category 1'
+                } ,  
+                {
+                    _id:'3',
+                    name: 'Category 2'
+                } ,  
+                {
+                    _id:'4',
+                    name: 'Category 3'
+                } ,   
+                {
+                    _id:'5',
+                    name: 'Category 4'
+                },  
+            ],
+            categorySelected: null
         }
     },
     buildCategories(){
@@ -75,7 +76,9 @@ export default {
         )
     },
     methods: {
-        editCategory(){},
+        editCategory(data){
+            this.categorySelected = data;
+        },
         deleteCategory(){}
     },
 };
