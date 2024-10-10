@@ -1,11 +1,12 @@
 <template>
   <div class="btn-group" role="group">
-    <CategoryItem v-for="category in categories" :key="category._id" />
+    <CategoryItem v-for="category in categories" :key="category._id" :category="category" @select-category="selectCategory($event)" />
   </div>
 </template>
 
 <script>
 import CategoryItem from './CategoryItem.vue';
+import { store } from '../../../store/store';
 
 export default {
   name: 'CategoriesList',
@@ -16,18 +17,15 @@ export default {
     return {
       categories: [
         {
-          _id: '2',
-          name: 'Category 1'
+          _id: '6667d88982f08e5ed86ae88a',
+          name: 'Sport'
         },
         {
-          _id: '3',
-          name: 'Category 2'
-        },
-        {
-          _id: '4',
-          name: 'Category 3'
+          _id: '667ee7e882f08e5ed86af174',
+          name: 'Food updated 2'
         }
-      ]
+      ],
+      store
     };
   },
   methods: {
@@ -44,6 +42,14 @@ export default {
         ...category,
         active: category.name === 'All'
       }));
+    },
+    selectCategory(id) {
+      this.categories = this.categories.map((category) => ({
+        ...category,
+        active: category._id === id
+      }));
+
+      this.store.setCurrentCategory(id);
     }
   },
   created() {

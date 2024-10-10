@@ -7,17 +7,25 @@
 <script>
 export default {
   name: 'CategoryItem',
-  data() {
-    return {
-      category: {
-        _id: '1',
-        name: 'Default name'
+  emits: ['selectCategory'],
+  props: {
+    category: {
+      type: Object,
+      required: true,
+      default() {
+        return {
+          _id: '1',
+          name: 'Default name'
+        };
       }
-    };
+    }
+  },
+  data() {
+    return {};
   },
   methods: {
     selectCategory(id) {
-      console.log(id);
+      this.$emit('selectCategory', id);
     }
   }
 };

@@ -4,7 +4,7 @@
       <div class="card bg-dark text-white">
         <img :src="post.image" class="card-img" />
         <div class="card-img-overlay">
-          <div class="d-flex justify-content-start align-items-center ms-4">
+          <div class="d-flex justify-content-start align-items-center ms-4" @click="this.$router.back()">
             <i class="fa-solid fa-chevron-left me-2"></i>
             <span>View Posts</span>
           </div>
@@ -34,6 +34,9 @@
 import CommentsList from '../components/CommentsList.vue';
 
 export default {
+  props: {
+    id: String
+  },
   components: {
     CommentsList
   },
@@ -58,7 +61,9 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+    console.log('🚀 ~ created ~ this.id:', this.id);
+  },
   unmounted() {}
 };
 </script>

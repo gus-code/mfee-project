@@ -2,7 +2,7 @@
   <div class="col-md-12 col-lg-6">
     <div class="card bg-dark text-white">
       <img :src="post.image" class="card-img" />
-      <div class="card-img-overlay mt-3 ms-3 card-img" @click="goToPostDetail(post)">
+      <div class="card-img-overlay mt-3 ms-3 card-img" @click="goToPostDetail(post._id)">
         <div class="card-content">
           <h1 class="display-5">{{ post.title }}</h1>
           <p class="card-text fs-5">
@@ -28,33 +28,25 @@
 </template>
 
 <script>
+import router from '../../../router/router';
+
 export default {
   name: 'PostItem',
+  props: {
+    post: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
-    return {
-      post: {
-        _id: '6661055a82f08e5ed86ae7f5',
-        title: 'Torre Eiffel UPDATED',
-        image: 'https://wallpaper.forfun.com/fetch/1f/1fb47ac98e070792db4d1d7949716b4c.jpeg',
-        description:
-          'La Torre Eiffel es un monumento excepcional y las vistas desde sus plataformas son alucinantes. Tiene tres niveles, el primero a 57 metros, el segundo a 115 metros y el tercero a unos vertiginosos 276 metros.',
-        category: {
-          _id: '6667d88982f08e5ed86ae88a',
-          name: 'Sport',
-          createdAt: '2024-06-11T04:54:33.269Z',
-          updatedAt: '2024-06-11T04:54:40.365Z',
-          __v: 0
-        },
-        comments: ['6682419a82f08e5ed86af27a', '668242a582f08e5ed86af28e', '66942d6a4891864731f93985'],
-        createdAt: '2024-06-06T00:39:54.397Z',
-        updatedAt: '2024-07-14T19:56:26.702Z',
-        __v: 3
-      }
-    };
+    return {};
   },
   methods: {
-    goToPostDetail() {
-      console.log('🚀 ~ goToPostDetail');
+    goToPostDetail(id) {
+      router.push({
+        name: 'post-detail',
+        params: { id: id }
+      });
     },
     deletePost() {
       console.log('🚀 ~ deletePost');
