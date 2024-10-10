@@ -29,18 +29,18 @@ const routes = [
   {
     path: '/categories',
     name: 'categories',
-    component: () => import(/* webpackChunkName: "CategoryView"*/ '..CategoryView.vue'),
+    component: () => import(/* webpackChunkName: "CategoryView"*/ '../modules/categories/views/CategoryView.vue'),
       
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "LoginView"*/ '..LoginView.vue'),
+    component: () => import(/* webpackChunkName: "LoginView"*/ '../modules/auth/views/LoginView.vue'),
   },
   {
     path: '/signup',
     name: 'signUp',
-    component: () => import(/* webpackChunkName: "SignUpView"*/ '..SignUpView.vue'),
+    component: () => import(/* webpackChunkName: "SignUpView"*/ '../modules/auth/views/SignUpView.vue'),
   },
 ];
 

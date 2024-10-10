@@ -50,24 +50,20 @@ export const store = reactive({
     this.categories = [
       {
         _id: '2',
-        name: 'Category1'
+        name: 'Category 1'
       },
       {
         _id: '3',
-        name: 'Category2'
+        name: 'Category 2'
       },
       {
         _id: '4',
-        name: 'Category3'
-      },
-      {
-        _id: '5',
-        name: 'Category4'
+        name: 'Category 3'
       }
     ];
   },
   showNavBar: true,
-  setNavBarVisible(show) {
+  setShowNavBar(show) {
     this.showNavBar = show;
   }
 });

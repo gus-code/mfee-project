@@ -26,7 +26,6 @@
             </tr>
         </tbody>
     </table>
-    <div class="alert alert-warning m-3" role="alert" v-show="!thereAreCategories">There are not results!!!.</div>
 </div>
 <CategoryForm :category-selected="categorySelected" />
 </template>
