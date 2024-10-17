@@ -33,6 +33,7 @@
 <script>
 import CommentsList from '../components/CommentsList.vue';
 import { store } from '../../../store/store';
+import { getPostById } from '../../../helpers/posts';
 
 export default {
   props: {
@@ -43,6 +44,13 @@ export default {
   },
   data() {
     return {
+      post: {}
+    };
+  },
+  methods: {
+    async getPostById(postId) {
+      this.post = await getPostById(postId);
+    }
       post: {
         title: 'The waves are high & beautiful u',
         description:

@@ -29,6 +29,8 @@
 
 <script>
 import router from '../../../router/router';
+import { deletePost } from '../../../helpers/posts';
+import { store } from '../../../store/store';
 
 export default {
   name: 'PostItem',
@@ -39,17 +41,24 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      store
+    };
   },
   methods: {
     goToPostDetail(id) {
       router.push({
         name: 'post-detail',
-        params: { id: id }
+        params: { id }
       });
     },
-    deletePost() {
-      console.log('🚀 ~ deletePost');
+    async deletePost() {
+      const status = await deletePost(this.post._id);
+      if (status) {
+        this.store.getPosts();
+      } else {
+        console.error("The post couldn't be deleted");
+      }
     },
     editPost() {
       console.log('🚀 ~ editPost');

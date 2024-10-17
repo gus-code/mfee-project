@@ -7,6 +7,7 @@
 <script>
 import CategoryItem from './CategoryItem.vue';
 import { store } from '../../../store/store';
+import { getCategories } from '../../../helpers/categories';
 
 export default {
   name: 'CategoriesList',
@@ -15,16 +16,7 @@ export default {
   },
   data() {
     return {
-      categories: [
-        {
-          _id: '6667d88982f08e5ed86ae88a',
-          name: 'Sport'
-        },
-        {
-          _id: '667ee7e882f08e5ed86af174',
-          name: 'Food updated 2'
-        }
-      ],
+      categories: [],
       store
     };
   },
@@ -50,10 +42,14 @@ export default {
       }));
 
       this.store.setCurrentCategory(id);
+    },
+    async getCategories() {
+      this.categories = await getCategories();
+      this.buildCategories();
     }
   },
   created() {
-    this.buildCategories();
+    this.getCategories();
   }
 };
 </script>

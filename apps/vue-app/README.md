@@ -18,21 +18,31 @@ https://vuelidate-next.netlify.app/
 
 ## Activities
 
-### CategoryForm
-1. Define a new prop (**categorySelected**) of type **Object**
-
-### CategoryList
-2. Define a new data value (**categorySelected)** and set it in the **updateCategory()** method with the value that receives
-3. Pass that value to **CategoryForm** as prop 
-
 ### store.js
-4. Add a new attribute in the **store** for categories and create its method to set it (as posts value)
-5. Create a new value (boolean) in the **store** to control when the nav bar will be visible with its method to change the value
+1. In the method **getCategories** call the function to get the categories from de API and save it
+2. Changes in the components that use the categories to obtain them from the store
 
-### App.vue
-6. Add a **v-show** validation in the nav with the store's new value to display it or hidden it
-7. You should change that value to hidden it when the user is on PostDetailView (you can use the **life cycle hooks** for that)
+### helpers
+3. Create a new file to have the axios calls for **/auth/login** and **/auth/register**
+4. In **categories.js** add the axios calls for **create**, **deletes** and **update** category
 
-### router.js
-8. Create the routes for **LoginView**, **SignUpView** and **CategoryView**
-9. Add the redirects to that views in the nav bar
+### LoginView.vue
+5. Add the validations for this form
+6. When the form is valid call the **/auth/login** that you already have created
+7. If the call was successfully redirect to **home** if not show an error in the form
+
+Note: You can save the token in the LS and inject it in the **capstoneApi.js**
+
+### SignUpView.vue
+8. Add the validations for this form
+9. When the form is valid call the **/auth/register** that you already have created
+10. If the call was successfully redirect to **login** if not print a console.error
+   
+### CategoryList
+11. Call **getCategories** from the store and show them in the table
+12. Call the function **deleteCategory** that you have already create to delete it
+
+## CategoryForm
+13.  Add the validations for this form
+14.  When the form is valid call the endpoint to save a category that you already have created
+15.  If the call was successfully call **getCategories** from the store if not print a console.error

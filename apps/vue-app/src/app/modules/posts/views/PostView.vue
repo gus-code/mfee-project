@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     thereArePosts() {
-      return this.store.posts.length > 0;
+      return this.postsFiltered.length > 0;
     },
     postsFiltered() {
       if (this.store.currentCategoryId === '1') {
