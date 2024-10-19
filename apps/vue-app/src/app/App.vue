@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar bg-body-tertiary" v-show="store.showNavBar">
+  <nav class="navbar bg-body-tertiary" v-show="store.setShowNavBar">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="./assets/world.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top" />

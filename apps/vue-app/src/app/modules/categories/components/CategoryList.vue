@@ -6,7 +6,8 @@
     </div>
 
     <hr />
-    <table class="table table-striped">
+    <div class="alert alert-warning m-3" role="alert" v-show="!existResults">There are not results.</div>
+    <table class="table table-striped"  v-show="existResults">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -20,7 +21,7 @@
                 <td>{{ category.name }}</td>
                 <td>
                     <i class="fa-solid fa-pen me-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal"
-                        v-on:click="editCategory(categories)"></i>
+                        v-on:click="updateCategory(category)"></i>
                     <i class="fa-solid fa-trash" v-on:click="deleteCategory(categories._id)"></i>
                 </td>
             </tr>
@@ -75,10 +76,16 @@ export default {
         )
     },
     methods: {
-        editCategory(data){
+        updateCategory(data){
             this.categorySelected = data;
         },
         deleteCategory(){}
     },
+  computed: {
+        existResults() {
+           return this.categories.length > 0;
+        }
+    }
+    
 };
 </script>

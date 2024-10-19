@@ -40,9 +40,9 @@ export default {
         save(){},
     },
     props: {
-    categorySelected: {
-      type: Object
-    }
+      categorySelected: {
+        type: Object
+      }
   },
 };
 </script>
