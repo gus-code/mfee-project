@@ -48,6 +48,12 @@ export default {
       this.buildCategories();
     }
   },
+  watch: {
+    'store.categories'(newValue) {
+      this.categories = newValue;
+      this.buildCategories();
+    }
+  },
   created() {
     this.getCategories();
   }

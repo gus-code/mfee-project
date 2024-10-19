@@ -18,31 +18,18 @@ https://vuelidate-next.netlify.app/
 
 ## Activities
 
-### store.js
-1. In the method **getCategories** call the function to get the categories from de API and save it
-2. Changes in the components that use the categories to obtain them from the store
+### /post-detail route
+1. Finish the functionality there to add a new comment. Create the axios call to add a new comment, you have to use validator in the input, sweet alerts, props, etc
 
-### helpers
-3. Create a new file to have the axios calls for **/auth/login** and **/auth/register**
-4. In **categories.js** add the axios calls for **create**, **deletes** and **update** category
-
-### LoginView.vue
-5. Add the validations for this form
-6. When the form is valid call the **/auth/login** that you already have created
-7. If the call was successfully redirect to **home** if not show an error in the form
-
-Note: You can save the token in the LS and inject it in the **capstoneApi.js**
-
-### SignUpView.vue
-8. Add the validations for this form
-9. When the form is valid call the **/auth/register** that you already have created
-10. If the call was successfully redirect to **login** if not print a console.error
+### CategoryForm
+2. Implement the alerts mixin to show a success or error message when the api call is made
+3. Add the functionality to know when you are editing or creating a category (you can use a watch here)
+4. Add the call to update a category
    
 ### CategoryList
-11. Call **getCategories** from the store and show them in the table
-12. Call the function **deleteCategory** that you have already create to delete it
+5. Implement the alerts mixin to show a success or error message when the api call delete is made
 
-## CategoryForm
-13.  Add the validations for this form
-14.  When the form is valid call the endpoint to save a category that you already have created
-15.  If the call was successfully call **getCategories** from the store if not print a console.error
+### SignUpView
+6. Implement the alerts mixin to show a success or error message when the api call is made
+
+You're done!, test the complete application

@@ -60,11 +60,13 @@
 import { useVuelidate } from '@vuelidate/core';
 import { helpers, required } from '@vuelidate/validators';
 import { getCategories } from '../../../helpers/categories';
-import { createPost } from '../../../helpers/posts';
+import { createPost, updatePost } from '../../../helpers/posts';
 import { store } from '../../../store/store';
+import { alerts } from '../../../helpers/alerts';
 
 export default {
   name: 'PostForm',
+  mixins: [alerts],
   data() {
     return {
       store,
@@ -139,12 +141,15 @@ export default {
       let status;
       if (this.action === 'Create') {
         status = await createPost(post);
+      } else {
+        status = await updatePost({ ...post, _id: this.post._id });
       }
 
       if (status) {
+        this.showAlert('success', 'The post has been saved');
         this.store.getPosts();
       } else {
-        console.error('Error to create a new post');
+        this.showAlert('error', "The post couldn't be saved");
       }
       this.$refs.btnCloseModal.click();
     },
@@ -157,14 +162,35 @@ export default {
         image: null
       };
       this.v$.$reset();
+      this.store.setPostEditing(null);
     },
     async getCategories() {
       this.categories = await getCategories();
     }
   },
+  watch: {
+    'store.postEditing'(newValue) {
+      if (newValue) {
+        this.action = 'Edit';
+        const { _id, title, description, image, category, comments } = newValue;
+        this.post = {
+          _id,
+          title,
+          description,
+          image,
+          category: category?._id,
+          comments
+        };
+      } else {
+        this.action = 'Create';
+      }
+    }
+  },
   created() {
     this.getCategories();
   },
-  unmounted() {}
+  unmounted() {
+    this.store.setPostEditing(null);
+  }
 };
 </script>

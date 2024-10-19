@@ -31,9 +31,11 @@
 import router from '../../../router/router';
 import { deletePost } from '../../../helpers/posts';
 import { store } from '../../../store/store';
+import { alerts } from '../../../helpers/alerts';
 
 export default {
   name: 'PostItem',
+  mixins: [alerts],
   props: {
     post: {
       type: Object,
@@ -53,15 +55,17 @@ export default {
       });
     },
     async deletePost() {
-      const status = await deletePost(this.post._id);
+      let status = await deletePost(this.post._id);
       if (status) {
+        this.showAlert('success', 'The post has been deleted');
         this.store.getPosts();
       } else {
+        this.showAlert('error', "The post couldn't be deleted");
         console.error("The post couldn't be deleted");
       }
     },
     editPost() {
-      console.log('🚀 ~ editPost');
+      this.store.setPostEditing(this.post);
     }
   }
 };
