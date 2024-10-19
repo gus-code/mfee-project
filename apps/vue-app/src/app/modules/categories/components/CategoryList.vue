@@ -17,69 +17,55 @@
         </thead>
         <tbody v-for="category in categories" :key="category._id">
             <tr>
-                <th scope="row">1</th>
+                <th scope="row">{{ category._id }}</th>
                 <td>{{ category.name }}</td>
                 <td>
                     <i class="fa-solid fa-pen me-3" data-bs-toggle="modal" data-bs-target="#createCategoryModal"
-                        v-on:click="updateCategory(category)"></i>
-                    <i class="fa-solid fa-trash" v-on:click="deleteCategory(categories._id)"></i>
+                        v-on:click="selectCategory(category)"></i>
+                    <i class="fa-solid fa-trash" v-on:click="remove(category._id)"></i>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-<CategoryForm :category-selected="categorySelected" />
+<CategoryForm :category-selected="categorySelected" @get-categories="getCategories" @select-category="selectCategory" />
 </template>
 <script>
 import CategoryForm from './CategoryForm.vue';
+import { getCategories } from '../../../helpers/categories';
+import { deleteCategory } from '../../../helpers/categories';
 
 export default {
-  components: {
+components: {
     CategoryForm
-  },
-  data(){
-        return {
-            categories: [
-                {
-                    _id:'2',
-                    name: 'Category 1'
-                } ,  
-                {
-                    _id:'3',
-                    name: 'Category 2'
-                } ,  
-                {
-                    _id:'4',
-                    name: 'Category 3'
-                } ,   
-                {
-                    _id:'5',
-                    name: 'Category 4'
-                },  
-            ],
-            categorySelected: null
+},
+data() {
+    return {
+    categories: null,
+    categorySelected: null
+    };
+},
+methods: {
+        async remove(id) {
+            let status;
+            status = await deleteCategory(id);
+
+            if (status) {
+                this.getCategories();
+            } else {
+                console.error('Error while trying to delete category');
+            }
+        },
+
+        selectCategory(category) {
+            this.categorySelected = category;
+        },
+        async getCategories() {
+            this.categories = await getCategories();
         }
     },
-    buildCategories(){
-        this.categoriies = [
-            {
-                _id:'1',
-                name: 'All'
-            },
-            ...this.categoriies
-        ]
-
-        this.categoriies = this.categoriies.map((categoriies) => ({
-            ...categoriies,
-            active: category.name ==='All'
-        })
-        )
-    },
-    methods: {
-        updateCategory(data){
-            this.categorySelected = data;
-        },
-        deleteCategory(){}
+    created() {
+        this.getCategories();
     },
   computed: {
         existResults() {

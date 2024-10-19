@@ -4,7 +4,10 @@ const routes = [
   {
     path: '/',
     // redirect: "/home",
-    redirect: { name: 'home' }
+    redirect: { name: 'home' },
+    redirect: { name: 'categories' },
+    redirect: { name: 'login' },
+    redirect: { name: 'signUp' }
   },
   {
     path: '/home',
