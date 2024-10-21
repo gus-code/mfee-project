@@ -16,28 +16,20 @@ https://github.com/avil13/vue-sweetalert2
 
 https://vuelidate-next.netlify.app/
 
-# Activities Session 01
+## Activities
 
-## Render PostLayout.vue
+### /post-detail route
+1. Finish the functionality there to add a new comment. Create the axios call to add a new comment, you have to use validator in the input, sweet alerts, props, etc
 
-1. Existe el componente **/layouts/PostLayout.vue**, debes exportalo y rederizalo en **App.vue**
+### CategoryForm
+2. Implement the alerts mixin to show a success or error message when the api call is made
+3. Add the functionality to know when you are editing or creating a category (you can use a watch here)
+4. Add the call to update a category
    
-## Render PostView.vue component
+### CategoryList
+5. Implement the alerts mixin to show a success or error message when the api call delete is made
 
-1. Existe un archivo llamado **PostView.html**, copia y pega su contenido en el template de **PostView.vue**. Elimina el archivo html
-2. Del archivo **PostView.css** copia su contenido y pégalo dentro del style de **PostView.vue**
-3. Elimina el archivo css
-4. Rederiza este componente en **PostLayout.vue**
+### SignUpView
+6. Implement the alerts mixin to show a success or error message when the api call is made
 
-## Render Header components
-
-1. Copiar y pegar todo el bloque que indica el comentario **Inicio HeaderPosts.vue** hasta **Fin HeaderPosts.vue** dentro del template de **HeaderPost.vue**. Renderizarlo una vez en el mismo lugar donde estaba su bloque de comentarios en **PostView.vue**
-2. Copiar y pegar todo el bloque que indica el comentario **Inicio CategoriesList.vue** hasta **Fin CategoriesList.vue** dentro del template de **CategoriesList.vue** y agregarlo al template del componente creado, renderizarlo una vez dentro de **HeaderPost.vue** en el mismo lugar donde se encontraba su bloque de comentario.
-3. Copiar y pegar todo el bloque del comentario de **Inicio CategoryItem.vue** dentro del template de **Fin CategoryItem.vue**, renderizar este componente dentro de **CategoriesList.vue** en el mismo lugar donde se encontraba su bloque de comentario.
-
-## Render PostItem component
-
-1. Copiar y pegar todo el contenido del bloque de comentario **Inicio PostItem.vue** hasta **Fin PostItem.vue** dentro del template de **PostItem.vue**
-2. Existe un archivo llamado **PostItem.css** copia y pegar su contenido en el **<style>** del componente creado en el punto anterior.
-3. Renderizarlo una vez en el mismo lugar donde se encontraba su bloque de código.
-
+You're done!, test the complete application
