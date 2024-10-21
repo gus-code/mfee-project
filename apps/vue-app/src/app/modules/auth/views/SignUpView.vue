@@ -19,8 +19,9 @@
             <input type="password" class="form-control" :class="v$.newUser.confirmPassword.$error === true ? 'is-invalid' : ''" v-model="newUser.confirmPassword"/>
             <span class="form-text text-danger" v-for="error of v$.newUser.confirmPassword.$errors" :key="error.$uid"> {{ error.$message }}</span>
           </div>
-          <div class="d-flex justify-content-center mt-1">
-            <button class="btn btn-primary" @click="submit">Sign Up</button>
+          <div class="d-flex justify-content-end mt-1">
+            <button style="margin-right: 5px;" class="btn btn-primary" v-on:click="backLogin">Back</button>
+            <button class="btn btn-primary" v-on:click="submit">Submit</button>
           </div>
         </form>
       </div>
@@ -32,12 +33,13 @@
 import { useVuelidate } from '@vuelidate/core';
 import router from '../../../router/router';
 import { helpers, required, sameAs } from '@vuelidate/validators';
-import { register } from '../../../helpers/auth';
-import { alerts } from '../../../helpers/alerts';
+import { register } from '../../../helpers/auth/user';
+import { alerts} from '../../../helpers/alerts';
+import { store } from '../../../store/store';
 
 export default {
   components: {},
-  mixins: [alerts],
+  mixins:[alerts],
     data() {
         return {
           newUser: {
@@ -47,6 +49,9 @@ export default {
           },
           v$: useVuelidate(),
         };
+    },
+    beforeCreate() {
+      store.setShowNavBar(false);
     },
     validations() {
       return {
@@ -78,18 +83,24 @@ export default {
         }
       },
 
+      backLogin() {
+        router.push({
+          name: 'login'
+        });
+      },
+
       async signUp() {
         let status;
         const { username, password } = this.newUser;
         status = await register({ username, password });
 
         if (status) {
-          this.showAlert('success', 'The user has been added');
+           this.showAlert('success', 'The user has been added');
           router.push({
             name: 'login'
           });
         } else {
-          this.showAlert('error', "The user couldn't be added");
+           this.showAlert('error', "The user couldn't be added");
         }
       }
     }

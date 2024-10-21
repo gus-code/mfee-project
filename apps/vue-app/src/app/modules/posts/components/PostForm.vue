@@ -79,20 +79,7 @@ export default {
         category: null,
         image: null
       },
-      categories: [
-        {
-          _id: '2',
-          name: 'Category 1'
-        },
-        {
-          _id: '3',
-          name: 'Category 2'
-        },
-        {
-          _id: '4',
-          name: 'Category 3'
-        }
-      ]
+      categories: null
     };
   },
   validations() {

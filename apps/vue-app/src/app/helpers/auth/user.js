@@ -1,4 +1,4 @@
-import capstoneApi from '../api/capstoneApi';
+import capstoneApi from "../../api/capstoneApi";
 
 export const register = async (credentials) => {
   let status;
@@ -15,7 +15,7 @@ export const register = async (credentials) => {
   return status;
 };
 
-export const login = async (credentials) => {
+export const loginRequest = async (credentials) => {
   let status;
   await capstoneApi
     .post(`/auth/login`, credentials)

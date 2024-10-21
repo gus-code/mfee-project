@@ -34,11 +34,13 @@
 import CategoryForm from './CategoryForm.vue';
 import { getCategories } from '../../../helpers/categories';
 import { deleteCategory } from '../../../helpers/categories';
+import { alerts } from '../../../helpers/alerts';
 
 export default {
 components: {
     CategoryForm
 },
+mixins: [alerts],
 data() {
     return {
     categories: null,
@@ -52,8 +54,9 @@ methods: {
 
             if (status) {
                 this.getCategories();
+                this.showAlert('success', 'The category has been deleted');
             } else {
-                console.error('Error while trying to delete category');
+                this.showAlert('error', "The category couldn't be deleted");
             }
         },
 
@@ -69,7 +72,7 @@ methods: {
     },
   computed: {
         existResults() {
-           return this.categories.length > 0;
+            return this.categories && this.categories.length > 0;
         }
     }
     

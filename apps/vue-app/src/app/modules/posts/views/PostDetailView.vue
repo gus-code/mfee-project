@@ -24,7 +24,7 @@
         <p class="fs-5">
           {{ post.description }}
         </p>
-        <CommentsList />
+        <CommentsList :comments="post.comments" @get-post-by-id="getPostById" />
       </div>
     </div>
   </div>
@@ -32,8 +32,8 @@
 
 <script>
 import CommentsList from '../components/CommentsList.vue';
-import { store } from '../../../store/store';
 import { getPostById } from '../../../helpers/posts';
+import { store } from '../../../store/store';
 
 export default {
   props: {
@@ -44,33 +44,18 @@ export default {
   },
   data() {
     return {
-      post: {}
+      store,
+      post: {},
+      comments: null
     };
   },
   methods: {
-    async getPostById(postId) {
-      this.post = await getPostById(postId);
-    },
-    post: {
-      title: 'The waves are high & beautiful u',
-      description:
-        'This is a wider card with supporting text below as a natural lead-i to additional content. This content is a little bit longer.',
-      image: 'https://cdn.pixabay.com/photo/2017/02/22/17/06/wave-2089959_960_720.jpg',
-      category: {
-        _id: '2',
-        name: 'Travel'
-      },
-      comments: [
-        {
-          author: 'Alejandro',
-          content: 'First comment'
-        }
-      ],
-      _id: '1',
-      store
+    async getPostById() {
+      this.post = await getPostById(this.id);
     }
   },
   created() {
+    this.getPostById();
     store.setShowNavBar(false);
   },
   unmounted() {

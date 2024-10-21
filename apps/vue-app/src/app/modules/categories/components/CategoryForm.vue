@@ -27,10 +27,12 @@
 <script>
 import { useVuelidate } from '@vuelidate/core';
 import { helpers, required } from '@vuelidate/validators';
-import { createCategory } from '../../../helpers/categories';
+import { createCategory, updateCategory } from '../../../helpers/categories';
+import { alerts } from '../../../helpers/alerts';
 
 export default {
     components: {},
+    mixins: [alerts],
     emits: ['getCategories', 'selectCategory'],
     props: {
       categorySelected: {
@@ -75,20 +77,31 @@ export default {
       if (!isValid) {
         this.v$.$touch();
       } else {
-        const { name } = this.category;
-        this.addCategory({ name });
+        this.addCategory();
       }
     },
-    async addCategory(newCategory) {
-      let status;
-      status = await createCategory(newCategory);
+    async addCategory() {
+      const newCategory = { name: this.category.name };
+      const status = this.action === 'Create' ? await createCategory(newCategory) : await updateCategory(this.category);
 
       if (status) {
         this.getCategories();
+        this.showAlert('success', 'The category has been saved');
       } else {
-        console.error('Error on adding the category');
+        this.showAlert('error', "The category couldn't be saved");
       }
       this.$refs.btnCloseModal.click();
+    }
+  },
+  watch: {
+    categorySelected(newValue) {
+      if (newValue) {
+        this.action = 'Edit';
+        const { ...category } = newValue;
+        this.category = category;
+      } else if (newValue === null) {
+        this.action = 'Create';
+      }
     }
   }
 };

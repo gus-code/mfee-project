@@ -17,8 +17,8 @@
 
           <span v-if="error" class="form-text text-danger"> {{ error }} </span>
           <div class="d-flex justify-content-end mt-1">
-            <button class="btn btn-outline-primary me-1" v-on:click="signUp()">Sign Up</button>
-            <button class="btn btn-primary" v-on:click="login()">Login</button>
+            <button style="margin-right: 5px;" class="btn btn-outline-primary me-1" v-on:click="signUp">Sign Up</button>
+            <button class="btn btn-primary" v-on:click="login">Login</button>
           </div>
         </form>
       </div>
@@ -29,9 +29,12 @@
 import useVuelidate from '@vuelidate/core';
 import router from '../../../router/router';
 import { required, email, helpers } from '@vuelidate/validators';
-import { loginService } from '../../../helpers/auth';
+import { loginRequest } from '../../../helpers/auth/user';
 import { store } from '../../../store/store';
+import { alerts} from '../../../helpers/alerts';
+
 export default {
+   mixins:[alerts],
     data() {
         return {
           credentials: {
@@ -39,13 +42,16 @@ export default {
             password: ''
           },
           v$: useVuelidate(),
-          error: null
+          error: null,
     };
+  },
+  beforeCreate() {
+    store.setShowNavBar(false);
   },
   methods: {
       signUp() {
         router.push({
-          name: 'register'
+          name: 'signUp'
         });
       },
       login() {
@@ -53,13 +59,17 @@ export default {
         if (this.v$.$invalid) {
           return;
         }
-        loginService(this.credentials.username, this.credentials.password)
-          .then(() => {
-            console.log('Login success');
-            store.setLogged(true);
-            router.push({
-              name: 'home'
-            });
+        loginRequest(this.credentials)
+          .then( result => {
+            if(result){
+              console.log('Login success');
+              store.setShowNavBar(true);
+              router.push({
+                name: 'home'
+              });
+            }else{
+              this.showAlert('error', "Incorrect Username or Password");
+            }
           })
           .catch((error) => {
             console.log('Error', error);
