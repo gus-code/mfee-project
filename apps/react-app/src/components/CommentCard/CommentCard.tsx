@@ -7,6 +7,8 @@ import { Container, Content, Author } from "./CommentCard.styles";
 
 // ACT 3 - Receive comment prop
 
+// ACT 3 - Receive comment prop
+
 const comment = {
   _id: "412fsfa",
   author: "José Valenzuela",

@@ -8,6 +8,8 @@ import {
 import Banner from "../../Banner";
 import Comments from "../../Comments";
 
+// const postID = "664128a212f505651c18d676"
+
 const post = {
   image: "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
   title: "Camaleon",
@@ -26,6 +28,7 @@ const post = {
 } 
 
 function PostPage() {
+  // ACT 9 - Use postID variable to fetch the post data
   return (
     <Container container>
       Post page
