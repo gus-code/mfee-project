@@ -1,3 +1,7 @@
+import { RouterProvider } from "react-router-dom";
+
+import Router from "./Router";
+import { AuthProvider, PostProvider } from "./context";
 import { Grid } from "@mui/material";
 import { HomePage, LoginPage } from "./components/Page";
 import { PostPage } from "./components/Page";
@@ -12,6 +16,10 @@ function App() {
   const loginPage: string = "LoginPage";
   const categoriesPage: string = "CategoriesPage";
   return (
+    <AuthProvider>
+      {/* ACT 7 - Rneder SnackbarProvider component */}
+      <PostProvider>
+        <RouterProvider router={Router} />
     <SnackbarProvider>
       <PostProvider>
         <>
@@ -41,7 +49,6 @@ function App() {
           </Grid>
         </>
       </PostProvider>
-    </SnackbarProvider>
   );
 }
 

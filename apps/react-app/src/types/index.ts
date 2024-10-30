@@ -11,6 +11,7 @@ export type FormInputs = {
 };
 
 export type NewPost = {
+export type NewPost = {
   title: string;
   image: string;
   description: string;

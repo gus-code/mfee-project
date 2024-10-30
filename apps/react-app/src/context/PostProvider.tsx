@@ -36,6 +36,25 @@ interface PostContextProps {
     updatedPost: NewPost;
     selectedCategoryID?: string;
   }) => void;
+  loadingPosts: boolean;
+  addPost: (newPost: NewPost) => void;
+  removePost: ({
+    postID,
+    selectedCategoryID,
+  }: {
+    postID: string;
+    selectedCategoryID?: string;
+  }) => void;
+  getPostList: (selectedCategoryID?: string) => void;
+  updatePostData: ({
+    postID,
+    updatedPost,
+    selectedCategoryID,
+  }: {
+    postID: string;
+    updatedPost: NewPost;
+    selectedCategoryID?: string;
+  }) => void;
 }
 
 interface PostProviderProps {
@@ -43,6 +62,12 @@ interface PostProviderProps {
 }
 
 export const PostContext = createContext<PostContextProps>({
+  posts: null,
+  loadingPosts: false,
+  addPost: () => {},
+  removePost: () => {},
+  getPostList: () => {},
+  updatePostData: () => {},
   posts: null,
   loadingPosts: false,
   addPost: () => {},
@@ -136,12 +161,18 @@ export function PostProvider({
       await deletePost({ postID, onSuccess, onError });
     },
     [onError, getPostList]
+    [onError, getPostList]
   );
 
   return (
     <PostContext.Provider
       value={{
         posts,
+        loadingPosts,
+        addPost,
+        removePost,
+        getPostList,
+        updatePostData,
         loadingPosts,
         addPost,
         removePost,

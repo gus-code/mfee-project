@@ -8,6 +8,9 @@ axiosInstance.interceptors.request.use((config) => {
   config.baseURL = "https://test.neuraac.com/api";
   config.headers.Authorization = `Bearer ${token}`;
   config.signal = AbortSignal.timeout(5000);
+  config.baseURL = "https://test.neuraac.com/api";
+  config.headers.Authorization = `Bearer ${token}`;
+  config.signal = AbortSignal.timeout(5000);
   return config;
 });
 

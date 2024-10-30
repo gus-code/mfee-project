@@ -29,6 +29,7 @@ const post = {
 
 function PostPage() {
   // ACT 9 - Use postID variable to fetch the post data
+  // ACT 10 - Get postID from route params
   return (
     <Container container>
       Post page

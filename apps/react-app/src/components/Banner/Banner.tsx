@@ -1,5 +1,6 @@
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
 const postImage = "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"; // ACT 1 - Put some image URL
@@ -15,7 +16,9 @@ function Banner({postImage, postTitle}: BannerProps) {
     <Container image={postImage}>
       {/* ACT 3 - Send postImage as image prop to Container component */}
       <BannerContent>
-        <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}>
+        <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}
+        // ACT 10 - Navigate to Home page 
+        >
           View Posts
         </Button>
         <BannerTitle variant="h3">
