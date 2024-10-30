@@ -7,6 +7,7 @@ import {
 
 import Banner from "../../Banner";
 import Comments from "../../Comments";
+import { useParams } from "react-router-dom";
 
 // const postID = "664128a212f505651c18d676"
 
@@ -30,6 +31,8 @@ const post = {
 function PostPage() {
   // ACT 9 - Use postID variable to fetch the post data
   // ACT 10 - Get postID from route params
+  const { id } = useParams();
+  console.log("PARAM ID: "+id);
   return (
     <Container container>
       Post page

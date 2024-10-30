@@ -12,6 +12,7 @@ import {
   CardContent,
   PostCard,
 } from "./PostList.styles";
+import { useNavigate } from "react-router-dom";
 
 interface PostListProps {
   posts: Post[];
@@ -21,6 +22,11 @@ interface PostListProps {
 
 function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
   const { removePost } = useContext(PostContext);
+  const navigate = useNavigate();
+
+  function handleClick(id: string){
+    navigate("/post/"+id);
+  }
 
   return (
     <Grid container columns={{ md: 12, xs: 12 }}>
@@ -31,6 +37,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
           key={post.id}
           image={post.image}
           md={posts.length === 1 ? 12 : 6}
+          onClick={() => handleClick(post.id)}
           // ACT 10 - Navigate to PostPage component and send postID as route params
         >
           <CardContainer>

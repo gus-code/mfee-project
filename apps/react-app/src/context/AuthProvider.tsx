@@ -25,7 +25,7 @@ export function AuthProvider({
 
   const validateToken = useCallback(async () => {
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdmlkQG91dGxvb2suY29tIiwiaWF0IjoxNzE1ODA1MTQzLCJleHAiOjE3MTU4MDg3NDN9.hsVhN9KdKhGeKZi7-ti-bAkGPS1vahx-qnCrpWMg0Bg";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdmlkQG91dGxvb2suY29tIiwiaWF0IjoxNzMwMzI5MjM0LCJleHAiOjE3MzAzMzI4MzR9.RHkHCiTYKcNvqH0DDPnjBDJ87Tf1tvw41pNb-FzDFfE";
       // ACT 11 - Get the token from localStorage
     const onLoading = (isLoading: boolean) => setAuthLoading(isLoading);
 

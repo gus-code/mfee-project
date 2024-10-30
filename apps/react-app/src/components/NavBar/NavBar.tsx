@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import { Box, Button, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar(): React.JSX.Element {
   return (
@@ -49,30 +50,34 @@ export default function NavBar(): React.JSX.Element {
           gap: 2,
         }}
       >
-        <Button
-          sx={{
-            textDecoration: "none",
-            fontWeight: "bold",
-            color: "white",
-            backgroundColor: "#1e8fff",
-            borderRadius: "8px",
-            padding: "8px",
-          }}
-        >
-          Categories
-        </Button>
-        <Button
-          sx={{
-            textDecoration: "none",
-            fontWeight: "bold",
-            color: "white",
-            backgroundColor: "#1e8fff",
-            borderRadius: "8px",
-            padding: "8px",
-          }}
-        >
-          Login
-        </Button>
+        <NavLink to="/categories" end style={({isActive}) => ({backgroundColor: isActive ? 'read' : 'blue'})}>
+          <Button
+            sx={{
+              textDecoration: "none",
+              fontWeight: "bold",
+              color: "white",
+              backgroundColor: "#1e8fff",
+              borderRadius: "8px",
+              padding: "8px",
+            }}
+          >
+            Categories
+          </Button>
+        </NavLink>
+        <NavLink to="/login" end style={({isActive}) => ({backgroundColor: isActive ? 'read' : 'blue'})}>
+          <Button
+            sx={{
+              textDecoration: "none",
+              fontWeight: "bold",
+              color: "white",
+              backgroundColor: "#1e8fff",
+              borderRadius: "8px",
+              padding: "8px",
+            }}
+          >
+            Login
+          </Button>
+        </NavLink>
       </Box>
     </Grid>
   );
