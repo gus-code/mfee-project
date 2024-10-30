@@ -1,7 +1,9 @@
-import { useState, FormEvent, Dispatch, SetStateAction } from "react";
+import { useState, FormEvent, Dispatch, SetStateAction, useCallback } from "react";
 import { PageContainer } from "./LoginPage.styles";
 import { Button, Grid } from "@mui/material";
 import TextField from "../../TextField";
+import { createUser, login } from "../../../api/endpoints/auth";
+import { AuthLoginResponse, AuthResponse } from "../../../types/index";
 
 export interface LoginFields{
   inputValueUsername: string | null,
@@ -117,16 +119,47 @@ const LoginPage = () => {
     }
   ]
 
-  function handleChangeLogin(keyName: string, value: string):void{
-    setLoginFields({...loginFields, [keyName]: value});
-  }
+
+  const createUserApi = useCallback(async () => {
+    const onSuccess = (data: AuthResponse) => {
+
+    }
+
+    const onError = () =>{};
+
+    const onLoading = () => {};
+
+    createUser({ newUser: {firstname: singUpFields.inputValueFirstName!, lastname: singUpFields.inputValueLastName!, username: singUpFields.inputValueUsername!, password: singUpFields.inputValuePassword!}, onSuccess, onError, onLoading});
+  }, [singUpFields]);
+
+  const loginApi = useCallback(async () => {
+
+    const onSuccess = (data: AuthLoginResponse) => {
+      console.log(data);
+    }
+
+    const onError = () => {};
+
+    const onLoading = () => {};
+
+    login({ user: {username: loginFields.inputValueUsername!, password: loginFields.inputValuePassword!}, onSuccess, onError, onLoading});
+
+  }, [loginFields]);
 
   function handleClickSignUp():void{
-    setSignUp(true);
+    if(signUp){
+      createUserApi();
+    }else{
+      setSignUp(true);
+    }
   }
 
   function handleClickLogIn():void{
-    setSignUp(false);
+    if(signUp){
+      setSignUp(false);
+    }else{
+      loginApi();
+    }
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>):void{

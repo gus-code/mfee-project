@@ -8,8 +8,8 @@ import {Paper} from "@mui/material";
 interface TableProps{
     headers: string[],
     categories: Category[] | null,
-    handleDeleteItem: () => void,
-    handleEdit: (value: string) => void;
+    handleDeleteItem: (id: string) => void,
+    handleEdit: (category: Category) => void;
 }
 
 function TableComponent({headers, categories, handleDeleteItem, handleEdit}:TableProps){
@@ -30,8 +30,8 @@ function TableComponent({headers, categories, handleDeleteItem, handleEdit}:Tabl
                             <TableRow>
                                 <TableCell>{category.name}</TableCell>
                                 <TableCell>
-                                    <IconButton sx={{alignSelf: 'center'}}><DeleteIcon/></IconButton>
-                                    <IconButton sx={{alignSelf: 'center'}} onClick={() => handleEdit(category.name)}><EditIcon/></IconButton>
+                                    <IconButton sx={{alignSelf: 'center'}} onClick={() => handleDeleteItem(category.id)}><DeleteIcon/></IconButton>
+                                    <IconButton sx={{alignSelf: 'center'}} onClick={() => handleEdit(category)}><EditIcon/></IconButton>
                                 </TableCell>
                             </TableRow>
                         )

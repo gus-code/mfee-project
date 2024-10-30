@@ -127,7 +127,7 @@ export interface User {
 }
 
 export interface NewUser extends User {
-  firstame: string;
+  firstname: string;
   lastname: string;
 }
 

@@ -1,7 +1,5 @@
 import { TextField as TextFieldMui } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { LoginFields, SignUpFields } from "../Page/LoginPage/LoginPage";
-
 interface TextFieldProps<T>{
     id: string, 
     label: string,
@@ -17,7 +15,8 @@ function TextField<T>({id, label, type, value, keyName, error, comparePasswords,
 
     function handleChange(keyName: string, value: string):void{
         setState((oldValue) => {
-           return {...oldValue, [keyName]: value}
+            console.log({...oldValue, [keyName]: value});
+            return {...oldValue, [keyName]: value}
         });
     }
 

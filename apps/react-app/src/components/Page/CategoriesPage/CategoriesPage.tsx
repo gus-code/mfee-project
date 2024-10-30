@@ -1,15 +1,11 @@
 import { Button, Grid, Modal, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PageContainer } from "./CategoriesPage.styles";
-import { Category } from "../../../types";
+import { CategoriesResponse, Category } from "../../../types";
 import TableComponent from "../../Table";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { IconButton, CardContent } from "@mui/material";
-
- const categories: Category[] = [
-   { id: "663fef70d513515319551d1f", name: "Travel" },
-   { id: "663fef70d513515319546d1f", name: "Food" },
- ];
+import { getCategories, createCategories, updateCategories, deleteCategories }  from "../../../api";
 
  const headers: string[] = ["Name", "Actions"];
 
@@ -31,14 +27,103 @@ function CategoriesPage() {
   const [errorInput, setErrorInput] = useState<boolean>(false);
   const [newCategory, setNewCategory] = useState<string>("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
-  const [updatedCategory, setUpdatedCategory] = useState<string>("");
-  const [initialValueUpdatedCategory, setInitialValueUpdatedCategory] = useState<string>("");
+  const [updatedCategory, setUpdatedCategory] = useState<Category>();
+  const [initialValueUpdatedCategory, setInitialValueUpdatedCategory] = useState<Category>();
   // ACT 6 - Call setRows when the component is mounted for first time, use "categories" variable as new value.
+
+  const getCategoriesList = useCallback(async () => {
+    const onSuccess = (data: CategoriesResponse[]) => {
+      const newRows = data.map((category) => ({
+        id: category._id,
+        name: category.name,
+      }));
+      setRows(newRows);
+    };
+
+    const onError = () => {
+      // createAlert({
+      //   message: "Something went wrong.",
+      //   severity: "error",
+      // });
+    };
+
+    const onLoading = (isLoading: boolean) => {
+    };
+
+    await getCategories({ onSuccess, onError, onLoading });
+  }, []);
+
+  const createCategory = useCallback(async (data: string) => {
+    const onSuccess = (data: CategoriesResponse) => {
+      getCategoriesList();
+    };
+
+    const onError = () => {
+      // createAlert({
+      //   message: "Something went wrong.",
+      //   severity: "error",
+      // });
+    };
+
+    const onLoading = (isLoading: boolean) => {
+    };
+
+    const name = data;
+
+    await createCategories({ onSuccess, onError, onLoading, name });
+  }, []);
+
   useEffect(() => {
-    setRows(categories);
+    getCategoriesList();
+  }, []);
+
+  const updateCategoryApi = useCallback(async (id: string, name: string) => {
+    const onSuccess = (data: CategoriesResponse) => {
+      getCategoriesList();
+    };
+
+    const onError = () => {
+      // createAlert({
+      //   message: "Something went wrong.",
+      //   severity: "error",
+      // });
+    };
+
+    const onLoading = (isLoading: boolean) => {
+    };
+
+    await updateCategories({ onSuccess, onError, onLoading, id, name });
+  }, []);
+
+  useEffect(() => {
+    getCategoriesList();
+  }, []);
+
+  const deleteCategoryApi = useCallback(async (id: string) => {
+    const onSuccess = (data: CategoriesResponse) => {
+      getCategoriesList();
+    };
+
+    const onError = () => {
+      // createAlert({
+      //   message: "Something went wrong.",
+      //   severity: "error",
+      // });
+    };
+
+    const onLoading = (isLoading: boolean) => {
+    };
+
+    await deleteCategories({ onSuccess, onError, onLoading, id });
+  }, []);
+
+  useEffect(() => {
+    getCategoriesList();
   }, []);
   //ACT 6 - Create two empty functions called "handleEditItem" and "handleDeleteItem"
-  function handleDeleteItem(){}
+  function handleDeleteItem(id: string){
+    deleteCategoryApi(id);
+  }
 
   function handleClose(){
     setIsModalOpened(false);
@@ -54,8 +139,10 @@ function CategoriesPage() {
       setErrorInput(true);
     }else {
       setErrorInput(false);
-      setRows([...(rows || []), {id: Math.random.toString(), name: newCategory}]);
+      //setRows([...(rows || []), {id: Math.random.toString(), name: newCategory}]);
+      createCategory(newCategory);
       setIsModalOpened(false);
+
     }
   }
 
@@ -68,9 +155,9 @@ function CategoriesPage() {
     }
   }
 
-  function handleChangeUpdate(value: string){
-    setUpdatedCategory(value);
-    if(value.length > 0){
+  function handleChangeUpdate(category: Category){
+    setUpdatedCategory(category);
+    if(category.name.length > 0){
       setErrorInput(false);
     }else{
       setErrorInput(true);
@@ -78,27 +165,18 @@ function CategoriesPage() {
   }
 
   function updateCategory(){
-    setRows((prevState) => {
-      const up = prevState?.map(row => {
-        if(row.name === initialValueUpdatedCategory){
-          row.name = updatedCategory;
-        }
-        return row;
-      }) || [];
-      console.log(up);
-      return up;
-    });
+    updateCategoryApi(initialValueUpdatedCategory!.id, updatedCategory!.name);
   }
 
-  function handleEdit(value: string){
+  function handleEdit(category: Category){
     setIsUpdate(true);
     setIsModalOpened(true);
-    setUpdatedCategory(value);
-    setInitialValueUpdatedCategory(value);
+    setUpdatedCategory(category);
+    setInitialValueUpdatedCategory(category);
   }
 
   function handleUpdate(){
-    if(updatedCategory.length === 0){
+    if(updatedCategory?.name.length === 0){
       setErrorInput(true);
     }else{
       updateCategory();
@@ -123,7 +201,7 @@ function CategoriesPage() {
       >
        <CardContent sx={style}>
           {!isUpdate ? <h3>Create Category</h3> : <h3>Update Category</h3>}
-          {!isUpdate ? <TextField label="Name" required fullWidth error={errorInput} onChange={(event) => handleChange(event.target.value)}></TextField> : <TextField label="Name" required fullWidth error={errorInput} onChange={(event) => handleChangeUpdate(event.target.value)} value={updatedCategory}></TextField>}
+          {!isUpdate ? <TextField label="Name" required fullWidth error={errorInput} onChange={(event) => handleChange(event.target.value)}></TextField> : <TextField label="Name" required fullWidth error={errorInput} onChange={(event) => handleChangeUpdate({id: updatedCategory!.id, name: event.target.value})} value={updatedCategory!.name}></TextField>}
           <div style={{marginTop: '2rem', textAlign: 'right'}}>
             <Button variant="outlined" sx={{mr:1}} onClick={handleClose}>CANCEL</Button>
             {!isUpdate ? <Button variant="contained" onClick={handleCreate}>CREATE</Button> : <Button variant="contained" onClick={handleUpdate}>UPDATE</Button>}

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create();
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdmlkQG91dGxvb2suY29tIiwiaWF0IjoxNzE1Nzk4NTc2LCJleHAiOjE3MTU4MDIxNzZ9.EgW4AcErd_fwDVwZa-pzJCw12xKBzGJ32B8Ry92XRs8";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdmlkQG91dGxvb2suY29tIiwiaWF0IjoxNzMwMjQyODQxLCJleHAiOjE3MzAyNDY0NDF9.-j9VzMtlUKmSCgYGOh0-j280-QjBT6iUW485hi4kvNQ";
 
 axiosInstance.interceptors.request.use((config) => {
   config.baseURL = "https://test.neuraac.com/api";

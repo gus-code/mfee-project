@@ -1,12 +1,12 @@
 import React, {
   createContext,
   useState,
-  // useContext,
+  useContext,
   useCallback,
 } from "react";
 
 import { NewPost, Post, PostsResponse } from "../types";
-// import { SnackbarContext } from "../context";
+import { SnackbarContext } from "./SnackbarProvider";
 import {
   createPost,
   deletePost,
@@ -54,7 +54,7 @@ export const PostContext = createContext<PostContextProps>({
 export function PostProvider({
   children,
 }: PostProviderProps): React.JSX.Element {
-  // const createAlert = useContext(SnackbarContext);
+  const { createAlert } = useContext(SnackbarContext);
   const [posts, setPosts] = useState<Post[] | null>(null);
   const [loadingPosts, setLoadingPosts] = useState(false);
 
@@ -63,10 +63,7 @@ export function PostProvider({
   };
 
   const onError = useCallback(() => {
-    // createAlert({
-    //   message: "Something went wrong.",
-    //   severity: "error",
-    // });
+    createAlert("error", "Something went wrong.")
   }, []);
 
   const getPostList = useCallback(
@@ -95,10 +92,7 @@ export function PostProvider({
     async (newPost: NewPost) => {
       const onSuccess = async () => {
         await getPostList();
-        // createAlert({
-        //   message: "Post successfully created.",
-        //   severity: "success",
-        // });
+        createAlert("success", "Post successfully created.")
       };
 
       await createPost({ newPost, onSuccess, onError, onLoading });
@@ -118,10 +112,7 @@ export function PostProvider({
     }) => {
       const onSuccess = async () => {
         await getPostList(selectedCategoryID);
-        // createAlert({
-        //   message: "Post successfully updated.",
-        //   severity: "success",
-        // });
+        createAlert("success", "Post successfully updated.")
       };
 
       await updatePost({ postID, updatedPost, onSuccess, onError, onLoading });
@@ -139,59 +130,13 @@ export function PostProvider({
     }) => {
       const onSuccess = async () => {
         await getPostList(selectedCategoryID);
-        // createAlert({
-        //   message: "Post successfully deleted.",
-        //   severity: "success",
-        // });
+        createAlert("success", "Posts deleted successfuly");
       };
       setLoadingPosts(true);
       await deletePost({ postID, onSuccess, onError });
     },
     [onError, getPostList]
   );
-  const createOrUpdatePost = useCallback(
-    ({
-      method,
-      newPost,
-      postID,
-    }: {
-      method: "post" | "patch";
-      newPost: NewPost;
-      postID?: string;
-    }) => {
-      const { category: postCategory, ...rest } = newPost;
-      const selectedCategory = postList
-        ?.map((post) => post.category)
-        .filter((category) => category?._id === postCategory)[0];
-      if (method === "post") {
-        const post: Post = {
-          id: Math.random().toString(),
-          category: selectedCategory,
-          comments: [],
-          ...rest,
-        };
-        setServerData((prev) => [...prev, post]);
-      }
-      if (method === "patch") {
-        setServerData((prev) =>
-          prev.map((post) =>
-            post.id === postID
-              ? { ...post, ...newPost, category: selectedCategory }
-              : post
-          )
-        );
-      }
-    },
-    []
-  );
-
-  const removePost = useCallback((postID: string) => {
-    setServerData((prev) => prev.filter((post: Post) => post.id !== postID));
-    // ACT 7 - Use createAlert function to notify the user that the item was successfully deleted
-    createAlert("success", "Posts deleted successfuly");
-  }, []);
-
-  useEffect(() => setPosts(serverData), [serverData]);
 
   return (
     <PostContext.Provider

@@ -12,18 +12,12 @@ import {
   CardContent,
   PostCard,
 } from "./PostList.styles";
-import { Category, Post } from "../../types";
-import { PostContext } from "../../context";
-import { useContext } from "react";
 
 interface PostListProps {
   posts: Post[];
   selectedCategory: Category | null;
   handleOpenForm: (defaultValues?: Post) => void;
 }
-
-function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
-  const { removePost } = useContext(PostContext);
 
 function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
   const { removePost } = useContext(PostContext);
