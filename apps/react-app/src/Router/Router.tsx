@@ -14,7 +14,7 @@ const Router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <PrivateRoute route={<Page page={<LoginPage />} /> } />
+    element: <LoginPage />
   },
   {
     path: "/categories",

@@ -30,7 +30,7 @@ const PrivateRoute = ({ route }: PrivateRouteProps): JSX.Element => {
 
   // ACT 11 - Navigate to /login when the user is not authenticated
   return (
-    <>{isAuthenticated ? { ...route } : <Navigate to={"/"} replace />}</>
+    <>{isAuthenticated ? { ...route } : <Navigate to={"/login"} replace />}</>
   );
 };
 

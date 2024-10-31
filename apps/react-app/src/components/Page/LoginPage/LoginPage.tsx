@@ -31,12 +31,9 @@ interface TextFields<T>{
 
 const LoginPage = () => {
 
-    // ACT 11 - After the login is successful, use the following to direct the user to the home page:
-  // const { protocol, host } = window.location;
-  // const signInUrl = `${protocol}//${host}/`;
-  // if (window.location.href !== signInUrl) {
-  //   window.location.assign(signInUrl);
-  // }
+  //ACT 11 - After the login is successful, use the following to direct the user to the home page:
+  const { protocol, host } = window.location;
+  
 
   const [signUp, setSignUp] = useState<boolean>(false);
   const [loginFields, setLoginFields] = useState<LoginFields>({
@@ -142,7 +139,11 @@ const LoginPage = () => {
   const loginApi = useCallback(async () => {
 
     const onSuccess = (data: AuthLoginResponse) => {
-      console.log(data);
+      localStorage.setItem("token", data.accessToken);
+      const signInUrl = `${protocol}//${host}/`;
+      if (window.location.href !== signInUrl) {
+        window.location.assign(signInUrl);
+      }
     }
 
     const onError = () => {};

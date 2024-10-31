@@ -3,26 +3,33 @@ import TextField from '@mui/material/TextField';
 import { Button, FormControl } from "@mui/material";
 import { useFormControlContext } from '@mui/base/FormControl';
 import { CommentProp } from "../CommentCard/CommentCard";
+import { CommentResponse } from "../../types";
+import { AxiosError } from "axios";
+import { createComment } from "../../api";
 
 interface AddCommentFormProps {
     setCommentsState: Dispatch<SetStateAction<CommentProp[]>>;
+    postId: string;
 }
 
-function AddCommentForm({setCommentsState}: AddCommentFormProps){
+function AddCommentForm({setCommentsState, postId}: AddCommentFormProps){
 
     const [inputValue, setInputValue] = useState<string | null>(null);
-    let ref = useRef<HTMLButtonElement>();
+    const ref = useRef<HTMLButtonElement>();
+
+    const createCommentApi = async (newComment: CommentProp) => {
+        const onSuccess = (data: CommentResponse) => {};
+        const onError = (error: AxiosError) => {};
+        const onLoading = () => {};
+        createComment({postID: postId, newComment: newComment, onSuccess, onError, onLoading});
+    }
 
     function handleSubmit(event: FormEvent<HTMLFormElement>):void{
         event.preventDefault();
         if(inputValue?.length <= 15){
             const newComment: CommentProp = {
-                _id: "412fsffaf",
                 author: "José Valenzuela",
                 content: inputValue || "",
-                createdAt: "2024-04-10 12:00:00",
-                updatedAt: "2024-04-10 12:00:00",
-                __v: "-v",
             }
             setCommentsState((oldValue: CommentProp[]) => {
                 return [...oldValue, newComment];
@@ -31,6 +38,7 @@ function AddCommentForm({setCommentsState}: AddCommentFormProps){
             if(ref.current){
                 ref.current.value = "";
             }
+            createCommentApi(newComment);
         }
     }
 

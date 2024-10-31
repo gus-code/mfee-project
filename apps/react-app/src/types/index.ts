@@ -1,3 +1,5 @@
+import { CommentProp } from "../components/CommentCard/CommentCard";
+
 export type Input = {
   value: string;
   error: string;
@@ -10,7 +12,7 @@ export type FormInputs = {
   image: Input;
 };
 
-export type NewPost = {
+
 export type NewPost = {
   title: string;
   image: string;
@@ -73,7 +75,7 @@ export type Post = {
   image: string;
   description: string;
   category: CategoriesResponse | null;
-  comments: string[];
+  comments: CommentProp[];
 };
 
 export type SelectedPost = {
@@ -111,7 +113,7 @@ export interface PostResponse {
   image: string;
   description: string;
   category: CategoriesResponse | null;
-  comments: CommentResponse[];
+  comments: CommentProp[];
   createdAt: string;
   updatedAt: string;
   __v: number;
