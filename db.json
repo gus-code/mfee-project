@@ -1,0 +1,62 @@
+{
+  "posts": [
+    {
+      "id": "1.24",
+      "title": "The average path a grandparent took to get to school",
+      "image": "https://th.bing.com/th/id/R.df8ba69a16ad146c6e8cc769fa900ab0?rik=qYqjcnEnWzdXug&pid=ImgRaw&r=0",
+      "description": "Don't forget to bring your machete in case you encounter the devil or some stones in case witches appear. ",
+      "category": "Travel",
+      "comments": [
+        {
+          "id": "2.1",
+          "author": "Anonymus",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Peaceful activities to do on a Monday morning",
+      "image": "https://www.cairnsskydivers.com.au/wp-content/uploads/2021/07/skydivingoverthegreatbarrierreef.jpg",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "category": "Sports",
+      "comments": [
+        {
+          "id": "3.1",
+          "author": "Anonymus",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "A good choice to eatt",
+      "image": "https://th.bing.com/th/id/R.2d66d3ce21d052726c2c527a03da4f4c?rik=3FedcY2H7LDtBw&riu=http%3a%2f%2ftheartofplating.com%2fwp-content%2fuploads%2f2015%2f06%2fEvan_Feature.jpg&ehk=KCxZkONbpjuAYhfpKxoeHgIizR%2fy1U0LM6olKn1d8go%3d&risl=&pid=ImgRaw&r=0",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "category": "Health",
+      "comments": [
+        {
+          "id": "4.1",
+          "author": "Anonymus",
+          "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        }
+      ]
+    },
+    {
+      "id": "0.34674599859102395",
+      "title": "New",
+      "image": "https://th.bing.com/th/id/R.385e7dbec0e6c313cfd6dc3b6fff1c95?rik=Ps5ZHpTWtX4y3A&pid=ImgRaw&r=0",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "category": "Travel",
+      "comments": []
+    },
+    {
+      "id": "0.18206228009545122",
+      "title": "Latest",
+      "image": "https://media.geeksforgeeks.org/wp-content/uploads/Screen-Shot-2017-11-13-at-10.23.39-AM.png",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+      "category": "Sports",
+      "comments": []
+    }
+  ]
+}
