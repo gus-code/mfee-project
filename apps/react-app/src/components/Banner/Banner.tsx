@@ -11,6 +11,7 @@ interface BannerProps {
 function Banner({ postImage, postTitle }: BannerProps) {
   return (
     <Container image={postImage}>
+      {/* ACT 3 - Send postImage as image prop to Container component */}
       <BannerContent>
         <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}>
           View Posts
