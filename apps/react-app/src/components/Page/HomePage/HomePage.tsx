@@ -1,7 +1,8 @@
-import PostList from "../../PostList";
-import CategoryButtonGroup from "../../CategoryButtonGroup";
-import CreatePostButton from "../../CreatePostButton";
+
 import { Category } from "../../../types";
+import CategoryButtonGroup from "../../CategoryButtonGroup/CategoryButtonGroup";
+import CreatePostButton from "../../CreatePostButton/CreatePostButton";
+import PostList from "../../PostList/PostList";
 
 const categories: Category[] = [
   { id: "123", name: "Travel" },

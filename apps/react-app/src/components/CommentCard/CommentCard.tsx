@@ -21,13 +21,17 @@ export interface CommentType {
   __v: number;
 }
 
-function CommentCard(comments: CommentType) {
+interface CommentCardProps {
+  comment: CommentType
+}
+
+function CommentCard(  {comment} : CommentCardProps) {
   return (
     <Container item sm={8}>
       <AccountCircleIcon />
       <Content>
-        <Author>{comments.author}</Author>
-        <Typography>{comments.content}</Typography>
+        <Author>{comment.author}</Author>
+        <Typography>{comment.content}</Typography>
       </Content>
     </Container>
   );
