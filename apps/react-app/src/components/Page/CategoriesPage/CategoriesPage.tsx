@@ -7,12 +7,12 @@ function CategoriesPage() {
     <PageContainer container>
       Categories Page
       <Grid item sx={{ justifyContent: "flex-end", display: "flex" }}>
-        //Add category (Icon button)
+        {/* //Add category (Icon button) */}
       </Grid>
       <Grid item sx={{ flexGrow: 1 }}>
-        //Table
+        {/* //Table */}
       </Grid>
-      //Modal
+      {/* //Modal */}
     </PageContainer>
   );
 }

@@ -3,10 +3,12 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-const postImage = ""; // ACT 1 - Put some image URL
-// const postTitle = ""; //ACT 1 -  Write a title
+interface BannerProps {
+  postImage: string;
+  postTitle: string;
+}
 
-function Banner() {
+function Banner({ postImage, postTitle }: BannerProps) {
   return (
     <Container image={postImage}>
       <BannerContent>
@@ -14,7 +16,7 @@ function Banner() {
           View Posts
         </Button>
         <BannerTitle variant="h3">
-          {/* ACT 1 - Render postTitle */}
+          {postTitle}
         </BannerTitle>
       </BannerContent>
     </Container>

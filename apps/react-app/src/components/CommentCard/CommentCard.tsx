@@ -12,13 +12,22 @@ import { Container, Content, Author } from "./CommentCard.styles";
 //   __v: "",
 // }; // ACT 1 - Fill all the properties with random data
 
-function CommentCard() {
+export interface CommentType {
+  _id: string;
+  author: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+function CommentCard(comments: CommentType) {
   return (
     <Container item sm={8}>
       <AccountCircleIcon />
       <Content>
-        <Author>{/* ACT 1 - Render comment author */}</Author>
-        <Typography>{/* ACT 1 - Render comment content */}</Typography>
+        <Author>{comments.author}</Author>
+        <Typography>{comments.content}</Typography>
       </Content>
     </Container>
   );

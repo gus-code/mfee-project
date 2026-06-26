@@ -1,3 +1,5 @@
+import Banner from "../../Banner";
+import Comments from "../../Comments/Comments";
 import {
   Container,
   BannerContainer,
@@ -5,35 +7,35 @@ import {
   DescriptionContainer,
 } from "./PostPage.styles";
 
-// const post = {
-//   image: "",
-//   title: "",
-//   postID: "",
-//   comments: [
-//     {
-//       _id: "",
-//       author: "",
-//       content: "",
-//       createdAt: "",
-//       updatedAt: "",
-//       __v: "",
-//     },
-//   ],
-//   description: "",
-// }; // ACT 1 - Fill all this properties with random data
+const post = {
+  image: "url",
+  title: "Post Title",
+  postID: "post-id",
+  comments: [
+    {
+      _id: "comment-id",
+      author: "John Doe",
+      content: "This is a sample comment.",
+      createdAt: "2023-01-01T00:00:00.000Z",
+      updatedAt: "2023-01-01T00:00:00.000Z",
+      __v: 0,
+    },
+  ],
+  description: "This is a sample post description.",
+}; // ACT 1 - Fill all this properties with random data
 
 function PostPage() {
   return (
     <Container container>
       Post page
       <BannerContainer item>
-        {/* ACT 1 - Render Banner component */}
+        <Banner postImage={post.image} postTitle={post.title} />
       </BannerContainer>
       <DescriptionContainer item>
-        <p>{/* ACT 1 - Render post description */}</p>
+        <p>{post.description}</p>
       </DescriptionContainer>
       <CommentsContainer item>
-        {/* ACT 1 - Render Comments component */}
+        <Comments comments={post.comments} />
       </CommentsContainer>
     </Container>
   );
