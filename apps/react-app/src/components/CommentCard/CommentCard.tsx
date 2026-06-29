@@ -3,22 +3,22 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { Container, Content, Author } from "./CommentCard.styles";
 
-// const comment = {
-//   _id: "",
-//   author: "",
-//   content: "",
-//   createdAt: "",
-//   updatedAt: "",
-//   __v: "",
-// }; // ACT 1 - Fill all the properties with random data
+const comment = {
+  _id: "013943",
+  author: "Valeria",
+  content: "I had an amazing experience traveling there too!",
+  createdAt: "08-06-2026",
+  updatedAt: "09-06-2026",
+  __v: "0",
+}; 
 
 function CommentCard() {
   return (
     <Container item sm={8}>
       <AccountCircleIcon />
       <Content>
-        <Author>{/* ACT 1 - Render comment author */}</Author>
-        <Typography>{/* ACT 1 - Render comment content */}</Typography>
+        <Author>{comment.author}</Author>
+        <Typography>{comment.content}</Typography>
       </Content>
     </Container>
   );

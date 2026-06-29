@@ -3,8 +3,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-const postImage = ""; // ACT 1 - Put some image URL
-// const postTitle = ""; //ACT 1 -  Write a title
+const postImage = "https://images.wallpapersden.com/image/download/cloudy-mountains_a2toaWWUmZqaraWkpJRobWllrWdma2U.jpg";
+const postTitle = "Discovering the World App"; 
 
 function Banner() {
   return (
@@ -14,7 +14,7 @@ function Banner() {
           View Posts
         </Button>
         <BannerTitle variant="h3">
-          {/* ACT 1 - Render postTitle */}
+          {postTitle}
         </BannerTitle>
       </BannerContent>
     </Container>
