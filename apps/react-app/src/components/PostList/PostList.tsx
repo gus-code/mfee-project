@@ -3,20 +3,26 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid, IconButton, Typography } from "@mui/material";
 
 import { shorten } from "../../common/utils";
+import { shorten } from "../../common/utils";
 import {
   CardActions,
   CardContainer,
   CardContent,
   PostCard,
 } from "./PostList.styles";
-import { Post } from "../../types";
+import { Category, Post } from "../../types";
+import { PostContext } from "../../context";
+import { useContext } from "react";
 
 interface PostListProps {
   posts: Post[];
+  selectedCategory: Category | null;
   handleOpenForm: (defaultValues?: Post) => void;
 }
 
-function PostList({ posts, handleOpenForm }: PostListProps) {
+function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
+  const { removePost } = useContext(PostContext);
+
   return (
     <Grid container columns={{ md: 12, xs: 12 }}>
       {posts.map((post) => (
@@ -30,7 +36,10 @@ function PostList({ posts, handleOpenForm }: PostListProps) {
           <CardContainer>
             <CardContent>
               <h1>{post.title}</h1>
+              <h1>{post.title}</h1>
               <h3>
+                {post.comments.length}
+                {post.comments.length > 1 ? " Comments" : " Comment"}
                 {post.comments.length}
                 {post.comments.length > 1 ? " Comments" : " Comment"}
               </h3>
@@ -51,6 +60,10 @@ function PostList({ posts, handleOpenForm }: PostListProps) {
                 color="inherit"
                 onClick={(e) => {
                   e.stopPropagation();
+                  removePost({
+                    postID: post.id,
+                    selectedCategoryID: selectedCategory?.id,
+                  });
                 }}
               >
                 <DeleteIcon />

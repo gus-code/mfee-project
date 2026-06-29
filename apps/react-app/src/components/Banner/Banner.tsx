@@ -1,6 +1,7 @@
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
+
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
 interface BannerProps {
