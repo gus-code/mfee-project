@@ -2,6 +2,8 @@ import { Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Container, Content, Author } from "./CommentCard.styles";
 
+// ACT 3 - Receive comment prop
+
 export interface CommentType {
   _id: string;
   author: string;
@@ -10,9 +12,6 @@ export interface CommentType {
   updatedAt: string;
   __v: number;
 }
-
-
-
 
 interface CommentCardProps {
   comment: CommentType;

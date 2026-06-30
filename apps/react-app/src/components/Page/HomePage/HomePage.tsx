@@ -1,13 +1,12 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 
-
-import { Category } from "../../../types";
+import PostList from "../../PostList";
+import CategoryButtonGroup from "../../CategoryButtonGroup";
+import CreatePostButton from "../../CreatePostButton";
+import { Category, Post } from "../../../types";
 import { PostContext } from "../../../context";
-import CategoryButtonGroup from "../../CategoryButtonGroup/CategoryButtonGroup";
-import CreatePostButton from "../../CreatePostButton/CreatePostButton";
-import Loading from "../../Loading/Loading";
-import PostList from "../../PostList/PostList";
-
+import Loading from "../../Loading";
+import Form from "../../Form";
 
 const categories: Category[] = [
   { id: "663fef70d513515319551d1f", name: "Travel" },
@@ -15,12 +14,17 @@ const categories: Category[] = [
 ];
 
 function HomePage() {
+  const [openForm, setOpenForm] = useState(false);
   const { posts, getPosts } = useContext(PostContext);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
 
-  const handleOpenForm = () => { };
+  const handleOpenForm = (defaultValues?: Post) => {
+    setOpenForm(true);
+    if (defaultValues) setSelectedPost(defaultValues);
+  };
 
   const handleSelectCategory = useCallback(
     (category: Category) => {
@@ -43,11 +47,12 @@ function HomePage() {
         selectedCategory={selectedCategory}
         handleSelectCategory={handleSelectCategory}
       />
-
-      <PostList
-        posts={posts}
-        selectedCategory={selectedCategory}
-        handleOpenForm={handleOpenForm}
+      <PostList posts={posts} handleOpenForm={handleOpenForm} />
+      <Form
+        open={openForm}
+        post={selectedPost}
+        setOpen={setOpenForm}
+        setSelectedPost={setSelectedPost}
       />
     </>
   );

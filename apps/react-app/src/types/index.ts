@@ -43,10 +43,10 @@ export type FormData = { [key: string]: string };
 
 export type Inputs = {
   id: string;
-  name: string;
+  name: keyof FormInputs;
   label: string;
   type: string;
-  options?: string[];
+  options?: { id?: string; name: string }[];
 }[];
 
 export interface Category {
