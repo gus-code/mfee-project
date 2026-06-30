@@ -24,6 +24,8 @@ const post = {
   description: "This is a sample post description.",
 }; // ACT 1 - Fill all this properties with random data
 
+// ACT 9 - Use postID variable to fetch the post data
+
 function PostPage() {
   return (
     <Container container>

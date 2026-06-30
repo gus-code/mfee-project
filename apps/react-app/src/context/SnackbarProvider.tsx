@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -52,3 +53,4 @@ export const SnackbarProvider = ({ children }: Props) => {
         </SnackbarContext.Provider>
     );
 };
+

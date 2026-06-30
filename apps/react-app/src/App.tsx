@@ -32,7 +32,7 @@ function App() {
           {page === "LoginPage" && <LoginPage />}
 
         </Grid>
-      </Grid>
+      </>
     </PostProvider>
   );
 }

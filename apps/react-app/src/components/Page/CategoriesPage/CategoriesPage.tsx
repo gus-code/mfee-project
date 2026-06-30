@@ -12,6 +12,8 @@ const categories: Category[] = [
   { id: "663fef70d513515319546d1f", name: "Food" },
 ];
 
+// ACT 9 - Use the getList, create, edit, delete and update categories APIs
+
 function CategoriesPage() {
   const [rows, setRows] = useState<Category[]>([]);
 
@@ -37,12 +39,13 @@ function CategoriesPage() {
       <Grid item sx={{ justifyContent: "flex-end", display: "flex" }}>
         <AddIcon/>
         <p>Edit</p>
+        {/* ACT 8 - Use the IconButton component (from MUI) to open the Modal */}
       </Grid>
       <Grid item sx={{ flexGrow: 1 }}>
         {/* ACT 6 - Create a component called "Table" to display category names */}
         <CategoryTable categories={rows}/>
       </Grid>
-      {/*Modal add categories */}
+      {/* ACT 8 - Create a Modal to add new categories and update existing ones */}
     </PageContainer>
   );
 }

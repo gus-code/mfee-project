@@ -5,6 +5,8 @@ import LoginForm from "../../Form/LoginForm";
 import { PageContainer } from "./LoginPage.styles";
 import { Button, Grid, Paper, Typography, Alert, Box } from "@mui/material";
 
+ // ACT 9 - Use the login and register APIs
+
 const LoginPage = () => {
   const [option, setOption] = useState("login");
   const [users, setUsers] = useState<User[]>([]);

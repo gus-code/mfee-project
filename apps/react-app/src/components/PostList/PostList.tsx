@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid, IconButton, Typography } from "@mui/material";
 
 import { shorten } from "../../common/utils";
+import { Category, Post } from "../../types";
+import { PostContext } from "../../context";
 import {
   CardActions,
   CardContainer,
@@ -40,7 +43,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 {post.comments.length > 1 ? " Comments" : " Comment"}
               </h3>
               <h3>{shorten(post.description, 70)}</h3>
-              <Typography variant="overline">{post.category?.name}</Typography>
+              <Typography variant="overline">{post.category}</Typography>
             </CardContent>
             <CardActions className="card-actions">
               <IconButton
@@ -56,7 +59,10 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 color="inherit"
                 onClick={(e) => {
                   e.stopPropagation();
-                  removePost(post.id);
+                  removePost({
+                    postID: post.id,
+                    selectedCategoryID: selectedCategory?.id,
+                  });
                 }}
               >
                 <DeleteIcon />
