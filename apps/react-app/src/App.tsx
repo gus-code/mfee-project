@@ -1,5 +1,3 @@
-import { Grid } from "@mui/material";
-
 import { CategoriesPage, HomePage, PostPage } from "./components/Page";
 
 import NavBar from "./components/NavBar";
@@ -8,7 +6,7 @@ import { PostProvider } from "./context";
 import { Grid } from "@mui/material";
 
 function App() {
-  const page: string = "HomePage";
+  const page: string = "PostPage";
   return (
     // ACT 7 - Rneder SnackbarProvider component
     <PostProvider>

@@ -3,7 +3,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid, IconButton, Typography } from "@mui/material";
 
 import { shorten } from "../../common/utils";
-import { shorten } from "../../common/utils";
 import {
   CardActions,
   CardContainer,
@@ -36,10 +35,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
           <CardContainer>
             <CardContent>
               <h1>{post.title}</h1>
-              <h1>{post.title}</h1>
               <h3>
-                {post.comments.length}
-                {post.comments.length > 1 ? " Comments" : " Comment"}
                 {post.comments.length}
                 {post.comments.length > 1 ? " Comments" : " Comment"}
               </h3>

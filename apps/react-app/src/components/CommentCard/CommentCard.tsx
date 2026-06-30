@@ -12,7 +12,13 @@ export interface CommentType {
 }
 
 
-function CommentCard() {
+
+
+interface CommentCardProps {
+  comment: CommentType;
+}
+
+function CommentCard({ comment }: CommentCardProps) {
   return (
     <Container item sm={8}>
       <AccountCircleIcon />
