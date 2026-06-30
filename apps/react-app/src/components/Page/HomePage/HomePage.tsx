@@ -1,12 +1,14 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import PostList from "../../PostList";
-import CategoryButtonGroup from "../../CategoryButtonGroup";
-import CreatePostButton from "../../CreatePostButton";
+
 import { Category, Post } from "../../../types";
 import { PostContext } from "../../../context";
-import Loading from "../../Loading";
+
 import Form from "../../Form";
+import CategoryButtonGroup from "../../CategoryButtonGroup/CategoryButtonGroup";
+import CreatePostButton from "../../CreatePostButton/CreatePostButton";
+import Loading from "../../Loading/Loading";
+import PostList from "../../PostList/PostList";
 
 const categories: Category[] = [
   { id: "663fef70d513515319551d1f", name: "Travel" },
@@ -47,7 +49,7 @@ function HomePage() {
         selectedCategory={selectedCategory}
         handleSelectCategory={handleSelectCategory}
       />
-      <PostList posts={posts} handleOpenForm={handleOpenForm} />
+      <PostList posts={posts} handleOpenForm={handleOpenForm} selectedCategory={null} />
       <Form
         open={openForm}
         post={selectedPost}

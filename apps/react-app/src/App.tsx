@@ -1,17 +1,18 @@
 import { CategoriesPage, HomePage, PostPage } from "./components/Page";
 
 import NavBar from "./components/NavBar";
-import { LoginPage } from "./components/Page/LoginPage/LoginPage";
+import LoginPage from "./components/Page/LoginPage/LoginPage";
 import { PostProvider } from "./context";
+import SnackbarRoot from "./components/SnackbarRoot/SnackbarRoot";
 import { Grid } from "@mui/material";
 
 function App() {
-  const page: string = "PostPage";
+  const page: string = "LoginPage";
   return (
-    // ACT 7 - Rneder SnackbarProvider component
     <PostProvider>
       <Grid container id="app" direction="column" height="100vh" wrap="nowrap">
         <NavBar />
+        <SnackbarRoot />
         <Grid
           container
           item

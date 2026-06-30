@@ -1,20 +1,12 @@
 import { Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Container, Content, Author } from "./CommentCard.styles";
+import { CommentResponse } from "../../types";
 
-// ACT 3 - Receive comment prop
 
-export interface CommentType {
-  _id: string;
-  author: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
+// Used the existing Type
 interface CommentCardProps {
-  comment: CommentType;
+  comment: CommentResponse;
 }
 
 function CommentCard({ comment }: CommentCardProps) {

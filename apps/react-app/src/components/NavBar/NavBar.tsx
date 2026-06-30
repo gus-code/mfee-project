@@ -2,8 +2,10 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import { Box, Button, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import { useSnackbarStore } from "../../store/snackbarStore";
 
 export default function NavBar(): React.JSX.Element {
+  const showSnackbar = useSnackbarStore((s) => s.show);
   return (
     <Grid
       item
@@ -58,6 +60,7 @@ export default function NavBar(): React.JSX.Element {
             borderRadius: "8px",
             padding: "8px",
           }}
+          onClick={() => showSnackbar("Categories clicked", "info")}
         >
           Categories
         </Button>

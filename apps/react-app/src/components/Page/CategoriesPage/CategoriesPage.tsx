@@ -1,11 +1,11 @@
-import { Grid, Table } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { PageContainer } from "./CategoriesPage.styles";
 import { useEffect, useState } from "react";
 
 import AddIcon from '@mui/icons-material/Add';
-import { Category } from "apps/react-app/src/types";
 import { CategoryTable } from "../../Table/Table";
+import { Category } from "apps/react-app/src/types";
 
 const categories: Category[] = [
   { id: "663fef70d513515319551d1f", name: "Travel" },
@@ -30,7 +30,6 @@ function CategoriesPage() {
 
   // ACT 6 - Create a state called "rows"
   // ACT 6 - Call setRows when the component is mounted for first time, use "categories" variable as new value.
-
   //ACT 6 - Create two empty functions called "handleEditItem" and "handleDeleteItem"
   return (
     <PageContainer container>
