@@ -1,24 +1,61 @@
 import { Title, Container, FormContainer } from "./Comments.styles";
-<<<<<<< HEAD
+
 import CommentCard from "../CommentCard"
-=======
+import { Comment } from "../CommentCard/CommentCard";
 
-// ACT 3 - Receive comments prop
->>>>>>> origin/react/session-02
+{ /* ACT 3 */}
+export interface commentsProps{
+  comments: Comment[]
+}
 
-function Comments() {
+const commentsArr = [
+  {
+    author:'Juan',
+    content:'Wow Amazing.'
+  },
+  {
+    author:'Valeria',
+    content:'Love this.'
+  },
+  {
+    author:'Paco',
+    content:'Another Comment'
+  },
+  {
+    author:'',
+    content:''
+  }
+]
+
+function Comments( {comments}:commentsProps) {
+  const commentsArr = [
+  {
+    author:'Juan',
+    content:'Wow Amazing.'
+  },
+  {
+    author:'Valeria',
+    content:'Love this.'
+  },
+  {
+    author:'Paco',
+    content:'Another Comment'
+  },
+  {
+    author:'',
+    content:''
+  }
+  ]
   return (
     <Container container>
       <Title item sm={8}>
         <h4>Comments</h4>
       </Title>
-<<<<<<< HEAD
-        <CommentCard/>
-=======
-      {/* ACT 1 = Render CommentCard component */}
-      {/* ACT 3 - Send one comment (comments[0]) as prop to CommentCard component */}
-      {/* ACT 5 - Iterate comments to render CommentCard component for each comment */}
->>>>>>> origin/react/session-02
+        <CommentCard comment={commentsArr[0]}/>; {/* ACT 3 */}
+        {/* ACT 5 */}
+        {comments.map((comment) => {
+          return  <CommentCard  comment={comment}/>;
+        })}
       <FormContainer item sm={8}>
         Form
       </FormContainer>

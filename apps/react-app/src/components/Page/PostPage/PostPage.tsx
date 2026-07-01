@@ -4,11 +4,12 @@ import {
   CommentsContainer,
   DescriptionContainer,
 } from "./PostPage.styles";
+
 import Banner from "../../Banner";
 import Comments from "../../Comments"
 
 const post = {
-  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJg9MMmYtrfdK60hhoaDdGwc3UxWqEWe4f4g&s",
+  image: "https://wallpaper.forfun.com/fetch/e8/e844b4573d679fbcd5717247f25a2b14.jpeg",
   title: "Traveling to Italy!",
   postID: "post-198312",
   comments: [
@@ -16,6 +17,14 @@ const post = {
       _id: "121314",
       author: "Albert",
       content: "I had such an amazing time visiting italy too, specially Rome",
+      createdAt: "03-08-2025",
+      updatedAt: "03-08-2025",
+      __v: "0",
+    },
+    {
+      _id: "121314",
+      author: "Richy",
+      content: "Great Content! ",
       createdAt: "03-08-2025",
       updatedAt: "03-08-2025",
       __v: "0",
@@ -29,15 +38,15 @@ function PostPage() {
     <Container container>
       Post page
       <BannerContainer item>
-        {/* ACT 1 - Render Banner component */}
-        {/* ACT 3 - Send postImage and postTitle as props to Banner component */}
+        {/* ACT 3 */}
+        <Banner postImage={post.image} postTitle={post.title}/>
       </BannerContainer>
       <DescriptionContainer item>
-        <p>{/* ACT 1 - Render post description */}</p>
+        <p>{post.description}</p>
       </DescriptionContainer>
       <CommentsContainer item>
-        {/* ACT 1 - Render Comments component */}
-        {/* ACT 3 - Send comments as prop to Comments component */}
+        {/* ACT 3 */}
+        <Comments comments={post.comments}/>
       </CommentsContainer>
     </Container>
   );

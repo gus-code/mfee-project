@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-function HomePage() {
-  const pageTitle = "Home Page";
-  return <>{pageTitle}</>;
-=======
 import PostList from "../../PostList";
 import CategoryButtonGroup from "../../CategoryButtonGroup";
 import CreatePostButton from "../../CreatePostButton";
@@ -44,7 +39,6 @@ function HomePage() {
       <PostList posts={posts} handleOpenForm={handleOpenForm} />
     </>
   );
->>>>>>> origin/react/session-02
 }
 
 export default HomePage;

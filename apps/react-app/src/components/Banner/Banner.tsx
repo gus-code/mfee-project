@@ -3,25 +3,25 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-const postImage = "https://images.wallpapersden.com/image/download/cloudy-mountains_a2toaWWUmZqaraWkpJRobWllrWdma2U.jpg";
-const postTitle = "Discovering the World App"; 
+interface BannerProps{
+  postImage:string,
+  postTitle:string
+}
+// link para imagen "https://images.wallpapersden.com/image/download/cloudy-mountains_a2toaWWUmZqaraWkpJRobWllrWdma2U.jpg";
 
 // ACT 3 - Receive postImage and postTitle props
-function Banner() {
+
+function Banner({postImage, postTitle}:BannerProps) {
   return (
-    <Container image={""}>
+    <Container image={postImage}>
       {/* ACT 3 - Send postImage as image prop to Container component */}
       <BannerContent>
         <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}>
           View Posts
         </Button>
-<<<<<<< HEAD
         <BannerTitle variant="h3">
           {postTitle}
         </BannerTitle>
-=======
-        <BannerTitle variant="h3">{/* ACT 1 - Render postTitle */}</BannerTitle>
->>>>>>> origin/react/session-02
       </BannerContent>
     </Container>
   );
