@@ -26,7 +26,17 @@ export default function NavBar(): React.JSX.Element {
         }}
       >
         <TravelExploreIcon sx={{ width: 45, height: 45 }} />
+<<<<<<< HEAD
         <Box sx={{ display: "flex", flexDirection: "column" }}>
+=======
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "start",
+          }}
+        >
+>>>>>>> origin/react/session-03
           <Typography variant="h6" fontWeight="bold">
             Discovering the World
           </Typography>

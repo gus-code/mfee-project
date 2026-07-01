@@ -1,36 +1,41 @@
-
-import { HomePage, PostPage, CategoriesPage, LoginPage} from "./components/Page";
+import { HomePage, LoginPage, PostPage, CategoriesPage } from "./components/Page";
+import NavBar from "./components/NavBar";
+import { PostProvider } from "./context";
 import { Grid } from "@mui/material";
 
-import { PageContainer } from "./components/Page/LoginPage/LoginPage.styles";
-import NavBar from "./components/NavBar";
-import Comments from "./components/Comments";
-
 function App() {
-  const page: string = "PostPage" ;
+  const page: string = "HomePage";
   return (
-    <>
-      <Grid container id="app" direction="column" height="100vh" wrap="nowrap">
-        <NavBar />
+    // ACT 7 - Rneder SnackbarProvider component
+    <PostProvider>
+      <>
         <Grid
           container
-          item
+          id="app"
+          direction="column"
+          height="100vh"
           wrap="nowrap"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "calc(100vh - 84px)",
-          }}
         >
-          {/* ACT 4  */}
-          {page === "HomePage" && <HomePage/> }
-          {page === "PostPage" && <PostPage/> }
-          {page === "LoginPage" && <LoginPage/> }
-          {page === "CategoriesPage" && <CategoriesPage/> }
-
+          <NavBar />
+          <Grid
+            container
+            item
+            wrap="nowrap"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "calc(100vh - 84px)",
+            }}
+          >
+            {/* ACT 4  */}
+            {page === "HomePage" && <HomePage/> }
+            {page === "PostPage" && <PostPage/> }
+            {page === "LoginPage" && <LoginPage/> }
+            {page === "CategoriesPage" && <CategoriesPage/> }
+          </Grid>
         </Grid>
-      </Grid>
-    </>
+      </>
+    </PostProvider>
   );
 }
 
