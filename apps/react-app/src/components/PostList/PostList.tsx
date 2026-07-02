@@ -12,9 +12,6 @@ import {
   CardContent,
   PostCard,
 } from "./PostList.styles";
-import { Category, Post } from "../../types";
-import { PostContext } from "../../context";
-import { useContext } from "react";
 
 interface PostListProps {
   posts: Post[];
