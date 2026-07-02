@@ -9,13 +9,11 @@ import {
   CardContent,
   PostCard,
 } from "./PostList.styles";
-<<<<<<< HEAD
-import { Post } from "../../types";
-=======
+
 import { Category, Post } from "../../types";
 import { PostContext } from "../../context";
 import { useContext } from "react";
->>>>>>> origin/react/session-03
+
 
 interface PostListProps {
   posts: Post[];
@@ -60,13 +58,12 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 color="inherit"
                 onClick={(e) => {
                   e.stopPropagation();
-<<<<<<< HEAD
-=======
+
                   removePost({
                     postID: post.id,
                     selectedCategoryID: selectedCategory?.id,
                   });
->>>>>>> origin/react/session-03
+
                 }}
               >
                 <DeleteIcon />

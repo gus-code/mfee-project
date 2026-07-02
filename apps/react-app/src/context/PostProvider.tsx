@@ -1,5 +1,6 @@
-import React, { createContext, useState, useCallback } from "react";
+import React, { createContext, useState, useCallback, useContext } from "react";
 
+import {SnackbarContext} from "./SnackbarProvider"
 import { Post } from "../types";
 
 interface PostContextProps {
@@ -19,7 +20,7 @@ interface PostProviderProps {
 }
 
 export const PostContext = createContext<PostContextProps>({
-  posts: [] || null,
+  posts: null,
   getPosts: () => {},
   removePost: () => {},
 });
@@ -68,6 +69,7 @@ const postList: Post[] = [
 export function PostProvider({
   children,
 }: PostProviderProps): React.JSX.Element {
+  const {createAlert} = useContext(SnackbarContext);
   const [serverData, setServerData] = useState(postList);
   const [posts, setPosts] = useState<Post[] | null>(postList);
 
@@ -92,9 +94,10 @@ export function PostProvider({
     }) => {
       setServerData((prev) => prev.filter((post: Post) => post.id !== postID));
       getPosts(selectedCategoryID);
-      // ACT 7 - Use createAlert function to notify the user that the item was successfully deleted
+      {/* ACT 7 */}
+      createAlert({ message: "Post removed successfully", severity: "success" });
     },
-    [getPosts]
+    [getPosts, createAlert]
   );
 
   return (

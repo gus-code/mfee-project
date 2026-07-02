@@ -51,7 +51,7 @@ function Comments( {comments}:commentsProps) {
       <Title item sm={8}>
         <h4>Comments</h4>
       </Title>
-        <CommentCard comment={commentsArr[0]}/>; {/* ACT 3 */}
+        <CommentCard comment={commentsArr[0]}/> {/* ACT 3 */}
         {/* ACT 5 */}
         {comments.map((comment) => {
           return  <CommentCard  comment={comment}/>;

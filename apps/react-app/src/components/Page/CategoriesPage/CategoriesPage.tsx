@@ -1,18 +1,31 @@
 import { Grid } from "@mui/material";
 
+import { useState, useEffect} from "react";
 import { PageContainer } from "./CategoriesPage.styles";
-// import { Category } from "../../../types";
+import DenseTable from "../../Table/Table"
+import { Category } from "../../../types";
 
-// const categories: Category[] = [
-//   { id: "663fef70d513515319551d1f", name: "Travel" },
-//   { id: "663fef70d513515319546d1f", name: "Food" },
-// ];
+const categories: Category[] = [
+  { id: "663fef70d513515319551d1f", name: "Travel"},
+  { id: "663fef70d513515319546d2f", name: "Food"},
+  { id: "663fef70d513515319546d3f", name: "Entertainment"},
+];
 
 function CategoriesPage() {
-  // ACT 6 - Create a state called "rows"
-  // ACT 6 - Call setRows when the component is mounted for first time, use "categories" variable as new value.
+  // ACT 6
+  const [rows, setRows] = useState<Category[]>([]);
+  // ACT 6 
+  useEffect(() => {
+    setRows(categories);
+  }, [categories]);
+  // ACT 6
+  const handleEditItem = ()=> {
 
-  //ACT 6 - Create two empty functions called "handleEditItem" and "handleDeleteItem"
+  };
+  const handleDeleteItem = ()=> {
+    
+  };
+
   return (
     <PageContainer container>
       Categories Page
@@ -20,7 +33,8 @@ function CategoriesPage() {
         //Add category (Icon button)
       </Grid>
       <Grid item sx={{ flexGrow: 1 }}>
-        {/* ACT 6 - Create a component called "Table" to display category names */}
+        {/* ACT 6  */}
+        <DenseTable rows={rows}/>
       </Grid>
       //Modal
     </PageContainer>
