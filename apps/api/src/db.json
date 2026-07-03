@@ -109,7 +109,7 @@
       "title": "BirdsPost",
       "image": "https://tse3.mm.bing.net/th/id/OIP.5J_j0NJlXDpLS94Ek4BXLwHaFj?cb=thfc1falcon4&rs=1&pid=ImgDetMain&o=7&rm=3",
       "description": "This is a bird post test",
-      "category": "4gWjcyB1xwRSFo9_C_k7A",
+      "category": "Birds",
       "comments": [
         {
           "id": "86599278-1878-4387-adc1-0ce0cf56d393",
@@ -120,7 +120,17 @@
         }
       ],
       "createdAt": "2026-07-03T18:47:06.141Z",
-      "updatedAt": "2026-07-03T18:47:06.141Z"
+      "updatedAt": "2026-07-03T20:06:57.741Z"
+    },
+    {
+      "id": "3ada73b3-5d51-4432-9e0e-7068ff592cf3",
+      "title": "Testing",
+      "image": "https://tse3.mm.bing.net/th/id/OIP.5J_j0NJlXDpLS94Ek4BXLwHaFj?cb=thfc1falcon4&rs=1&pid=ImgDetMain&o=7&rm=3",
+      "description": "Testing post because of a change",
+      "category": "Sports",
+      "comments": [],
+      "createdAt": "2026-07-03T19:56:28.673Z",
+      "updatedAt": "2026-07-03T20:07:33.752Z"
     }
   ],
   "users": [

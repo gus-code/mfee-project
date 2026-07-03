@@ -282,15 +282,24 @@ app.post('/api/posts',verifyToken, (req, res) => {
   res.status(201).json(post);
 });
 
-app.patch('/api/posts/:id',verifyToken, (req, res) => {
+app.patch('/api/posts/:id', verifyToken, (req, res) => {
   const db = readDB();
+
   const post = db.posts.find((p) => p.id === req.params.id);
   if (!post) return res.status(404).json({ message: 'Post not found' });
-  for (const field of ['title', 'image', 'description', 'category'] as const) {
-    if (req.body[field] !== undefined) post[field] = req.body[field];
-  }
+
+  const { title, image, description, category } = req.body;
+
+  if (title !== undefined) post.title = title;
+  if (image !== undefined) post.image = image;
+  if (description !== undefined) post.description = description;
+  if (category !== undefined) post.category = category;
+
   post.updatedAt = now();
   writeDB(db);
+
+  // console.log("PATCH BODY:", req.body);
+
   res.status(200).json(post);
 });
 

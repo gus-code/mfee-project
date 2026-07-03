@@ -10,7 +10,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-import { CreatePostPayload, Post } from "../../types";
+import { CreatePostPayload, Post, UpdatePostPayload } from "../../types";
 import { validator } from "../../common/utils";
 import { PostContext } from "../../context";
 import { FormInputs, Inputs, Category } from "../../types";
@@ -87,25 +87,32 @@ const Form = ({ open, post, categories, selectedCategory, setOpen, setSelectedPo
     event.preventDefault();
 
     const inputs = Object.values(formData);
-    const containError = inputs.map((input) => input.error).some((v) => !!v);
+    const containError = inputs.some((input) => !!input.error);
     if (containError) return;
 
     const newPost: CreatePostPayload = {
       title: formData.title.value,
       image: formData.image.value,
       description: formData.description.value,
-      category: formData.category.value
+      category: formData.category.value,
+    };
+
+    const updatePayload: UpdatePostPayload = {
+      id: post?.id ?? "",
+      title: formData.title.value,
+      image: formData.image.value,
+      description: formData.description.value,
+      category: formData.category.value,
     };
 
     handleClose();
 
-    post
-      ? await updatePostData({
-        payload: { ...newPost, id: post.id },
-        selectedCategoryID: selectedCategory?.id
-      })
-      : await addPost(newPost);
-  };
+    if (post) {
+      await updatePostData(updatePayload);
+    } else {
+      await addPost(newPost);
+    }
+};
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) => {
     const { name, value } = e.target;
@@ -173,7 +180,7 @@ const Form = ({ open, post, categories, selectedCategory, setOpen, setSelectedPo
                 helperText={formData[input.name].error ?? ' '}
               >
                 {categories?.map((option, idx) => (
-                  <MenuItem value={option.id ?? option.name} key={idx}>
+                  <MenuItem value={option.name} key={idx}>
                     {option.name}
                   </MenuItem>
                 ))}

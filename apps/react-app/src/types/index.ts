@@ -168,3 +168,11 @@ export interface AuthResponse {
 export interface MeResponse {
   user: { name: string; username: string } | null;
 }
+
+export interface UpdatePostPayload {
+  id: string;
+  title?: string;
+  image?: string;
+  description?: string;
+  category?: string;
+}
