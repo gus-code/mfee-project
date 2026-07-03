@@ -12,6 +12,8 @@ const api = axios.create({
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdmlkQG91dGxvb2suY29tIiwiaWF0IjoxNzE1Nzk4NTc2LCJleHAiOjE3MTU4MDIxNzZ9.EgW4AcErd_fwDVwZa-pzJCw12xKBzGJ32B8Ry92XRs8";
 
+// ACT 11 - Get the token from localStorage
+
 api.interceptors.request.use((config) => {
   config.baseURL = BASE_URL;
   config.headers.Authorization = `Bearer ${token}`;

@@ -10,7 +10,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-import { CreatePostPayload, NewPost, Post } from "../../types";
+import { CreatePostPayload, Post } from "../../types";
 import { validator } from "../../common/utils";
 import { PostContext } from "../../context";
 import { FormInputs, Inputs, Category } from "../../types";
@@ -101,9 +101,9 @@ const Form = ({ open, post, categories, selectedCategory, setOpen, setSelectedPo
 
     post
       ? await updatePostData({
-          payload: { ...newPost, id: post.id },
-          selectedCategoryID: selectedCategory?.id
-        })
+        payload: { ...newPost, id: post.id },
+        selectedCategoryID: selectedCategory?.id
+      })
       : await addPost(newPost);
   };
 
@@ -189,5 +189,6 @@ const Form = ({ open, post, categories, selectedCategory, setOpen, setSelectedPo
     </Dialog>
   );
 };
+
 
 export default Form;

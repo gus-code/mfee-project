@@ -158,3 +158,13 @@ export interface UpdateCategory {
   id: string;
   name: string;
 }
+
+export interface AuthResponse {
+  message: string;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface MeResponse {
+  user: { name: string; username: string } | null;
+}

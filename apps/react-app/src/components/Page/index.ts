@@ -1,4 +1,6 @@
 export { default as HomePage } from "./HomePage";
 export { default as PostPage } from "./PostPage";
 export { default as CategoriesPage } from "./CategoriesPage";
-// ACT 2 - Export LoginPage component
+// ACT 10 - export NotFoundPage componenet
+
+export { default } from "./Page";

@@ -31,6 +31,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
           key={post.id}
           image={post.image}
           md={posts.length === 1 ? 12 : 6}
+          // ACT 10 - Navigate to PostPage component and send postID as route params
         >
           <CardContainer>
             <CardContent>

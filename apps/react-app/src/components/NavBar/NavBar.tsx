@@ -55,6 +55,7 @@ export default function NavBar({ onNavigate }: NavBarProps): React.JSX.Element {
           gap: 2,
         }}
       >
+         {/* ACT 10 - Use NavLink to navigate to categories page and change the backgroundcolor when is active */}
         <Button
           sx={{
             textDecoration: "none",
@@ -71,6 +72,8 @@ export default function NavBar({ onNavigate }: NavBarProps): React.JSX.Element {
         >
           Categories
         </Button>
+
+         {/* ACT 10 - Use NavLink to navigate to categories page and change the backgroundcolor when is active */}
         <Button
           sx={{
             textDecoration: "none",

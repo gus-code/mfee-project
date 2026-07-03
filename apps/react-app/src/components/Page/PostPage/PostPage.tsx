@@ -17,6 +17,9 @@ interface PostPageProps {
 }
 
 function PostPage({ postId }: PostPageProps) {
+
+   // ACT 10 - Get postID from route params
+
   const { data: post, isLoading } = useQuery<Post | null>({
     queryKey: ['post', postId],
     queryFn: () => (postId ? getPostById(postId) : Promise.resolve(null)),

@@ -6,6 +6,13 @@ import { Button, Grid, Paper, Typography, Box } from "@mui/material";
 
  // ACT 9 - Use the login and register APIs
 
+   // ACT 11 - After the login is successful, save the accessToken in local storage and use the following to direct the user to the home page:
+  // const { protocol, host } = window.location;
+  // const signInUrl = `${protocol}//${host}/`;
+  // if (window.location.href !== signInUrl) {
+  //   window.location.assign(signInUrl);
+  // }
+
 const LoginPage = () => {
   const [option, setOption] = useState("login");
 

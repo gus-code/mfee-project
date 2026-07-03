@@ -4,7 +4,7 @@ import CommentCard from "../CommentCard/CommentCard";
 import NewCommentForm from "../Form/CommentForm";
 import { Title, Container, FormContainer } from "./Comments.styles";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postComment } from "../../api";
+import { postComment } from "../../api/endpoints";
 
 interface CommentsProps {
   comments: Comment[];
