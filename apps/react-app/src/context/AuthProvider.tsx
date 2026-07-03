@@ -1,49 +1,61 @@
-import axios, { AxiosResponse } from "axios";
-import React, { createContext, useCallback, useState } from "react";
-import { BASE_URL } from "../api/axios";
+import axios from "axios";
+import React, { createContext, useCallback, useEffect, useState } from "react";
+import { DATA_BASE_URL } from "../api/axios";
 
 interface AuthContextProps {
   authLoading: boolean;
-  isAuthenticated: boolean | null;
-  validateToken: () => void;
+  isAuthenticated: boolean;
+  validateToken: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextProps>({
   authLoading: false,
-  isAuthenticated: null,
-  validateToken: () => {},
+  isAuthenticated: false,
+  validateToken: async () => {},
 });
 
 interface AuthProviderProps {
   children: React.JSX.Element;
 }
 
-export function AuthProvider({
-  children,
-}: AuthProviderProps): React.JSX.Element {
+export function AuthProvider({ children }: AuthProviderProps) {
   const [authLoading, setAuthLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const validateToken = useCallback(async () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsYW5yYyIsImlhdCI6MTc1ODUyMDc4OSwiZXhwIjoxNzYxMTEyNzg5fQ.pPtq1A9_3yzKlo0rW-mvXfTnYB65Hk2IyIW6qkexb2c";
-      // ACT 11 - Get the token from localStorage
-    const onLoading = (isLoading: boolean) => setAuthLoading(isLoading);
+    const token = localStorage.getItem("accessToken");
+    
+    if (!token) {
+      setIsAuthenticated(false);
+      return;
+    }
 
-    onLoading(true);
-    await axios({
-      url: BASE_URL + "/posts",
-      method: "get",
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response: AxiosResponse) => {
-        if (response.status === 200) {
-          setIsAuthenticated(true);
+    try {
+      setAuthLoading(true);
+
+      const response = await axios.get(
+        `${DATA_BASE_URL}/auth/validate`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      .catch(() => setIsAuthenticated(false))
-      .finally(() => onLoading(false));
+      );
+
+      if (response.status === 200) {
+        setIsAuthenticated(true);
+      }
+    } catch (error) {
+      setIsAuthenticated(false);
+      localStorage.removeItem("accessToken");
+    } finally {
+      setAuthLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    validateToken();
+  }, [validateToken]);
 
   return (
     <AuthContext.Provider

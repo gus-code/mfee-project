@@ -13,6 +13,7 @@ export const registerUser = async ( user: User ) => {
 
 export const loginUser = async ( user: UserLogin ) => {
   const { data } = await api.post('/auth/login', user);
+  localStorage.setItem('accessToken', data.accessToken)
   return data;
 }
 

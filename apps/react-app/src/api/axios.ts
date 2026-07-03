@@ -1,24 +1,45 @@
 import axios from "axios";
+import { useSnackbarStore } from "../store/snackbarStore";
 
-export const BASE_URL = "http://localhost:3001/api";
+export const DATA_BASE_URL = "http://localhost:3001/api";
 
-
-// Create axios instance with base config
+const openSnackbar = () => {
+  useSnackbarStore.getState().show(
+    "You need to log in first",
+    "warning"
+  )
+}
+// Create axios instance with base config for the data API
 const api = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true, // allow cookies for auth endpoints
+  baseURL: DATA_BASE_URL,
+  withCredentials: true,
 });
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdmlkQG91dGxvb2suY29tIiwiaWF0IjoxNzE1Nzk4NTc2LCJleHAiOjE3MTU4MDIxNzZ9.EgW4AcErd_fwDVwZa-pzJCw12xKBzGJ32B8Ry92XRs8";
-
-// ACT 11 - Get the token from localStorage
 
 api.interceptors.request.use((config) => {
-  config.baseURL = BASE_URL;
-  config.headers.Authorization = `Bearer ${token}`;
+  config.baseURL = DATA_BASE_URL;
+
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   config.signal = AbortSignal.timeout(5000);
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+
+    if (status === 401) {
+      localStorage.removeItem("accessToken");
+      openSnackbar();
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 
 export default api;

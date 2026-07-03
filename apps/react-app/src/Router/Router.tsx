@@ -1,16 +1,30 @@
 import { createBrowserRouter } from "react-router-dom";
-import Page, { HomePage } from "../components/Page";
+import Page, { CategoriesPage, HomePage, PostPage } from "../components/Page";
 import PrivateRoute from "./PrivateRoute";
+import LoginPage from "../components/Page/LoginPage/LoginPage";
+import NotFoundPage from "../components/Page/NotFoundPage";
 
 const Router = createBrowserRouter([
   {
     path: "/",
-    element: <PrivateRoute route={<Page page={<HomePage />} />} />,
+    element: <Page page={<HomePage />} />,
   },
-  // ACT 10 - Render PostPage component inside a private route and mark postID as a params
-  // ACT 10 - Render CategoriesPage component inside a private route
-  // ACT 10 - Render LoginPage component inside a private route
-  // ACT 10 - Render NotFoundPage component for undefined routes
+  {
+    path: '/posts/:postId',
+    element: <PrivateRoute route={<Page page={<PostPage/>}/>}/>
+  },
+  {
+    path: '/categories',
+    element: <PrivateRoute route={<Page page={<CategoriesPage/>}/>}/>
+  },
+    {
+    path: '/login',
+    element: <Page page={<LoginPage/>}/>
+  },
+    {
+    path: '*',
+    element: <Page page={<NotFoundPage/>} />
+  }
 ]);
 
 export default Router;

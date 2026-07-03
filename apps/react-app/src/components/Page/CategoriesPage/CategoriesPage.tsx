@@ -82,7 +82,6 @@ function CategoriesPage() {
   //ACT 6 - Create two empty functions called "handleEditItem" and "handleDeleteItem"
   return (
     <PageContainer container>
-      Categories Page
 
       <p>{editId}</p>
       <Grid item sx={{ justifyContent: "flex-end", display: "flex" }}>

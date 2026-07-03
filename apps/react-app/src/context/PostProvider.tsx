@@ -1,88 +1,71 @@
-import React, {
-  createContext,
-  useCallback
-} from 'react';
+import React, { createContext, useCallback } from "react";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 
-// import { SnackbarContext } from "../context";
-import { createPost, deletePost, updatePost } from '../api';
-import { CreatePostPayload, UpdatePostPayload } from '../types';
-import { useQueryClient } from '@tanstack/react-query';
+import {
+  createPost,
+  updatePost,
+  deletePost,
+} from "../api";
+
+import {
+  CreatePostPayload,
+  UpdatePostPayload,
+} from "../types";
 
 interface PostContextProps {
-  addPost: (newPost: CreatePostPayload) => Promise<void>;
-  removePost: ({ postID, selectedCategoryID }: { postID: string; selectedCategoryID?: string }) => Promise<void>;
-  updatePostData: ({ payload, selectedCategoryID }: { payload: UpdatePostPayload; selectedCategoryID?: string }) => Promise<void>;
-}
-
-interface PostProviderProps {
-  children: React.JSX.Element;
+  addPost: (newPost: CreatePostPayload) => void;
+  removePost: (postID: string) => void;
+  updatePostData: (payload: UpdatePostPayload) => void;
 }
 
 export const PostContext = createContext<PostContextProps>({
-  addPost: async () => {},
-  removePost: async () => {},
-  updatePostData: async () => {}
+  addPost: () => {},
+  removePost: () => {},
+  updatePostData: () => {},
 });
 
-export function PostProvider({ children }: PostProviderProps): React.JSX.Element {
-  // const createAlert = useContext(SnackbarContext);
+export function PostProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
 
-  const onLoading = (_isLoading: boolean) => {
-    return;
-  };
-
-  const onError = useCallback(() => {
-    // createAlert({
-    //   message: "Something went wrong.",
-    //   severity: "error",
-    // });
-  }, []);
-
-  const addPost = useCallback(
-    async (newPost: CreatePostPayload) => {
-      await createPost(newPost);
-      await queryClient.invalidateQueries({ queryKey: ['posts'] });
+  const createMutation = useMutation({
+    mutationFn: createPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
-    [queryClient]
-  );
+  });
 
-  const updatePostData = useCallback(
-    async ({ payload }: { payload: UpdatePostPayload; selectedCategoryID?: string }) => {
-      const onSuccess = async () => {
-        await queryClient.invalidateQueries({ queryKey: ['posts'] });
-        // createAlert({
-        //   message: "Post successfully updated.",
-        //   severity: "success",
-        // });
-      };
-
-      await updatePost({ payload: payload, onSuccess, onError, onLoading });
+  const updateMutation = useMutation({
+    mutationFn: updatePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
-    [onError, queryClient]
-  );
+  });
 
-  const removePost = useCallback(
-    async ({ postID }: { postID: string; selectedCategoryID?: string }) => {
-      const onSuccess = async () => {
-        await queryClient.invalidateQueries({ queryKey: ['posts'] });
-        // createAlert({
-        //   message: "Post successfully deleted.",
-        //   severity: "success",
-        // });
-      };
-
-      await deletePost({ postID, onSuccess, onError });
+  const deleteMutation = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
-    [onError, queryClient]
-  );
+  });
+
+  const addPost = useCallback((newPost: CreatePostPayload) => {
+    createMutation.mutate(newPost);
+  }, [createMutation]);
+
+  const updatePostData = useCallback((payload: UpdatePostPayload) => {
+    updateMutation.mutate(payload);
+  }, [updateMutation]);
+
+  const removePost = useCallback((postID: string) => {
+    deleteMutation.mutate(postID);
+  }, [deleteMutation]);
 
   return (
     <PostContext.Provider
       value={{
         addPost,
         removePost,
-        updatePostData
+        updatePostData,
       }}
     >
       {children}

@@ -4,15 +4,22 @@
 import { randomUUID } from 'crypto';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 
 import cors from 'cors';
 import express, { Request, Response } from 'express';
+import dotenv from 'dotenv';
+
+
+dotenv.config({
+  path: './apps/api/.env'
+});
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3001;
 
-// ponytail: db.json lives next to the source; nx serve runs from the workspace
-// root, so resolve from cwd. Move to an env var if you ever run from elsewhere.
 const DB_PATH = join(process.cwd(), 'apps/api/src/db.json');
 
 interface Comment {
@@ -38,6 +45,7 @@ interface Category {
   createdAt: string;
   updatedAt: string;
 }
+
 interface User {
   firstname: string;
   lastname: string;
@@ -49,6 +57,9 @@ interface DB {
   posts: Post[];
   users: User[];
 }
+
+console.log('ACCESS:', process.env.ACCESS_TOKEN_SECRET)
+console.log('REFRESH:', process.env.REFRESH_TOKEN_SECRET);
 
 const readDB = (): DB => {
   const parsed = JSON.parse(readFileSync(DB_PATH, 'utf-8')) as Partial<DB>;
@@ -63,11 +74,35 @@ const now = () => new Date().toISOString();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 // Frontend runs with credentials: true, so reflect the origin instead of "*".
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: 'http://localhost:4200', credentials: true }));
+
+const verifyToken = (req: Request, res: Response, next: Function) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const decoded = jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET!
+    );
+
+    (req as any).user = decoded;
+
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+};
 
 // --- Auth ---
-app.post('/api/auth/register', (req, res) => {
+app.post('/api/auth/register',async (req, res) => {
   const db = readDB();
   const { firstname, lastname, username, password } = req.body as Partial<User>;
 
@@ -80,15 +115,43 @@ app.post('/api/auth/register', (req, res) => {
     return res.status(409).json({ message: 'Username already exists' });
   }
 
+  const hashedPassword = await bcrypt.hash(password.trim(), 10);
+
   const user: User = {
     firstname: firstname.trim(),
     lastname: lastname.trim(),
     username: username.trim(),
-    password: password.trim()
+    password: hashedPassword
   };
+
+  const accessToken = jwt.sign(
+    { username: user.username },
+    process.env.ACCESS_TOKEN_SECRET!,
+    { expiresIn: '30d' }
+  );
+
+  const refreshToken = jwt.sign(
+    { username: user.username },
+    process.env.REFRESH_TOKEN_SECRET!,
+    { expiresIn: '30d' }
+  );
 
   db.users.push(user);
   writeDB(db);
+
+  res.cookie('accessToken', accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 30 * 24 * 60 * 60 * 1000
+  });
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 30 * 24 * 60 * 60 * 1000
+  });
 
   res.status(201).json({
     message: 'User registered',
@@ -96,7 +159,7 @@ app.post('/api/auth/register', (req, res) => {
   });
 });
 
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', async (req, res) => {
   const db = readDB();
   const { username, password } = req.body as Partial<User>;
 
@@ -105,21 +168,49 @@ app.post('/api/auth/login', (req, res) => {
   }
 
   const user = db.users.find(
-    (candidate) => candidate.username === username.trim() && candidate.password === password.trim()
+    (candidate) => candidate.username === username.trim()
   );
 
   if (!user) {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
 
+  const validPassword = await bcrypt.compare(
+    password.trim(),
+    user.password
+  );
+
+  if (!validPassword) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+  const accessToken = jwt.sign(
+    { username: user.username },
+    process.env.ACCESS_TOKEN_SECRET!,
+    { expiresIn: '30d' }
+  );
+
+  const refreshToken = jwt.sign(
+    { username: user.username },
+    process.env.REFRESH_TOKEN_SECRET!,
+    { expiresIn: '30d' }
+  );
+
   res.status(200).json({
     message: 'Logged in',
+    accessToken,
     user: { firstname: user.firstname, lastname: user.lastname, username: user.username }
   });
 });
 app.post('/api/auth/refresh', (_req, res) => res.status(200).json({ message: 'Token refreshed' }));
 app.post('/api/auth/logout', (_req, res) => res.status(200).json({ message: 'Logged out' }));
-app.get('/api/auth/me', (_req, res) => res.status(200).json({ user: { name: 'Demo', username: 'demo@example.com' } }));
+
+app.get("/api/auth/validate", verifyToken, (req, res) => {
+  res.status(200).json({
+    message: "Token valid",
+    user: (req as any).user,
+  });
+});
 
 // --- Categories ---
 app.get('/api/categories', (_req, res) => res.status(200).json(readDB().categories));
@@ -129,7 +220,7 @@ app.get('/api/categories/:id', (req, res) => {
   category ? res.status(200).json(category) : res.status(404).json({ message: 'Category not found' });
 });
 
-app.post('/api/categories', (req: Request, res: Response) => {
+app.post('/api/categories', verifyToken, (req: Request, res: Response) => {
   const db = readDB();
   const category: Category = { id: randomUUID(), name: req.body.name, createdAt: now(), updatedAt: now() };
   db.categories.push(category);
@@ -137,7 +228,7 @@ app.post('/api/categories', (req: Request, res: Response) => {
   res.status(201).json(category);
 });
 
-app.patch('/api/categories/:id', (req, res) => {
+app.patch('/api/categories/:id', verifyToken, (req, res) => {
   const db = readDB();
   const category = db.categories.find((c) => c.id === req.params.id);
   if (!category) return res.status(404).json({ message: 'Category not found' });
@@ -147,7 +238,7 @@ app.patch('/api/categories/:id', (req, res) => {
   res.status(200).json(category);
 });
 
-app.delete('/api/categories/:id', (req, res) => {
+app.delete('/api/categories/:id', verifyToken,  (req, res) => {
   const db = readDB();
   const before = db.categories.length;
   db.categories = db.categories.filter((c) => c.id !== req.params.id);
@@ -159,7 +250,7 @@ app.delete('/api/categories/:id', (req, res) => {
 // --- Posts ---
 app.get('/api/posts', (_req, res) => res.status(200).json(readDB().posts));
 
-// Must come before "/:id" so "category" is not read as an id.
+
 app.get('/api/posts/category/:category', (req, res) => {
   const db = readDB();
   const id = req.params.category;
@@ -174,7 +265,7 @@ app.get('/api/posts/:id', (req, res) => {
   post ? res.status(200).json(post) : res.status(404).json({ message: 'Post not found' });
 });
 
-app.post('/api/posts', (req, res) => {
+app.post('/api/posts',verifyToken, (req, res) => {
   const db = readDB();
   const post: Post = {
     id: randomUUID(),
@@ -191,7 +282,7 @@ app.post('/api/posts', (req, res) => {
   res.status(201).json(post);
 });
 
-app.patch('/api/posts/:id', (req, res) => {
+app.patch('/api/posts/:id',verifyToken, (req, res) => {
   const db = readDB();
   const post = db.posts.find((p) => p.id === req.params.id);
   if (!post) return res.status(404).json({ message: 'Post not found' });
@@ -203,7 +294,7 @@ app.patch('/api/posts/:id', (req, res) => {
   res.status(200).json(post);
 });
 
-app.delete('/api/posts/:id', (req, res) => {
+app.delete('/api/posts/:id',verifyToken, (req, res) => {
   const db = readDB();
   const before = db.posts.length;
   db.posts = db.posts.filter((p) => p.id !== req.params.id);
@@ -212,7 +303,7 @@ app.delete('/api/posts/:id', (req, res) => {
   res.status(204).send();
 });
 
-app.post('/api/posts/:id/comments', (req, res) => {
+app.post('/api/posts/:id/comments',verifyToken, (req, res) => {
   const db = readDB();
   const post = db.posts.find((p) => p.id === req.params.id);
   if (!post) return res.status(404).json({ message: 'Post not found' });

@@ -3,13 +3,18 @@ import Grid from "@mui/material/Grid";
 import { Box, Button, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { useSnackbarStore } from "../../store/snackbarStore";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface NavBarProps {
-  onNavigate?: (page: 'HomePage' | 'CategoriesPage' | 'LoginPage') => void;
-}
 
-export default function NavBar({ onNavigate }: NavBarProps): React.JSX.Element {
+export default function NavBar(): React.JSX.Element {
+
+  const currRoute = useLocation();
   const showSnackbar = useSnackbarStore((s) => s.show);
+  const navigate = useNavigate();
+  const handleClick = (path: string) => {
+    navigate(path)
+  }
+
   return (
     <Grid
       item
@@ -30,8 +35,12 @@ export default function NavBar({ onNavigate }: NavBarProps): React.JSX.Element {
           gap: "16px",
           alignItems: "center",
         }}
+
+        onClick={() => navigate('/')}
       >
-        <TravelExploreIcon sx={{ width: 45, height: 45 }} />
+        
+        <TravelExploreIcon sx={{ width: 45, height: 45 }}
+        />
         <Box
           sx={{
             display: "flex",
@@ -61,13 +70,13 @@ export default function NavBar({ onNavigate }: NavBarProps): React.JSX.Element {
             textDecoration: "none",
             fontWeight: "bold",
             color: "white",
-            backgroundColor: "#1e8fff",
+            backgroundColor: currRoute.pathname === "/categories" ? "#0069d1" : "#1e8fff",
             borderRadius: "8px",
             padding: "8px",
           }}
           onClick={() => {
             showSnackbar("Categories clicked", "info");
-            onNavigate?.('CategoriesPage');
+            handleClick("/categories");
           }}
         >
           Categories
@@ -79,11 +88,11 @@ export default function NavBar({ onNavigate }: NavBarProps): React.JSX.Element {
             textDecoration: "none",
             fontWeight: "bold",
             color: "white",
-            backgroundColor: "#1e8fff",
+            backgroundColor: currRoute.pathname === "/login" ? "#0069d1" : "#1e8fff",
             borderRadius: "8px",
             padding: "8px",
           }}
-          onClick={() => onNavigate?.('LoginPage')}
+          onClick={() => handleClick("/login")}
         >
           Login
         </Button>

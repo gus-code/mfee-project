@@ -5,14 +5,13 @@ import { UserLogin } from "../../types";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../api/endpoints/auth";
 import { queryClient } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormData extends UserLogin {};
-
-
-
-
 const LoginForm = () => {
 
+
+  const navigate = useNavigate();
   const loginMessage = 'Succeed'
   const loginError = 'Username or password might be incorrrect'
 
@@ -27,13 +26,16 @@ const LoginForm = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['user']
-      })
+      });
+      navigate('/')
     },
   })
 
   const onSubmit: SubmitHandler<LoginFormData> = (data) => {
     registerMuatation.mutate(data)
   };
+
+
 
   
   return (

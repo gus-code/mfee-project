@@ -25,16 +25,10 @@
       "updatedAt": "2025-07-11T09:30:00.000Z"
     },
     {
-      "name": "Travel",
+      "name": "Travel Edited",
       "id": "Tr4v3l246813579",
       "createdAt": "2025-07-12T15:45:00.000Z",
-      "updatedAt": "2025-07-12T15:45:00.000Z"
-    },
-    {
-      "id": "85354c04-b2b6-48d0-95a0-b7321445d15c",
-      "name": "TestCategory",
-      "createdAt": "2026-07-03T15:22:13.033Z",
-      "updatedAt": "2026-07-03T15:22:13.033Z"
+      "updatedAt": "2026-07-03T19:38:19.953Z"
     }
   ],
   "posts": [
@@ -70,6 +64,13 @@
           "id": "3.1",
           "author": "Anonymus",
           "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        },
+        {
+          "id": "da0ea848-8f54-44fb-8e9d-09561ec32e09",
+          "author": "Segundo comentario de Prueba",
+          "content": "Hola",
+          "createdAt": "2026-07-03T19:37:33.767Z",
+          "updatedAt": "2026-07-03T19:37:33.767Z"
         }
       ]
     },
@@ -102,6 +103,24 @@
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
       "category": "Sports",
       "comments": []
+    },
+    {
+      "id": "7217f8fc-1260-4a3a-8458-4756d47cbd7f",
+      "title": "BirdsPost",
+      "image": "https://tse3.mm.bing.net/th/id/OIP.5J_j0NJlXDpLS94Ek4BXLwHaFj?cb=thfc1falcon4&rs=1&pid=ImgDetMain&o=7&rm=3",
+      "description": "This is a bird post test",
+      "category": "4gWjcyB1xwRSFo9_C_k7A",
+      "comments": [
+        {
+          "id": "86599278-1878-4387-adc1-0ce0cf56d393",
+          "author": "Cruz",
+          "content": "It works!",
+          "createdAt": "2026-07-03T18:47:28.539Z",
+          "updatedAt": "2026-07-03T18:47:28.539Z"
+        }
+      ],
+      "createdAt": "2026-07-03T18:47:06.141Z",
+      "updatedAt": "2026-07-03T18:47:06.141Z"
     }
   ],
   "users": [
@@ -116,6 +135,12 @@
       "lastname": "Perez",
       "username": "Cruz",
       "password": "Cruz1234"
+    },
+    {
+      "firstname": "Cruz",
+      "lastname": "Pérez",
+      "username": "criz123",
+      "password": "$2b$10$Ln.OwjsPj3NN4wx0ZMghReetmv0kDm4trxmD1apPix/IywUW0dEWO"
     }
   ]
 }

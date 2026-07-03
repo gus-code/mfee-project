@@ -8,17 +8,15 @@ import {
   CommentsContainer,
   DescriptionContainer,
 } from "./PostPage.styles";
-import { getPostById } from "../../../api";
 import { Post } from "../../../types";
 import Loading from "../../Loading";
+import { getPostById } from "../../../api/endpoints";
+import { useParams } from 'react-router-dom';
 
-interface PostPageProps {
-  postId?: string;
-}
+function PostPage() {
 
-function PostPage({ postId }: PostPageProps) {
-
-   // ACT 10 - Get postID from route params
+  // ACT 10 - Get postID from route params
+  const { postId } = useParams();
 
   const { data: post, isLoading } = useQuery<Post | null>({
     queryKey: ['post', postId],
@@ -32,7 +30,6 @@ function PostPage({ postId }: PostPageProps) {
 
   return (
     <Container container>
-      Post page
       <BannerContainer item>
         <Banner postImage={post.image} postTitle={post.title} />
       </BannerContainer>

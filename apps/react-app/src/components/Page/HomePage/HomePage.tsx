@@ -6,8 +6,9 @@ import CategoryButtonGroup from "../../CategoryButtonGroup";
 import { Category, Post } from "../../../types";
 import Loading from "../../Loading";
 import CreatePostButton from "../../CreatePostButton";
-import { getAllCategories, getAllPost, getPostByCategory } from "../../../api";
+
 import { useQuery } from "@tanstack/react-query";
+import { getAllCategories, getPostByCategory, getAllPost } from "../../../api";
 
 function HomePage() {
   const [open, setOpen] = useState(false);
