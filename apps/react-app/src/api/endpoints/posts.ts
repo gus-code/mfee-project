@@ -1,6 +1,6 @@
-import { AxiosError, AxiosResponse } from 'axios';
 
-import { CreateCommentPayload, CreatePostPayload, Post, UpdatePostPayload } from '../../types';
+
+import { CreateCommentPayload, CreatePostPayload, UpdatePostPayload } from '../../types';
 import api from '../axios';
 
 
@@ -30,50 +30,13 @@ export const postComment = async(comment: CreateCommentPayload) => {
   return data;
 }
 
-export const updatePost = async ({
-  payload,
-  onSuccess,
-  onError,
-  onLoading,
-}: {
-  payload: UpdatePostPayload;
-  onSuccess?: (data: Post) => void;
-  onError?: (error: AxiosError) => void;
-  onLoading?: (isLoading: boolean) => void;
-}) => {
-  onLoading && onLoading(true);
-
+export const updatePost = async (payload: UpdatePostPayload) => {
   const { id, ...updatedFields } = payload;
+  const { data } = await api.patch(`/posts/${id}`, updatedFields);
+  return data;
+}
 
-  await api
-    .patch(`/posts/${id}`, updatedFields)
-    .then((response: AxiosResponse) => {
-      const data: Post = response.data;
-      if (response.status === 200 && onSuccess) onSuccess(data);
-    })
-    .catch((error: AxiosError) => {
-      console.error(error);
-      onError && onError(error);
-    })
-    .finally(() => onLoading && onLoading(false));
-};
-
-export const deletePost = async ({
-  postID,
-  onSuccess,
-  onError,
-}: {
-  postID: string;
-  onSuccess?: () => void;
-  onError?: (error: AxiosError) => void;
-}) => {
-  await api
-    .delete(`/posts/${postID}`)
-    .then((response: AxiosResponse) => {
-      if (response.status === 204 && onSuccess) onSuccess();
-    })
-    .catch((error: AxiosError) => {
-      console.error(error);
-      onError && onError(error);
-    });
-};
+export const deletePost = async(id: string) => {
+  const { data } = await api.delete(`/posts/${id}`);
+  return data;
+}

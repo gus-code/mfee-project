@@ -5,7 +5,7 @@ import React, {
 
 // import { SnackbarContext } from "../context";
 import { createPost, deletePost, updatePost } from '../api';
-import { CreatePostPayload, Post, UpdatePostPayload } from '../types';
+import { CreatePostPayload, UpdatePostPayload } from '../types';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface PostContextProps {
