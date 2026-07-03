@@ -38,12 +38,26 @@ interface Category {
   createdAt: string;
   updatedAt: string;
 }
+interface User {
+  firstname: string;
+  lastname: string;
+  username: string;
+  password: string;
+}
 interface DB {
   categories: Category[];
   posts: Post[];
+  users: User[];
 }
 
-const readDB = (): DB => JSON.parse(readFileSync(DB_PATH, 'utf-8'));
+const readDB = (): DB => {
+  const parsed = JSON.parse(readFileSync(DB_PATH, 'utf-8')) as Partial<DB>;
+  return {
+    categories: parsed.categories ?? [],
+    posts: parsed.posts ?? [],
+    users: parsed.users ?? []
+  };
+};
 const writeDB = (db: DB) => writeFileSync(DB_PATH, JSON.stringify(db, null, 2));
 const now = () => new Date().toISOString();
 
@@ -52,10 +66,57 @@ app.use(express.json());
 // Frontend runs with credentials: true, so reflect the origin instead of "*".
 app.use(cors({ origin: true, credentials: true }));
 
-// --- Auth (stubbed: the frontend uses a hardcoded token and the API does not
-// verify it, so these just return the shape the callbacks expect) ---
-app.post('/api/auth/register', (_req, res) => res.status(201).json({ message: 'User registered' }));
-app.post('/api/auth/login', (_req, res) => res.status(200).json({ message: 'Logged in' }));
+// --- Auth ---
+app.post('/api/auth/register', (req, res) => {
+  const db = readDB();
+  const { firstname, lastname, username, password } = req.body as Partial<User>;
+
+  if (!firstname?.trim() || !lastname?.trim() || !username?.trim() || !password?.trim()) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  const existingUser = db.users.find((user) => user.username === username?.trim());
+  if (existingUser) {
+    return res.status(409).json({ message: 'Username already exists' });
+  }
+
+  const user: User = {
+    firstname: firstname.trim(),
+    lastname: lastname.trim(),
+    username: username.trim(),
+    password: password.trim()
+  };
+
+  db.users.push(user);
+  writeDB(db);
+
+  res.status(201).json({
+    message: 'User registered',
+    user: { firstname: user.firstname, lastname: user.lastname, username: user.username }
+  });
+});
+
+app.post('/api/auth/login', (req, res) => {
+  const db = readDB();
+  const { username, password } = req.body as Partial<User>;
+
+  if (!username?.trim() || !password?.trim()) {
+    return res.status(400).json({ message: 'Username and password are required' });
+  }
+
+  const user = db.users.find(
+    (candidate) => candidate.username === username.trim() && candidate.password === password.trim()
+  );
+
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+  res.status(200).json({
+    message: 'Logged in',
+    user: { firstname: user.firstname, lastname: user.lastname, username: user.username }
+  });
+});
 app.post('/api/auth/refresh', (_req, res) => res.status(200).json({ message: 'Token refreshed' }));
 app.post('/api/auth/logout', (_req, res) => res.status(200).json({ message: 'Logged out' }));
 app.get('/api/auth/me', (_req, res) => res.status(200).json({ user: { name: 'Demo', username: 'demo@example.com' } }));

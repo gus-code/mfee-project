@@ -1,3 +1,5 @@
+
+import { useQuery } from '@tanstack/react-query';
 import Banner from "../../Banner";
 import Comments from "../../Comments/Comments";
 import {
@@ -6,27 +8,25 @@ import {
   CommentsContainer,
   DescriptionContainer,
 } from "./PostPage.styles";
+import { getPostById } from "../../../api";
+import { Post } from "../../../types";
+import Loading from "../../Loading";
 
-const post = {
-  image: "url",
-  title: "Post Title",
-  postID: "post-id",
-  comments: [
-    {
-      _id: "comment-id",
-      author: "John Doe",
-      content: "This is a sample comment.",
-      createdAt: "2023-01-01T00:00:00.000Z",
-      updatedAt: "2023-01-01T00:00:00.000Z",
-      __v: 0,
-    },
-  ],
-  description: "This is a sample post description.",
-}; // ACT 1 - Fill all this properties with random data
+interface PostPageProps {
+  postId?: string;
+}
 
-// ACT 9 - Use postID variable to fetch the post data
+function PostPage({ postId }: PostPageProps) {
+  const { data: post, isLoading } = useQuery<Post | null>({
+    queryKey: ['post', postId],
+    queryFn: () => (postId ? getPostById(postId) : Promise.resolve(null)),
+    enabled: Boolean(postId),
+  });
 
-function PostPage() {
+  if (!postId) return <div>Select a post to view.</div>;
+  if (isLoading) return <Loading />;
+  if (!post) return <div>Post not found</div>;
+
   return (
     <Container container>
       Post page
@@ -37,7 +37,7 @@ function PostPage() {
         <p>{post.description}</p>
       </DescriptionContainer>
       <CommentsContainer item>
-        <Comments comments={post.comments} />
+        <Comments comments={post.comments} postId={postId} />
       </CommentsContainer>
     </Container>
   );

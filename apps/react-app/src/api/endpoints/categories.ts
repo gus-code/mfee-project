@@ -1,32 +1,28 @@
-import { AxiosError, AxiosResponse } from "axios";
 
-import axios from "../axios";
-import { Category } from "../../types";
+import { UpdateCategory } from "../../types";
+import api from "../axios";
 
-export const getCategories = async ({
-  onSuccess,
-  onError,
-  onLoading,
-}: {
-  onSuccess?: (data: Category[]) => void;
-  onError?: (error: AxiosError) => void;
-  onLoading?: (isLoading: boolean) => void;
-}) => {
-  onLoading && onLoading(true);
+export const getAllCategories = async () => {
+  const { data } = await api.get('/categories');
+  return data;
+}
 
-  await axios({
-    url: "/categories",
-    method: "get",
-  })
-    .then((response: AxiosResponse) => {
-      const data: Category[] = response.data;
-      if (response.status === 200 && onSuccess) onSuccess(data);
-    })
-    .catch((error: AxiosError) => {
-      console.error(`${error}`);
-      onError && onError(error);
-    })
-    .finally(() => onLoading && onLoading(false));
-};
+export const getCategoryById = async (id: string) => {
+  const { data } = await api.get(`/categories/${id}`);
+  return data;
+}
 
-// ACT 9 - Create callbacks fuctions to call create, update and delete APIs
+export const updateCategory = async ( category: UpdateCategory ) => {
+  const { data } = await api.patch(`/categories/${category.id}`, { name: category.name } );
+  return data;
+}
+
+export const deleteCategory = async (id: string) => {
+  const { data } = await api.delete(`/categories/${id}`);
+  return data;
+}
+
+export const createCategory = async (name: string ) => {
+  const { data } = await api.post('/categories', { name });
+  return data;
+}

@@ -1,4 +1,4 @@
-import { Order, TableData } from "../../types";
+import { Order, TableData } from "../types";
 
 function descendingComparator(
   a: TableData,

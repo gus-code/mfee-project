@@ -1,29 +1,41 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button, Box, Alert, Typography } from "@mui/material";
+import { UserLogin } from "../../types";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "../../api/endpoints/auth";
+import { queryClient } from "../../App";
 
-interface LoginFormData {
-  username: string;
-  password: string;
-}
+interface LoginFormData extends UserLogin {};
 
-interface Props {
-  onLogin: (data: LoginFormData) => void;
-  loginMessage: string | null;
-  loginError: string | null;
-}
 
-const LoginForm = ({ onLogin, loginMessage, loginError }: Props) => {
+
+
+const LoginForm = () => {
+
+  const loginMessage = 'Succeed'
+  const loginError = 'Username or password might be incorrrect'
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>();
 
+  const registerMuatation = useMutation({
+    mutationFn: loginUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['user']
+      })
+    },
+  })
+
   const onSubmit: SubmitHandler<LoginFormData> = (data) => {
-    onLogin(data);
+    registerMuatation.mutate(data)
   };
 
+  
   return (
     <Box
       component="form"
@@ -51,8 +63,8 @@ const LoginForm = ({ onLogin, loginMessage, loginError }: Props) => {
       <Button type="submit" variant="contained" fullWidth>
         Ingresar
       </Button>
-      {loginMessage && <Alert severity="success">{loginMessage}</Alert>}
-      {loginError && <Alert severity="error">{loginError}</Alert>}
+      {registerMuatation.isSuccess && <Alert severity="success">{loginMessage}</Alert>}
+      {registerMuatation.isError && <Alert severity="error">{loginError}</Alert>}
     </Box>
   );
 };

@@ -115,3 +115,46 @@ export interface AuthResponse {
 export interface MeResponse {
   user: { name: string; username: string } | null;
 }
+
+export interface User {
+  firstname?: string;
+  lastname?: string;
+  username: string;
+  password: string;
+}
+
+export interface NewUser extends User {
+  firstname: string;
+  lastname: string;
+}
+
+export interface UserLogin {
+  username: string;
+  password: string;
+}
+
+export interface CommentResponse {
+  _id: string;
+  author: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface NewComment {
+  author: string;
+  content: string;
+}
+
+export interface NewPost {
+  title: string;
+  image: string;
+  description: string;
+  category: string;
+}
+
+export interface UpdateCategory {
+  id: string;
+  name: string;
+}

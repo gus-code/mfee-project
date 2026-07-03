@@ -1,145 +1,58 @@
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { CreatePostPayload, Post, UpdatePostPayload } from '../../types';
-import axios from '../axios';
+import { CreateCommentPayload, CreatePostPayload, Post, UpdatePostPayload } from '../../types';
+import api from '../axios';
 
-export const getPosts = async ({
-  onSuccess,
-  onError,
-  onLoading
-}: {
-  onSuccess?: (data: Post[]) => void;
-  onError?: (error: AxiosError) => void;
-  onLoading?: (isLoading: boolean) => void;
-}) => {
-  onLoading && onLoading(true);
 
-  await axios({
-    url: '/posts',
-    method: 'get'
-  })
-    .then((response: AxiosResponse) => {
-      const data: Post[] = response.data;
-      if (response.status === 200 && onSuccess) onSuccess(data);
-    })
-    .catch((error: AxiosError) => {
-      console.error(`${error}`);
-      onError && onError(error);
-    })
-    .finally(() => onLoading && onLoading(false));
-};
+export const getAllPost = async() => {
+  const { data } = await api.get('/posts');
+  return data;
+}
 
-export const getPostsByCategory = async ({
-  selectedCategoryID,
-  onSuccess,
-  onError,
-  onLoading
-}: {
-  selectedCategoryID: string;
-  onSuccess?: (data: Post[]) => void;
-  onError?: (error: AxiosError) => void;
-  onLoading?: (isLoading: boolean) => void;
-}) => {
-  onLoading && onLoading(true);
+export const getPostById = async( id: string) => {
+  const { data } = await api.get(`/posts/${id}`)
+  return data;
+}
 
-  await axios({
-    url: `/posts/category/${selectedCategoryID}`,
-    method: 'get'
-  })
-    .then((response: AxiosResponse) => {
-      const data: Post[] = response.data;
-      if (response.status === 200 && onSuccess) onSuccess(data);
-    })
-    .catch((error: AxiosError) => {
-      console.error(`${error}`);
-      onError && onError(error);
-    })
-    .finally(() => onLoading && onLoading(false));
-};
+export const getPostByCategory = async( id: string ) => {
+  const { data } = await api.get(`/posts/category/${id}`)
+  return data;
+}
 
-export const getPost = async ({
-  postID,
-  onSuccess,
-  onError,
-  onLoading
-}: {
-  postID: string;
-  onSuccess?: (data: Post) => void;
-  onError?: (error: AxiosError) => void;
-  onLoading?: (isLoading: boolean) => void;
-}) => {
-  onLoading && onLoading(true);
+export const createPost = async(post: CreatePostPayload) => {
+  const { data } = await api.post('/posts', post);
+  return data;
+}
 
-  await axios({
-    url: `/posts/${postID}`,
-    method: 'get'
-  })
-    .then((response: AxiosResponse) => {
-      const data: Post = response.data;
-      if (response.status === 200 && onSuccess) onSuccess(data);
-    })
-    .catch((error: AxiosError) => {
-      console.error(`${error}`);
-      onError && onError(error);
-    })
-    .finally(() => onLoading && onLoading(false));
-};
-
-export const createPost = async ({
-  newPost,
-  onSuccess,
-  onError,
-  onLoading
-}: {
-  newPost: CreatePostPayload;
-  onSuccess?: (data: Post) => void;
-  onError?: (error: AxiosError) => void;
-  onLoading?: (isLoading: boolean) => void;
-}) => {
-  onLoading && onLoading(true);
-
-  await axios({
-    method: 'post',
-    url: `/posts`,
-    data: newPost
-  })
-    .then((response: AxiosResponse) => {
-      const data: Post = response.data;
-      if (response.status === 201 && onSuccess) onSuccess(data);
-    })
-    .catch((error: AxiosError) => {
-      console.error(`${error}`);
-      onError && onError(error);
-    })
-    .finally(() => onLoading && onLoading(false));
-};
+export const postComment = async(comment: CreateCommentPayload) => {
+  const newComment = { author: comment.author, content: comment.content };
+  const { data } = await api.post(`/posts/${comment.id}/comments`, newComment);
+  return data;
+}
 
 export const updatePost = async ({
   payload,
   onSuccess,
   onError,
-  onLoading
+  onLoading,
 }: {
   payload: UpdatePostPayload;
   onSuccess?: (data: Post) => void;
   onError?: (error: AxiosError) => void;
   onLoading?: (isLoading: boolean) => void;
 }) => {
-  const { id, ...updatedPost } = payload;
-
   onLoading && onLoading(true);
 
-  await axios({
-    url: `/posts/${id}`,
-    method: 'patch',
-    data: updatedPost
-  })
+  const { id, ...updatedFields } = payload;
+
+  await api
+    .patch(`/posts/${id}`, updatedFields)
     .then((response: AxiosResponse) => {
       const data: Post = response.data;
       if (response.status === 200 && onSuccess) onSuccess(data);
     })
     .catch((error: AxiosError) => {
-      console.error(`${error}`);
+      console.error(error);
       onError && onError(error);
     })
     .finally(() => onLoading && onLoading(false));
@@ -149,25 +62,18 @@ export const deletePost = async ({
   postID,
   onSuccess,
   onError,
-  onLoading
 }: {
   postID: string;
   onSuccess?: () => void;
   onError?: (error: AxiosError) => void;
-  onLoading?: (isLoading: boolean) => void;
 }) => {
-  onLoading && onLoading(true);
-
-  await axios({
-    url: `/posts/${postID}`,
-    method: 'delete'
-  })
+  await api
+    .delete(`/posts/${postID}`)
     .then((response: AxiosResponse) => {
       if (response.status === 204 && onSuccess) onSuccess();
     })
     .catch((error: AxiosError) => {
-      console.error(`${error}`);
+      console.error(error);
       onError && onError(error);
-    })
-    .finally(() => onLoading && onLoading(false));
+    });
 };

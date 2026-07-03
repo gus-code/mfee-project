@@ -1,21 +1,17 @@
 import React, {
   createContext,
-  useState,
-  // useContext,
   useCallback
 } from 'react';
 
 // import { SnackbarContext } from "../context";
-import { createPost, deletePost, getPosts, getPostsByCategory, updatePost } from '../api';
+import { createPost, deletePost, updatePost } from '../api';
 import { CreatePostPayload, Post, UpdatePostPayload } from '../types';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface PostContextProps {
-  posts: Post[] | null;
-  loadingPosts: boolean;
-  addPost: (newPost: CreatePostPayload) => void;
-  removePost: ({ postID, selectedCategoryID }: { postID: string; selectedCategoryID?: string }) => void;
-  getPostList: (selectedCategoryID?: string) => void;
-  updatePostData: ({ payload, selectedCategoryID }: { payload: UpdatePostPayload; selectedCategoryID?: string }) => void;
+  addPost: (newPost: CreatePostPayload) => Promise<void>;
+  removePost: ({ postID, selectedCategoryID }: { postID: string; selectedCategoryID?: string }) => Promise<void>;
+  updatePostData: ({ payload, selectedCategoryID }: { payload: UpdatePostPayload; selectedCategoryID?: string }) => Promise<void>;
 }
 
 interface PostProviderProps {
@@ -23,21 +19,17 @@ interface PostProviderProps {
 }
 
 export const PostContext = createContext<PostContextProps>({
-  posts: null,
-  loadingPosts: false,
-  addPost: () => {},
-  removePost: () => {},
-  getPostList: () => {},
-  updatePostData: () => {}
+  addPost: async () => {},
+  removePost: async () => {},
+  updatePostData: async () => {}
 });
 
 export function PostProvider({ children }: PostProviderProps): React.JSX.Element {
   // const createAlert = useContext(SnackbarContext);
-  const [posts, setPosts] = useState<Post[] | null>(null);
-  const [loadingPosts, setLoadingPosts] = useState(false);
+  const queryClient = useQueryClient();
 
-  const onLoading = (isLoading: boolean) => {
-    setLoadingPosts(isLoading);
+  const onLoading = (_isLoading: boolean) => {
+    return;
   };
 
   const onError = useCallback(() => {
@@ -47,37 +39,18 @@ export function PostProvider({ children }: PostProviderProps): React.JSX.Element
     // });
   }, []);
 
-  const getPostList = useCallback(
-    async (selectedCategoryID?: string) => {
-      const onSuccess = async (data: Post[]) => {
-        setPosts(data);
-      };
-
-      const params = { onSuccess, onError, onLoading };
-      selectedCategoryID ? await getPostsByCategory({ selectedCategoryID, ...params }) : await getPosts(params);
-    },
-    [onError]
-  );
-
   const addPost = useCallback(
     async (newPost: CreatePostPayload) => {
-      const onSuccess = async () => {
-        await getPostList();
-        // createAlert({
-        //   message: "Post successfully created.",
-        //   severity: "success",
-        // });
-      };
-
-      await createPost({ newPost, onSuccess, onError, onLoading });
+      await createPost(newPost);
+      await queryClient.invalidateQueries({ queryKey: ['posts'] });
     },
-    [onError, getPostList]
+    [queryClient]
   );
 
   const updatePostData = useCallback(
-    async ({ payload, selectedCategoryID }: { payload: UpdatePostPayload; selectedCategoryID?: string }) => {
+    async ({ payload }: { payload: UpdatePostPayload; selectedCategoryID?: string }) => {
       const onSuccess = async () => {
-        await getPostList(selectedCategoryID);
+        await queryClient.invalidateQueries({ queryKey: ['posts'] });
         // createAlert({
         //   message: "Post successfully updated.",
         //   severity: "success",
@@ -86,32 +59,29 @@ export function PostProvider({ children }: PostProviderProps): React.JSX.Element
 
       await updatePost({ payload: payload, onSuccess, onError, onLoading });
     },
-    [onError, getPostList]
+    [onError, queryClient]
   );
 
   const removePost = useCallback(
-    async ({ postID, selectedCategoryID }: { postID: string; selectedCategoryID?: string }) => {
+    async ({ postID }: { postID: string; selectedCategoryID?: string }) => {
       const onSuccess = async () => {
-        await getPostList(selectedCategoryID);
+        await queryClient.invalidateQueries({ queryKey: ['posts'] });
         // createAlert({
         //   message: "Post successfully deleted.",
         //   severity: "success",
         // });
       };
-      setLoadingPosts(true);
+
       await deletePost({ postID, onSuccess, onError });
     },
-    [onError, getPostList]
+    [onError, queryClient]
   );
 
   return (
     <PostContext.Provider
       value={{
-        posts,
-        loadingPosts,
         addPost,
         removePost,
-        getPostList,
         updatePostData
       }}
     >

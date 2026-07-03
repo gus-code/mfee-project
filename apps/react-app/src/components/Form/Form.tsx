@@ -10,10 +10,10 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-import { NewPost, Post } from "../../types";
+import { CreatePostPayload, NewPost, Post } from "../../types";
 import { validator } from "../../common/utils";
 import { PostContext } from "../../context";
-import { FormInputs, Inputs } from "../../types";
+import { FormInputs, Inputs, Category } from "../../types";
 
 const inputs: Inputs = [
   {
@@ -97,11 +97,6 @@ const Form = ({ open, post, categories, selectedCategory, setOpen, setSelectedPo
       category: formData.category.value
     };
 
-    createOrUpdatePost({
-      method: post ? "patch" : "post",
-      newPost,
-      postID: post?.id,
-    });
     handleClose();
 
     post

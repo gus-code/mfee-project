@@ -4,7 +4,11 @@ import { Box, Button, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { useSnackbarStore } from "../../store/snackbarStore";
 
-export default function NavBar(): React.JSX.Element {
+interface NavBarProps {
+  onNavigate?: (page: 'HomePage' | 'CategoriesPage' | 'LoginPage') => void;
+}
+
+export default function NavBar({ onNavigate }: NavBarProps): React.JSX.Element {
   const showSnackbar = useSnackbarStore((s) => s.show);
   return (
     <Grid
@@ -60,7 +64,10 @@ export default function NavBar(): React.JSX.Element {
             borderRadius: "8px",
             padding: "8px",
           }}
-          onClick={() => showSnackbar("Categories clicked", "info")}
+          onClick={() => {
+            showSnackbar("Categories clicked", "info");
+            onNavigate?.('CategoriesPage');
+          }}
         >
           Categories
         </Button>
@@ -73,6 +80,7 @@ export default function NavBar(): React.JSX.Element {
             borderRadius: "8px",
             padding: "8px",
           }}
+          onClick={() => onNavigate?.('LoginPage')}
         >
           Login
         </Button>

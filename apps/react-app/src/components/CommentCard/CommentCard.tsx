@@ -1,12 +1,10 @@
 import { Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Container, Content, Author } from "./CommentCard.styles";
-import { CommentResponse } from "../../types";
+import { Comment } from "../../types";
 
-
-// Used the existing Type
 interface CommentCardProps {
-  comment: CommentResponse;
+  comment: Comment;
 }
 
 function CommentCard({ comment }: CommentCardProps) {

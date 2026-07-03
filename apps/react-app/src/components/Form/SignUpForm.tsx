@@ -2,16 +2,29 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TextField, Button, Box, Alert } from "@mui/material";
 import { NewUser } from "../../types";
+import { useMutation } from "@tanstack/react-query";
+
+import { queryClient } from "../../App";
+import { registerUser } from "../../api/endpoints/auth";
 
 interface SignUpFormData extends NewUser {
   confirmPassword: string;
 }
 
-interface Props {
-  onAdd: (user: NewUser) => void;
-}
+export const SignUpForm = () => {
 
-export const SignUpForm = ({ onAdd }: Props) => {
+  const registerMutation = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
+    },
+  });
+
+  const registerMessage = 'Account created, please log in'
+  const registerError = 'There was an error while creating your account'
+
   const {
     register,
     handleSubmit,
@@ -25,7 +38,7 @@ export const SignUpForm = ({ onAdd }: Props) => {
   const onSubmit: SubmitHandler<SignUpFormData> = (data) => {
     // Type transformation
     const { confirmPassword, ...user } = data;
-    onAdd(user);
+    registerMutation.mutate(data);
     reset();
   };
 
@@ -91,6 +104,9 @@ export const SignUpForm = ({ onAdd }: Props) => {
           All fields are required
         </Alert>
       )}
+
+      {registerMutation.isSuccess && <Alert severity="success">{registerMessage}</Alert>}
+      {registerMutation.isError && <Alert severity="error">{registerError}</Alert>}
     </Box>
   );
 };

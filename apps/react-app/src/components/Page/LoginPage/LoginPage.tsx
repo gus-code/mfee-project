@@ -1,42 +1,14 @@
 import { useState } from "react";
-import { NewUser, User } from "../../types";
 import SignUpForm from "../../Form/SignUpForm";
 import LoginForm from "../../Form/LoginForm";
 import { PageContainer } from "./LoginPage.styles";
-import { Button, Grid, Paper, Typography, Alert, Box } from "@mui/material";
+import { Button, Grid, Paper, Typography, Box } from "@mui/material";
 
  // ACT 9 - Use the login and register APIs
 
 const LoginPage = () => {
   const [option, setOption] = useState("login");
-  const [users, setUsers] = useState<User[]>([]);
-  const [loginMessage, setLoginMessage] = useState<string | null>(null);
-  const [loginError, setLoginError] = useState<string | null>(null);
 
-  const handleAdd = (data: NewUser) => {
-    const newUser: User = {
-      username: data.username,
-      password: data.password,
-    };
-    setUsers((prev) => [...prev, newUser]);
-    setOption("login");
-    setLoginMessage("User created. Please log in.");
-    setLoginError(null);
-  };
-
-  const handleLogin = (data: { username: string; password: string }) => {
-    const userFound = users.find(
-      (user) => user.username === data.username && user.password === data.password
-    );
-
-    if (userFound) {
-      setLoginMessage("Login exitoso");
-      setLoginError(null);
-    } else {
-      setLoginMessage(null);
-      setLoginError("Usuario o contraseña incorrectos");
-    }
-  };
 
   return (
     <PageContainer container>
@@ -61,15 +33,11 @@ const LoginPage = () => {
       <Grid item xs={12} md={6} lg={5}>
         <Paper elevation={3} sx={{ p: 4, borderRadius: 3 }}>
           {option === "login" ? (
-            <LoginForm
-              onLogin={handleLogin}
-              loginMessage={loginMessage}
-              loginError={loginError}
-            />
+            <LoginForm/>
           ) : (
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <Typography variant="h6">Crear cuenta</Typography>
-              <SignUpForm onAdd={handleAdd} />
+              <SignUpForm />
             </Box>
           )}
         </Paper>

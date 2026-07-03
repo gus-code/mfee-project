@@ -4,7 +4,7 @@
       "name": "Birds",
       "id": "4gWjcyB1xwRSFo9_C_k7A",
       "createdAt": "2025-06-30T10:35:42.430Z",
-      "updatedAt": "2025-06-30T10:53:54.265Z"
+      "updatedAt": "2026-07-03T15:21:56.996Z"
     },
     {
       "name": "Food",
@@ -29,6 +29,12 @@
       "id": "Tr4v3l246813579",
       "createdAt": "2025-07-12T15:45:00.000Z",
       "updatedAt": "2025-07-12T15:45:00.000Z"
+    },
+    {
+      "id": "85354c04-b2b6-48d0-95a0-b7321445d15c",
+      "name": "TestCategory",
+      "createdAt": "2026-07-03T15:22:13.033Z",
+      "updatedAt": "2026-07-03T15:22:13.033Z"
     }
   ],
   "posts": [
@@ -43,6 +49,13 @@
           "id": "2.1",
           "author": "Anonymus",
           "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        },
+        {
+          "id": "53eee191-3c7d-40b3-b047-ffeb122b8412",
+          "author": "Hello",
+          "content": "Hello",
+          "createdAt": "2026-07-03T15:21:41.960Z",
+          "updatedAt": "2026-07-03T15:21:41.960Z"
         }
       ]
     },
@@ -89,6 +102,20 @@
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
       "category": "Sports",
       "comments": []
+    }
+  ],
+  "users": [
+    {
+      "firstname": "Admin",
+      "lastname": "User",
+      "username": "admin",
+      "password": "admin"
+    },
+    {
+      "firstname": "Cruz",
+      "lastname": "Perez",
+      "username": "Cruz",
+      "password": "Cruz1234"
     }
   ]
 }
