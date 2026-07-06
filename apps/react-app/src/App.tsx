@@ -2,9 +2,12 @@ import { HomePage, LoginPage, PostPage, CategoriesPage } from "./components/Page
 import NavBar from "./components/NavBar";
 import { PostProvider, SnackbarProvider } from "./context";
 import { Grid } from "@mui/material";
+import Comments from "./components/Comments/Comments";
+import {Comment} from "./components/CommentCard/CommentCard"
+import{useState} from "react";
 
 function App() {
-  const page: string = "PostPage";
+  const page: string = "LoginPage";
   return (
     // ACT 7
     <SnackbarProvider>

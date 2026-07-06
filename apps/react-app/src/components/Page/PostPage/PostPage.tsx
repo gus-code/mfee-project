@@ -37,8 +37,7 @@ const post = {
   description: "Traveling Around the globe is so awesome!",
 };
 
-function PostPage() {
-  /*  ========== TEST SNACKBAR ========
+function PostPage() { 
   const { posts, getPosts, removePost } = useContext(PostContext);
 
   useEffect(() => {
@@ -50,11 +49,11 @@ function PostPage() {
       removePost({ postID: posts[0].id });
     }
   };
-*/
+
   return (
     <Container container>
       Post page
-        <Button variant="contained" sx={{ mb: 1.5, width: "fit-content" }} /* == SNACKBAR TEST == onClick={handleRemovePost}*/>
+        <Button variant="contained" sx={{ mb: 1.5, width: "fit-content" }} onClick={handleRemovePost}>
           Remove post test
         </Button>
         
