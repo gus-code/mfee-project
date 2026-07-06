@@ -7,7 +7,7 @@ import {Comment} from "./components/CommentCard/CommentCard"
 import{useState} from "react";
 
 function App() {
-  const page: string = "LoginPage";
+  const page: string = "HomePage";
   return (
     // ACT 7
     <SnackbarProvider>

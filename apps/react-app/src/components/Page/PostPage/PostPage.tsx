@@ -12,6 +12,7 @@ import Banner from "../../Banner";
 import Comments from "../../Comments";
 import { PostContext } from "../../../context";
 
+/*
 const post = {
   image: "https://wallpaper.forfun.com/fetch/e8/e844b4573d679fbcd5717247f25a2b14.jpeg",
   title: "Traveling to Italy!",
@@ -26,7 +27,7 @@ const post = {
       __v: "0",
     },
     {
-      _id: "121314",
+      _id: "121315",
       author: "Richy",
       content: "Great Content! ",
       createdAt: "03-08-2025",
@@ -36,19 +37,25 @@ const post = {
   ],
   description: "Traveling Around the globe is so awesome!",
 };
-
+*/
 function PostPage() { 
-  const { posts, getPosts, removePost } = useContext(PostContext);
-
+  // ACT 9 
+  const { posts, getPostList, removePost } = useContext(PostContext);
+  
   useEffect(() => {
-    getPosts();
-  }, [getPosts]);
+    getPostList();
+  }, [getPostList]);
+
+  const currentPost = posts?.[0];
+  if (!currentPost) {
+    return <div>Loading...</div>;
+  }
 
   const handleRemovePost = () => {
     if (posts && posts.length > 0) {
-      removePost({ postID: posts[0].id });
-    }
+    removePost({ postID: currentPost._id });    }
   };
+
 
   return (
     <Container container>
@@ -59,14 +66,14 @@ function PostPage() {
         
       <BannerContainer item>
         {/* ACT 3 */}
-        <Banner postImage={post.image} postTitle={post.title} />
+        <Banner postImage={currentPost.image} postTitle={currentPost.title} />
       </BannerContainer>
       <DescriptionContainer item>
-        <p>{post.description}</p>
+        <p>{currentPost.description}</p>
       </DescriptionContainer>
       <CommentsContainer item>
         {/* ACT 3 */}
-        <Comments comments={post.comments} />
+        <Comments comments={currentPost.comments} />
       </CommentsContainer>
     </Container>
   );

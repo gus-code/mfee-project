@@ -1,17 +1,18 @@
+import { useContext } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid, IconButton, Typography } from "@mui/material";
 
 import { shorten } from "../../common/utils";
+import { Category, Post } from "../../types";
+import { PostContext } from "../../context";
 import {
-  CardActions,
+CardActions,
   CardContainer,
   CardContent,
   PostCard,
 } from "./PostList.styles";
-import { Category, Post } from "../../types";
-import { PostContext } from "../../context";
-import { useContext } from "react";
+
 
 
 interface PostListProps {
@@ -29,7 +30,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
         <PostCard
           item
           xs={12}
-          key={post.id}
+          key={post._id}
           image={post.image}
           md={posts.length === 1 ? 12 : 6}
         >
@@ -41,7 +42,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 {post.comments.length > 1 ? " Comments" : " Comment"}
               </h3>
               <h3>{shorten(post.description, 70)}</h3>
-              <Typography variant="overline">{post.category?.name}</Typography>
+              <Typography variant="overline">{post.name}</Typography>
             </CardContent>
             <CardActions className="card-actions">
               <IconButton
@@ -57,12 +58,10 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 color="inherit"
                 onClick={(e) => {
                   e.stopPropagation();
-
                   removePost({
-                    postID: post.id,
-                    selectedCategoryID: selectedCategory?.id,
+                    postID: post._id,
+                    selectedCategoryID: selectedCategory?._id,
                   });
-
                 }}
               >
                 <DeleteIcon />

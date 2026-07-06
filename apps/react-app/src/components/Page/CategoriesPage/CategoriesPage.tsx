@@ -5,12 +5,14 @@ import { useState, useEffect} from "react";
 import { ModalActions, ModalBackground, ModalContent, PageContainer } from "./CategoriesPage.styles";
 import DenseTable from "../../Table/Table"
 import { Category } from "../../../types";
+import {getCategories,updateCategories,createCategory,deleteCategory,} from "../../../api/endpoints/categories";
 
-const categories: Category[] = [
+/*const categories: Category[] = [
   { id: "663fef70d513515319551d1f", name: "Travel"},
   { id: "663fef70d513515319546d2f", name: "Food"},
   { id: "663fef70d513515319546d3f", name: "Entertainment"},
 ];
+*/
 
 function CategoriesPage() {
   // ACT 6
@@ -20,9 +22,13 @@ function CategoriesPage() {
   const isEditMode = selectedCategory !== null;
 
   useEffect(() => {
-    setRows(categories);
-  }, []);
+  getCategories({
+    onSuccess: (data) => setRows(data),
+    onError: (err) => console.error(err),
+  });
+}, []);
 
+   // ACT 9 
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>)=>{
     event.preventDefault()
     const form = event.currentTarget;
@@ -31,16 +37,27 @@ function CategoriesPage() {
     if(!categoryName) return;
 
     if(isEditMode){
-      setRows((prevRows)=>
-      prevRows.map((row)=>
-      row.id === selectedCategory?.id? {...row, name:categoryName} : row)
-      );
+      updateCategories({
+        id: selectedCategory!._id,
+        updatedCategory: { name: categoryName },
+        onSuccess: (updated) => {
+          setRows((prev) =>
+            prev.map((row) => row._id === updated._id ? updated : row ));
+        },
+        onError: (err) => console.error(err),
+      }
+    );
     } else {
-        const newCategory: Category = {
-          id: (rows.length + 1).toString(),
-          name: categoryName,
-        };
-        setRows([...rows,newCategory])
+        createCategory({
+          newCategory: { name: categoryName },
+          onSuccess: (data) => {
+            setRows((prev) => [...prev, data]);
+          },
+          onError: (error) => { console.error(error);
+            alert("Failed to create new categoryy");
+          },
+        }
+      );
     }
 
     form.reset();
@@ -61,10 +78,13 @@ function CategoriesPage() {
   }
   
   const handleDeleteItem = (id:string)=> {
-    setRows(
-      (prevRows) => prevRows.filter(
-        (row) => row.id !== id)
-    );
+    deleteCategory({
+      id,
+      onSuccess: () => {
+        setRows((prevRows) => prevRows.filter((row) => row._id !== id));
+      },
+      onError: (error) => {console.error(error);alert("Failed to delete category");},
+    });
   };
   
 
@@ -73,7 +93,7 @@ function CategoriesPage() {
      <h3> Categories Page</h3>
       <Grid item sx={{ justifyContent: "flex-end", display: "flex" }}>
         {/* ACT 8 */}
-        <IconButton color="primary" onClick={() => setModalOpen(true)}>
+        <IconButton color="primary" onClick={handleAddItem}>
           <AddIcon />
         </IconButton>
       </Grid>

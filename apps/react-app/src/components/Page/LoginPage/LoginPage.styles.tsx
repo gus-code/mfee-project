@@ -37,15 +37,6 @@ export const FormContainer = styled(Grid)`
     width: 100%;
   }
 
-
-  textarea {
-    width: 100%;
-    max-width: 100%;
-    font-size: 14px;
-    font-family: Arial, sans-serif;
-    resize: none;
-  }
-
   button {
     padding: 12px 16px;
     margin-top: 8px;

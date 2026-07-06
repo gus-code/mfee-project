@@ -1,6 +1,6 @@
 // ACT 7 
 import { Alert, Snackbar} from "@mui/material"
-import React, { createContext, useState, useCallback, useContext } from "react";
+import React, { createContext, useState, useCallback } from "react";
 
 import { Alert as alertType} from "../types";
 
@@ -16,9 +16,7 @@ export const SnackbarContext = createContext<SnackbarContextProps>({
   createAlert: ()=> {}
 });
 
-export function SnackbarProvider({
-  children,
-}: SnackbarProviderProps): React.JSX.Element {
+export function SnackbarProvider({children }: SnackbarProviderProps): React.JSX.Element {
   const [openSB, setOpenSB] = useState(false);
   const [alert, setAlert] = useState<alertType>({message: "", severity: "success"});
 

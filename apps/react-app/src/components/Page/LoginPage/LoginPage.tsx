@@ -1,33 +1,51 @@
 import { PageContainer, FormContainer } from "./LoginPage.styles";
 import {useState} from "react";
 import { Grid } from "@mui/material";
-import {User,NewUser} from "../../../types";
+import {LoginPayload,RegisterPayload} from "../../../types";
 import { sign } from "crypto";
+import { login, createUser } from "../../../api/endpoints/auth";
 
 const LoginPage = () => {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [logInData, setLogInData] = useState<User>({username:"", password:""});
-  const [signUpData, setSignUpData] = useState<NewUser>({firstname:"", lastname:"", username:"", password:"", confirmpassword:""});
+  const [logInData, setLogInData] = useState<LoginPayload>({username:"", password:""});
+  const [signUpData, setSignUpData] = useState<RegisterPayload>({firstname:"", lastname:"", username:"", password:""});
 
   const handleLoginSubmit =(event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if(!logInData?.username || !logInData.password) return;
-    console.log("Login:",logInData);
-    setLogInData({username: '', password: ''});
+
+    login({
+      user: logInData,
+      onSuccess: (data)=>{
+        localStorage.setItem("token",data.accessToken);
+        console.log("success logging in");
+        setLogInData({username: '', password: ''});
+      },
+      onError: (error)=>{
+        console.error(error);
+        alert("Invalid user or password");
+      }
+
+    })
   }
 
     const handleSignupSubmit =(event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-    if(!signUpData?.username || !signUpData?.password || !signUpData?.firstname || !signUpData?.lastname 
-      || !signUpData?.confirmpassword) return;
-    if(signUpData.password !== signUpData.confirmpassword){
-      alert("Passwords dont match"); return;
-    }
-    console.log("SignUp:",signUpData);
-    setSignUpData({username: '', firstname: '', lastname: '', password: '', confirmpassword:''});
+      if(!signUpData?.username || !signUpData?.password || !signUpData?.firstname || !signUpData?.lastname ) return;
+
+      createUser({
+        newUser: signUpData,
+        onSuccess: (data)=>{
+          console.log("user created", data);
+          setLoggedIn(true);
+          setSignUpData({username: '', firstname: '', lastname: '', password: ''});
+        }, onError: (error)=>{ console.error(error);
+          alert("user not created successfully")
+        }
+      })
 
   }
-  
+  // ACT 9 
   return (
     <PageContainer container>
       <Grid item md={4} xs={4} lg={4}>
@@ -67,10 +85,6 @@ const LoginPage = () => {
             <div>
               <label htmlFor="password">Password</label>
               <input type="password" placeholder="Password" value={signUpData?.password} onChange={(e)=> setSignUpData({...signUpData, password: e.target.value})}></input>
-            </div>
-            <div>
-              <label htmlFor="confirmpswd">Confirm password </label>
-              <input type="password" placeholder="Confirm Password" value={signUpData?.confirmpassword} onChange={(e)=> setSignUpData({...signUpData, confirmpassword: e.target.value})} ></input>
             </div>
             <a href="#" onClick={()=> setLoggedIn(true)}> Already have an account?</a>
             <button type="submit">Sign Up</button>

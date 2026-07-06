@@ -10,8 +10,6 @@ export const PageContainer = styled(Grid)`
   flex-grow: 1;
 `; 
 
-
-
 export const ModalBackground = styled("div")({ 
   position: "fixed",
   inset: 0,
@@ -43,7 +41,6 @@ export const ModalActions = styled("div")({
   display: "flex",
   justifyContent: "flex-end",
   gap: "8px",
-
   "& button":{
     width: "80px",
     height: "25px",
