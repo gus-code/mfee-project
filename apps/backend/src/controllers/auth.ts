@@ -109,7 +109,7 @@ const login = async (req, res) => {
     path: "/",
   });
 
-  res.status(200).json({ message: "Login successful" });
+  res.status(200).json({ message: "Login successful", accessToken, refreshToken });
 };
 
 const refresh = (req, res) => {

@@ -1,54 +1,27 @@
-import { useContext, useEffect } from "react";
 import { Button, Typography } from "@mui/material";
+import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-import {
-  Container,
-  BannerContainer,
-  CommentsContainer,
-  DescriptionContainer,
-} from "./PostPage.styles";
-
+import {Container,BannerContainer,CommentsContainer,DescriptionContainer,} from "./PostPage.styles";
 import Banner from "../../Banner";
 import Comments from "../../Comments";
 import { PostContext } from "../../../context";
+import Loading from "../../Loading";
 
-/*
-const post = {
-  image: "https://wallpaper.forfun.com/fetch/e8/e844b4573d679fbcd5717247f25a2b14.jpeg",
-  title: "Traveling to Italy!",
-  postID: "post-198312",
-  comments: [
-    {
-      _id: "121314",
-      author: "Albert",
-      content: "I had such an amazing time visiting italy too, specially Rome",
-      createdAt: "03-08-2025",
-      updatedAt: "03-08-2025",
-      __v: "0",
-    },
-    {
-      _id: "121315",
-      author: "Richy",
-      content: "Great Content! ",
-      createdAt: "03-08-2025",
-      updatedAt: "03-08-2025",
-      __v: "0",
-    },
-  ],
-  description: "Traveling Around the globe is so awesome!",
-};
-*/
 function PostPage() { 
-  // ACT 9 
+  const { postID } = useParams();
   const { posts, getPostList, removePost } = useContext(PostContext);
   
   useEffect(() => {
     getPostList();
   }, [getPostList]);
 
-  const currentPost = posts?.[0];
+  const currentPost = posts?.find(
+    (post) => post._id === postID
+  );
+
   if (!currentPost) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   const handleRemovePost = () => {
@@ -56,24 +29,19 @@ function PostPage() {
     removePost({ postID: currentPost._id });    }
   };
 
+  console.log("Current post:", currentPost);
+
 
   return (
-    <Container container>
-      Post page
-        <Button variant="contained" sx={{ mb: 1.5, width: "fit-content" }} onClick={handleRemovePost}>
-          Remove post test
-        </Button>
-        
+    <Container container>    
       <BannerContainer item>
-        {/* ACT 3 */}
         <Banner postImage={currentPost.image} postTitle={currentPost.title} />
       </BannerContainer>
       <DescriptionContainer item>
         <p>{currentPost.description}</p>
       </DescriptionContainer>
       <CommentsContainer item>
-        {/* ACT 3 */}
-        <Comments comments={currentPost.comments} />
+        <Comments comments={currentPost.comments}/>     
       </CommentsContainer>
     </Container>
   );

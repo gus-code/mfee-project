@@ -1,15 +1,16 @@
-import { Title, Container, FormContainer } from "./Comments.styles";
+import { useState } from "react";
 
+import { Title, Container, FormContainer } from "./Comments.styles";
 import CommentCard from "../CommentCard"
 import { Comment } from "../CommentCard/CommentCard";
-import { useState } from "react";
+import { createComment } from "../../api/endpoints/comments";
 
 { /* ACT 3 */}
 export interface commentsProps{
   comments: Comment[]
 }
 
-function Comments( {comments}:commentsProps) {
+function Comments( {comments }:commentsProps) {
   const [commentList, setCommentList] = useState(comments);
   const commentsArr = [
   {
@@ -32,7 +33,6 @@ function Comments( {comments}:commentsProps) {
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const form = event.currentTarget;
     const nameInput = form.elements.namedItem("name") as HTMLInputElement;
     const commentInput = form.elements.namedItem("comment")as HTMLTextAreaElement;
@@ -64,7 +64,6 @@ function Comments( {comments}:commentsProps) {
           return  <CommentCard key={index} comment={comment}/>;
         })}
       <FormContainer item sm={8}>
-        {/* ACT 8 */}
           <form onSubmit={handleSubmit}>
             <label htmlFor="name">Name:</label>
             <input type="text" name="name" placeholder="Enter your name" />

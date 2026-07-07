@@ -99,18 +99,21 @@ export interface UpdatePostPayload {
   title?: string;
   image?: string;
   description?: string;
-  category: string;
+  category?: string;
 }
 
+
 export interface CreateCommentPayload {
-  _id: string;
   author: string;
   content: string;
 }
 
 // Response types
+
 export interface AuthResponse {
+  message: string;
   accessToken: string;
+  refreshToken: string;
 }
 
 export interface MeResponse {

@@ -3,17 +3,15 @@ import { useState, useContext, useEffect, useCallback } from "react";
 import Form from "../../Form";
 import PostList from "../../PostList";
 import CategoryButtonGroup from "../../CategoryButtonGroup";
-import {
-  PostContext,
-  SnackbarContext
-} from "../../../context";
+import {PostContext,SnackbarContext} from "../../../context";
 import {  Category, Post } from "../../../types";
 import Loading from "../../Loading";
 import CreatePostButton from "../../CreatePostButton";
 import { getCategories } from "../../../api";
 
 function HomePage() {
-  const { createAlert } = useContext(SnackbarContext);  const { posts, loadingPosts, getPostList } = useContext(PostContext);
+  const { createAlert } = useContext(SnackbarContext);  
+  const { posts, loadingPosts, getPostList } = useContext(PostContext);
   const [open, setOpen] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);

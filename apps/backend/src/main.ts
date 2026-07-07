@@ -30,7 +30,7 @@ app.use(cookieParser()); // Parse cookies
 app.use('/api/auth', auth);
 
 // Protected routes (require JWT)
-// app.use(verifyToken);
+app.use(verifyToken);
 app.use('/api/categories', categories);
 app.use('/api/posts', posts);
 

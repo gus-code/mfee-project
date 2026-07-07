@@ -1,8 +1,9 @@
-import { PageContainer, FormContainer } from "./LoginPage.styles";
+
 import {useState} from "react";
 import { Grid } from "@mui/material";
+
+import { PageContainer, FormContainer } from "./LoginPage.styles";
 import {LoginPayload,RegisterPayload} from "../../../types";
-import { sign } from "crypto";
 import { login, createUser } from "../../../api/endpoints/auth";
 
 const LoginPage = () => {
@@ -18,6 +19,11 @@ const LoginPage = () => {
       user: logInData,
       onSuccess: (data)=>{
         localStorage.setItem("token",data.accessToken);
+        const { protocol, host } = window.location;
+        const signInUrl = `${protocol}//${host}/`;
+        if (window.location.href !== signInUrl) {
+          window.location.assign(signInUrl);
+        }
         console.log("success logging in");
         setLogInData({username: '', password: ''});
       },
@@ -45,11 +51,9 @@ const LoginPage = () => {
       })
 
   }
-  // ACT 9 
   return (
     <PageContainer container>
       <Grid item md={4} xs={4} lg={4}>
-        {/* ACT 8*/}
         <FormContainer>
          {loggedIn ? (
            <form onSubmit={handleLoginSubmit}> 
@@ -62,7 +66,7 @@ const LoginPage = () => {
               <label htmlFor="password">Password</label>
               <input type="password" placeholder="Password" value={logInData?.password} onChange={(e)=> setLogInData({...logInData, password: e.target.value})}/>
             </div>
-            <a href="#" onClick={()=> setLoggedIn(false)}> Don't have an account?</a>
+            <a href="#" onClick={(e) => {e.preventDefault(); setLoggedIn(false);}}> Don't have an account?</a>
             <button type="submit">Login</button>
           </form>
          ) : (
@@ -86,7 +90,7 @@ const LoginPage = () => {
               <label htmlFor="password">Password</label>
               <input type="password" placeholder="Password" value={signUpData?.password} onChange={(e)=> setSignUpData({...signUpData, password: e.target.value})}></input>
             </div>
-            <a href="#" onClick={()=> setLoggedIn(true)}> Already have an account?</a>
+            <a href="#" onClick={(e) => { e.preventDefault();setLoggedIn(true);}}> Already have an account?</a>
             <button type="submit">Sign Up</button>
           </form>
          )}

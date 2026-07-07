@@ -9,6 +9,11 @@
       "name": "Test",
       "username": "1test@example.com",
       "password": "$2b$10$gfjXAR4iN8lAvijmadeNEe9/AdpBE7bX2Q5thJm3efmHl2IxeoOoO"
+    },
+    {
+      "name": "Alan Rincon",
+      "username": "alanrc",
+      "password": "$2b$10$EcTqJUzdLPzrYNJAoe3Y4O5iGLExAmA.WwR9hn3Oijbm1i5S7cH2q"
     }
   ]
 }

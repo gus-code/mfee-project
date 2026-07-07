@@ -1,22 +1,24 @@
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-
+import { useNavigate } from "react-router-dom";
 
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-{/* ACT 3 */}
+
 interface BannerProps{
   postImage:string,
   postTitle:string
 }
 
 function Banner({postImage, postTitle}:BannerProps) {
+  const navigate = useNavigate();
   return (
-    <Container image={postImage}> {/* ACT 3 */}
+    <Container image={postImage}>
       <BannerContent>
-        <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}>
+        <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}
+          onClick={() => navigate("/")}>
           View Posts
-        </Button>
+        </Button >
         <BannerTitle variant="h3">
           {postTitle}
         </BannerTitle>
