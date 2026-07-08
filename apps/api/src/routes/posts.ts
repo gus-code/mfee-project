@@ -9,6 +9,6 @@ router.get("/category/:id", getPostByCategory);
 router.post("/", createPost);
 router.patch("/:id", updatePost);
 router.delete("/:id", deletePost);
-router.post("/comment", createComment);
+router.post("/:id/comments", createComment);
 
 export default router

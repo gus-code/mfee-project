@@ -13,9 +13,18 @@ export const categorySchema = new Schema<ICategory>(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 )
+
+categorySchema.virtual("posts", {
+  ref: "Post",
+  localField: "_id",
+  foreignField: "category",
+});
+
 
 const Category = mongoose.model<ICategory>('Category', categorySchema);
 

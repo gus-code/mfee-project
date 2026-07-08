@@ -1,5 +1,5 @@
 import express from 'express';
-import { createCategory, deleteCategory, getCategories, getCategoryById, updateCategory } from '../controllers/category'
+import category from '../controllers/category'
 
 const router = express.Router();
 // Initialize categories array to save data in memory
@@ -9,18 +9,18 @@ export interface Categorie {
 }
 
 // Get all categories
-router.get('/', getCategories)
+router.get('/', category.getCategories)
 
 // Get category by id
-router.get('/:id', getCategoryById)
+router.get('/:id', category.getCategoryById)
 
 // Create category
-router.post('/', createCategory)
+router.post('/', category.createCategory)
 
 // Update category
-router.patch('/:id', updateCategory)
+router.patch('/:id', category.updateCategory)
 
 // Delete category
-router.delete('/:id', deleteCategory)
+router.delete('/:id', category.deleteCategory)
 
 export default router;
