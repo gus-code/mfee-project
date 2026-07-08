@@ -93,7 +93,7 @@ export const updateCategory = (req: Request, res: Response) => {
 }
 
 // Delete category
-export const deleteCategory = (req: Request, res: Response)=> {
+export const deleteCategory = (req: Request, res: Response) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Retrieve the index of the category in the array
