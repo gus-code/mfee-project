@@ -1,98 +1,101 @@
-
-import { Request, Response } from "express";
-import Category from "../models/category.model";
-
-export interface Category {
-  id: string,
-  name: string
-}
-
-const seedCategory = {
-  id: "92b8d466-b4de-457e-9683-b003e232f3ba",
-  name: "Tech"
-}
-const categories: Category[] = []
-categories.push(seedCategory);
-
-export const findCategoryById = (id: string) => {
-  return categories.find((p) => p.id === id);
-};
+import Category from '../models/category';
 
 // Get all categories
-export const getCategories = async (req: Request, res: Response) => {
+const getCategories = async (req, res) => {
   try {
     const categories = await Category.find();
+    // Return all the categories with a 200 status code
     res.status(200).json(categories);
   } catch (error) {
-    const {message} = error;
-    res.status(500).send({message});
+    const { message } = error;
+    res.status(500).json({ message });
   }
-}
+};
 
 // Get category by id
-export const getCategoryById = async (req: Request, res: Response) => {
+const getCategoryById = async (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
 
   try {
-    const categories = await Category.findById(id);
-    res.status(200).json(categories);
+    // Check if we have a category with that id
+    const category = await Category.findById(id);
 
+    if (!category) {
+      // If we don't find the category return a 404 status code with a message
+      return res.status(404).json({ message: 'Category not found' });
+      // Note: Remember that json method doesn't interrupt the workflow
+      // therefore is important to add a "return" to break the process
+    }
+
+    // Return the category with a 200 status code
+    res.status(200).json(category);
   } catch (error) {
-    const {message} = error;
-    res.status(500).send({message});
+    const { message } = error;
+    res.status(500).json({ message });
   }
-}
+};
 
 // Create category
-export const createCategory = async (req: Request, res: Response) => {
-
+const createCategory = async (req, res) => {
   try {
-    const categories = await Category.create(req.body);
-    res.status(200).json(categories);
-
+    const category = await Category.create(req.body);
+    // Return the created category with a 201 status code
+    res.status(201).json(category);
   } catch (error) {
-    const {message} = error;
-    res.status(500).send({message});
+    const { message } = error;
+    res.status(500).json({ message });
   }
-}
+};
 
 // Update category
-export const updateCategory = async (req: Request, res: Response) => {
+const updateCategory = async (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
-  try {
-    const category = await Category.findByIdAndUpdate(id, req.body, {new: true});
 
-    if( !category ){
-      res.status(400).send({message: "Category not found"});
+  try {
+    // Check and update if we have a category with that id
+    const category = await Category.findByIdAndUpdate(id, req.body, { new: true });
+
+    // If we don't find the category return a 404 status code with a message
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
     }
 
-    res.status(201).send(category)
-
+    // Return the updated category with a 200 status code
+    res.status(200).json(category);
   } catch (error) {
-    const {message} = error;
-    res.status(500).send({message});
+    const { message } = error;
+    res.status(500).json({ message });
   }
-
-}
+};
 
 // Delete category
-export const deleteCategory = async (req: Request, res: Response) => {
+const deleteCategory = async (req, res) => {
   // Retrieve the id from the route params
   const { id } = req.params;
 
   try {
-    const category = await Category.findByIdAndDelete(id, req.body);
+    // Check and delete if we have a category with that id
+    const category = await Category.findByIdAndDelete(id);
 
-    if( !category ){
-      res.status(400).send({message: "Category not found"});
+    // If we don't find the category return a 404 status code with a message
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
     }
-    res.status(201).send(category)
 
+    // Return a 200 status code
+    res.status(200).json(category);
   } catch (error) {
-    const {message} = error;
-    res.status(500).send({message});
+    const { message } = error;
+    res.status(500).json({ message });
   }
+};
 
-}
+export default {
+  getCategories,
+  getCategoryById,
+  createCategory,
+  updateCategory,
+  deleteCategory
+};
