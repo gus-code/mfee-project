@@ -7,6 +7,7 @@ import { verifyToken } from './middleware/auth';
 import auth from './routes/auth';
 import categories from './routes/categories';
 import posts from './routes/posts';
+import { errorHandler } from './middleware/error';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
@@ -23,6 +24,8 @@ app.use(verifyToken);
 app.use('/api/categories', categories);
 
 app.use('/api/posts', posts)
+
+app.use(errorHandler);
 
 app.listen(port, host, () => {
   console.log(`[ ready ] http://${host}:${port}`);

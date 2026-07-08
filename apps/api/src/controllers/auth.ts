@@ -5,6 +5,7 @@ import { User } from '../models/user';
 
 const users: User[] = [];
 
+
 const register = async (req, res) => {
   const { username, password } = req.body;
 
