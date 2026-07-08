@@ -8,9 +8,11 @@ import auth from './routes/auth';
 import categories from './routes/categories';
 import posts from './routes/posts';
 import { errorHandler } from './middleware/error';
+import mongoose from 'mongoose';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+console.log(process.env.MONGO_URL);
 
 const app = express();
 
@@ -27,6 +29,13 @@ app.use('/api/posts', posts)
 
 app.use(errorHandler);
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log("Connected to MongoDB")
+
+  app.listen(port, host, () => {
+    console.log(`[ ready ] http://${host}:${port}`);
+  });
+
+}).catch((e) => {
+  console.log(e.message)
+})
