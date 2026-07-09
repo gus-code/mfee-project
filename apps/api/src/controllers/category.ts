@@ -1,18 +1,25 @@
+import {Response, Request} from "express";
+
+interface category{
+  id: string,
+  name:string
+}
+
 // Initialize categories array to save data in memory
-const categories = [];
+const categories: category[] = [];
 
 export const getCategory = (id: string) => {
   return categories.find((p) => p.id === id);
 };
 
 // Get all categories
-const getCategories = (req, res) => {
+const getCategories = (req: Request,res: Response) => {
   // Return all the categories with a 200 status code
   res.status(200).json(categories);
 };
 
 // Get category by id
-const getCategoryById = (req, res) => {
+const getCategoryById = (req: Request,res: Response) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Check if we have a category with that id
@@ -30,7 +37,7 @@ const getCategoryById = (req, res) => {
 };
 
 // Create category
-const createCategory = (req, res) => {
+const createCategory = (req: Request,res: Response) => {
   // Retrieve the name from the request body
   const { name } = req.body;
 
@@ -52,7 +59,7 @@ const createCategory = (req, res) => {
 };
 
 // Update category
-const updateCategory = (req, res) => {
+const updateCategory = (req: Request,res: Response) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Retrieve the index of the category in the array
@@ -82,7 +89,7 @@ const updateCategory = (req, res) => {
 };
 
 // Delete category
-const deleteCategory = (req, res) => {
+const deleteCategory = (req: Request,res: Response) => {
   // Retrieve the id from the route params
   const { id } = req.params;
   // Retrieve the index of the category in the array

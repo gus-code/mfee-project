@@ -1,4 +1,6 @@
+import {Request, Response} from "express";
 import { getCategory } from "./category"
+
 interface post {
     id: string,
     title:string,
@@ -22,18 +24,18 @@ export const getPost = (id: string) => {
 };
 
 
-const getPosts = (req,res) =>{
+const getPosts = (req: Request,res: Response) =>{
     res.status(200).json(posts);
 }
 
-const getPostByCategory = (req,res)=>{
+const getPostByCategory = (req: Request,res: Response)=>{
     const {category} = req.params;
     const categoryPosts = posts.filter((p)=> p.category === category);
 
     res.status(200).json(categoryPosts);
 }
 
-const getPostById = (req,res) => {
+const getPostById = (req: Request,res: Response) => {
     const {id} = req.params;
     const post = getPost(id);
     if(!post){
@@ -46,7 +48,7 @@ const getPostById = (req,res) => {
 
 }
 
-const createPost = (req,res)=>{
+const createPost = (req: Request,res: Response)=>{
     const {title, image, description, category} = req.body;
     if(!title || !category || !description || !image){
         return res.status(400).json({message: 'The title, description, image and category are required'});
@@ -64,7 +66,7 @@ const createPost = (req,res)=>{
     res.status(201).json(newPost);
 }
 
-const createComment = (req,res) =>{
+const createComment = (req: Request,res: Response) =>{
     const {id} = req.params;
     const {author, content} = req.body;
     const post = getPost(id);
@@ -88,7 +90,7 @@ const createComment = (req,res) =>{
 }
 
 
-const updatePost = (req,res)=>{
+const updatePost = (req: Request,res: Response)=>{
     const {id}=req.params;
     const {title, description, image, category,}= req.body;
     const postIndex = posts.findIndex((p)=> p.id === id);
@@ -114,7 +116,7 @@ const updatePost = (req,res)=>{
 
 }
 
-const deletePost = (req,res)=>{
+const deletePost = (req: Request,res: Response)=>{
     const {id}= req.params;
     const postIndex = posts.findIndex((p)=> p.id === id)
 
