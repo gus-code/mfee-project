@@ -1,12 +1,19 @@
 import express from 'express';
 
+//typescript interface definition :)
+interface Category {
+  id: string;
+  name: string;
+}
+
+
 export const getCategory = (id: string) => {
   return categories.find((p) => p.id === id);
 };
 
 const router = express.Router();
 // Initialize categories array to save data in memory
-const categories = [];
+const categories: Category[] = [];
 
 // Get all categories
 router.get('/', (req, res) => {
