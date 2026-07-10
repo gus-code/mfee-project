@@ -6,6 +6,9 @@ import { User } from '../models/user';
 
 const users: User[] = [];
 
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
+
 const register = async (req:Request, res:Response) => {
   const { username, password } = req.body;
 
@@ -54,8 +57,8 @@ const login = async (req:Request, res:Response) => {
   }
 
   // Generate access token and refresh token
-  const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-  const refreshToken = jwt.sign({ username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+  const accessToken = jwt.sign({ username }, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ username }, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
   // Save refresh token
   res.cookie('refreshToken', refreshToken, {
@@ -74,13 +77,13 @@ const refresh = (req:Request, res:Response) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, { username }) => {
+  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, (err, { username }) => {
     if (err) {
       // Invalid token
       return res.status(403).json({ message: 'Forbidden' });
     }
 
-    const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+    const accessToken = jwt.sign({ username }, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
     res.json({ accessToken });
   });
 };

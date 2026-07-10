@@ -1,23 +1,10 @@
 import {Request, Response} from "express";
 import { getCategory } from "./category"
+import {Post} from "../models/post"
+import {Comment} from "../models/comment"
 
-interface post {
-    id: string,
-    title:string,
-    image:string,
-    description: string,
-    category: string,
-    comments: string[]
-}
-
-interface comment{
-    id: string,
-    author: string,
-    content: string
-}
-
-const posts: post[]=[];
-const comments: comment[] = [];
+const posts: Array<Post>=[];
+const comments: Array<Comment> = [];
 
 export const getPost = (id: string) => {
     return posts.find((p) => p.id === id);
