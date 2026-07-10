@@ -1,9 +1,9 @@
 import {Response, Request} from "express";
 
-import {Category} from "../models/category"
+import Category from "../models/category";
 
 // Initialize categories array to save data in memory
-const categories:Array<Category> = [];
+const categories: Array<{ id: string; name: string }> = [];
 
 export const getCategory = (id: string) => {
   return categories.find((p) => p.id === id);
