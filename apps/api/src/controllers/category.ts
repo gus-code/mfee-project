@@ -16,7 +16,7 @@ const getCategories = async (req: Request, res: Response) => {
     // Return all the categories with a 200 status code
     res.status(200).json(categories);
   } catch (error) {
-    const { message } = error;
+    const { message } = error as Error;
     res.status(500).json({ message });
   }
 };
@@ -40,7 +40,7 @@ const getCategoryById = async (req:Request, res:Response) => {
     // Return the category with a 200 status code
     res.status(200).json(category);
   } catch (error) {
-    const { message } = error;
+    const { message } = error as Error;
     res.status(500).json({ message });
   }
 };
@@ -52,7 +52,7 @@ const createCategory = async (req:Request, res:Response) => {
     // Return the created category with a 201 status code
     res.status(201).json(category);
   } catch (error) {
-    const { message } = error;
+    const { message } = error as Error;
     res.status(500).json({ message });
   }
 };
@@ -74,7 +74,7 @@ const updateCategory = async (req:Request, res:Response) => {
     // Return the updated category with a 200 status code
     res.status(200).json(category);
   } catch (error) {
-    const { message } = error;
+    const { message } = error as Error;
     res.status(500).json({ message });
   }
 };
@@ -96,7 +96,7 @@ const deleteCategory = async (req:Request, res:Response) => {
     // Return a 200 status code
     res.status(200).json(category);
   } catch (error) {
-    const { message } = error;
+    const { message } = error as Error;
     res.status(500).json({ message });
   }
 };
