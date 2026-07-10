@@ -1,11 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import {Request, Response} from "express"
 
 import { User } from '../models/user';
 
 const users: User[] = [];
 
-const register = async (req, res) => {
+const register = async (req:Request, res:Response) => {
   const { username, password } = req.body;
 
   // Check that we have the correct payload
@@ -34,7 +35,7 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const login = async (req:Request, res:Response) => {
   const { username, password } = req.body;
 
   // Check that we have the correct payload
@@ -65,7 +66,7 @@ const login = async (req, res) => {
   res.json({ accessToken });
 };
 
-const refresh = (req, res) => {
+const refresh = (req:Request, res:Response) => {
   // Get refresh token from cookies
   const refreshToken = req.cookies.refreshToken;
 
@@ -84,7 +85,7 @@ const refresh = (req, res) => {
   });
 };
 
-const logout = (req, res) => {
+const logout = (req:Request, res:Response) => {
   res.clearCookie('refreshToken');
   res.json({ message: 'Logged out successfully' });
 };
