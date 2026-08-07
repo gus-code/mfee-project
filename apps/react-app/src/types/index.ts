@@ -10,19 +10,6 @@ export type FormInputs = {
   image: Input;
 };
 
-export type NewPost = {
-  title: string;
-  image: string;
-  description: string;
-  category: string;
-};
-
-export type Comment = {
-  id: string;
-  author: string;
-  content: string;
-};
-
 export interface Alert {
   severity?: "error" | "warning" | "info" | "success";
   message: string;
@@ -43,57 +30,107 @@ export type FormData = { [key: string]: string };
 
 export type Inputs = {
   id: string;
-  name: string;
+  name: keyof FormInputs;
   label: string;
   type: string;
-  options?: string[];
+  options?: { id?: string; name: string }[];
 }[];
+
+
+// TypeScript interfaces for BE models
 
 export interface Category {
   id: string;
   name: string;
-}
-
-export interface NewCategory {
-  name: string;
-}
-
-export interface CategoriesResponse {
-  _id: string;
-  name: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
-export type Post = {
+export interface Comment {
+  id: string;
+  author: string;
+  content: string;
+  post_id: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Post {
   id: string;
   title: string;
   image: string;
   description: string;
-  category: CategoriesResponse | null;
-  comments: string[];
-};
-
-export type SelectedPost = {
-  id: string;
-  title: string;
-  image: string;
-  description: string;
-  category: CategoriesResponse | null;
-  comments: CommentResponse[];
-};
-
-export interface PostsResponse {
-  _id: string;
-  title: string;
-  image: string;
-  description: string;
-  category: CategoriesResponse | null;
-  comments: string[];
+  category: string;
+  comments: Comment[];
   createdAt: string;
   updatedAt: string;
-  __v: number;
+}
+
+// Payload types
+export interface RegisterPayload {
+  name: string;
+  username: string;
+  password: string;
+}
+
+export interface LoginPayload {
+  username: string;
+  password: string;
+}
+
+export interface CreateCategoryPayload {
+  name: string;
+}
+
+export interface UpdateCategoryPayload {
+  name: string;
+}
+
+export interface CreatePostPayload {
+  title: string;
+  image: string;
+  description: string;
+  category: string;
+}
+
+export interface UpdatePostPayload {
+  id: string;
+  title?: string;
+  image?: string;
+  description?: string;
+  category?: string;
+}
+
+export interface CreateCommentPayload {
+  id: string;
+  author: string;
+  content: string;
+}
+
+// Response types
+export interface AuthResponse {
+  message: string;
+}
+
+export interface MeResponse {
+  user: { name: string; username: string } | null;
+}
+
+export interface User {
+  firstname?: string;
+  lastname?: string;
+  username: string;
+  password: string;
+}
+
+export interface NewUser extends User {
+  firstname: string;
+  lastname: string;
+}
+
+export interface UserLogin {
+  username: string;
+  password: string;
 }
 
 export interface CommentResponse {
@@ -104,37 +141,38 @@ export interface CommentResponse {
   updatedAt: string;
   __v: number;
 }
-export interface PostResponse {
-  _id: string;
-  title: string;
-  image: string;
-  description: string;
-  category: CategoriesResponse | null;
-  comments: CommentResponse[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
 
 export interface NewComment {
   author: string;
   content: string;
 }
 
-export interface User {
-  username: string;
-  password: string;
+export interface NewPost {
+  title: string;
+  image: string;
+  description: string;
+  category: string;
 }
 
-export interface NewUser extends User {
-  firstame: string;
-  lastname: string;
+export interface UpdateCategory {
+  id: string;
+  name: string;
 }
 
 export interface AuthResponse {
   message: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
-export interface AuthLoginResponse {
-  accessToken: string;
+export interface MeResponse {
+  user: { name: string; username: string } | null;
+}
+
+export interface UpdatePostPayload {
+  id: string;
+  title?: string;
+  image?: string;
+  description?: string;
+  category?: string;
 }

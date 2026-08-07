@@ -1,21 +1,22 @@
-import { Grid } from "@mui/material";
 
-import { HomePage } from "./components/Page";
-import { PageContainer } from "./components/Page/LoginPage/LoginPage.styles";
+import { AuthProvider, PostProvider } from "./context";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { RouterProvider } from "react-router-dom";
+import Router from "./Router";
+import SnackbarRoot from "./components/SnackbraRoot/SnackbarRoot";
+
+export const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
-      <HomePage />
-      {/* ACT 1 - Render PostPage, and CategoriesPage components */}
-      {/* ACT 2 - Move the following content to a new component called LoginPage and render it*/}
-      <PageContainer container>
-        Login Page
-        <Grid item md={4} xs={4} lg={4}>
-          Form
-        </Grid>
-      </PageContainer>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <PostProvider>
+          <SnackbarRoot/>
+          <RouterProvider router={Router} />
+        </PostProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -1,0 +1,116 @@
+========================================================================
+ TAREAS PENDIENTES - react-app
+========================================================================
+Fecha: 2026-07-01
+API local ya creada y probada en apps/api (puerto 3001, prefijo /api).
+Arrancarla con:  npm run start:api   (o: npx nx serve api)
+Arrancar el front con:  npm run start:react
+========================================================================
+
+
+BLOQUEANTES (la app NO arranca hasta arreglar esto)
+------------------------------------------------------------------------
+[ ] 1. Instalar zustand -> el store lo importa pero no esta en package.json
+       npm install zustand
+[ ] 2. store/snackbarStore.ts: el import es sintaxis vieja (v4).
+       Con zustand v5 debe ser:  import { create } from "zustand";
+       (hoy dice: import create from "zustand";)
+[ ] 3. App.tsx: tags mal cerrados. Abre <Grid container ...> pero cierra
+       con </>. Cerrar con </Grid> para que compile.
+
+
+SNACKBAR - consolidar (hay 2 sistemas, elegir 1)
+------------------------------------------------------------------------
+Activo:   store/snackbarStore.ts + SnackbarRoot.tsx  (API: show / hide)
+          usado por App.tsx y NavBar.tsx
+Huerfano: context/SnackbarProvider.tsx  (API: showSnackbar) - nadie lo usa
+
+[ ] 4. Decidir: quedarse con el STORE (recomendado, ya esta cableado).
+[ ] 5. Borrar context/SnackbarProvider.tsx (o dejar de importarlo del todo).
+[ ] 6. Reactivar los avisos: en PostProvider.tsx y HomePage.tsx hay codigo
+       comentado que llamaba a createAlert({message, severity}).
+       Cambiarlo por el store:  useSnackbarStore((s) => s.show)
+       y llamar  show("Post creado", "success")  en onSuccess/onError.
+
+
+CONECTAR APIs A LA UI (comentarios ACT 9)
+------------------------------------------------------------------------
+[ ] 7. api/endpoints/categories.ts  (ACT 9)
+       Faltan callbacks: createCategory, updateCategory, deleteCategory.
+       La API ya expone POST/PATCH/DELETE /categories(/:id).
+       Copiar el patron de api/endpoints/posts.ts.
+[ ] 8. components/Page/CategoriesPage/CategoriesPage.tsx  (ACT 9 / 6 / 8)
+       - Reemplazar el array hardcodeado por getCategories() real.
+       - ACT 6: estado "rows", setRows al montar.
+       - ACT 8: IconButton (MUI) para abrir Modal de crear/editar categoria.
+[ ] 9. components/Page/LoginPage/LoginPage.tsx  (ACT 9)
+       Conectar login y createUser (register) del api.
+[ ] 10. components/Page/PostPage/PostPage.tsx  (ACT 9 / ACT 1)
+       Usar getPost(postID) para traer datos reales en vez de random.
+
+
+ACTs de React puro (sin API)
+------------------------------------------------------------------------
+[ ] 11. App.tsx (ACT 1 / 4): renderizar PostPage y CategoriesPage segun
+        la variable "page". Ver comentarios ACT.
+[ ] 12. Page/index.ts + LoginPage/index.ts (ACT 2): exportar LoginPage.
+[ ] 13. Banner/Banner.tsx (ACT 3): pasar postImage como prop image.
+
+
+NOTA SOBRE DATOS (category id vs nombre)
+------------------------------------------------------------------------
+- Los posts semilla guardan la categoria por NOMBRE ("Travel").
+- El Form (Form.tsx) manda option.id, asi que los posts NUEVOS guardan el ID.
+- La API tolera ambos al filtrar (/posts/category/:id matchea id Y nombre).
+- Si quieres datos consistentes: elige uno solo en el Form (id o nombre).
+========================================================================
+
+RESUMEN ACT 10 / ACT 11 - react-app
+========================================================================
+- apps/react-app/src/api/axios.ts
+  * ACT 11: reemplazar el token hardcodeado por uno recuperado desde localStorage.
+  * Donde aplicar: interceptor de request y manejo del Authorization header.
+
+- apps/react-app/src/components/Banner/Banner.tsx
+  * ACT 10: al hacer click, navegar a la HomePage.
+  * Donde aplicar: lógica del onClick / navegación del banner.
+
+- apps/react-app/src/components/NavBar/NavBar.tsx
+  * ACT 10: usar NavLink para las páginas de categorías y aplicar estilo activo.
+  * Donde aplicar: el bloque de navegación del navbar.
+
+- apps/react-app/src/components/Page/PostPage/PostPage.tsx
+  * ACT 10: obtener postID desde los params de la ruta.
+  * Donde aplicar: lectura de params y carga del post por id.
+
+- apps/react-app/src/components/PostList/PostList.tsx
+  * ACT 10: navegar a PostPage enviando postID como param de ruta.
+  * Donde aplicar: handler del click sobre un post.
+
+- apps/react-app/src/components/Page/LoginPage/LoginPage.tsx
+  * ACT 11: después del login exitoso, guardar el accessToken en localStorage y redirigir a la home.
+  * Donde aplicar: flujo de login y registro.
+
+- apps/react-app/src/context/AuthProvider.tsx
+  * ACT 11: obtener el token desde localStorage al validar autenticación.
+  * Donde aplicar: validateToken.
+
+- apps/react-app/src/Router/PrivateRoute.tsx
+  * ACT 11: redirigir a /login cuando el usuario no está autenticado.
+  * Donde aplicar: render del componente protegido.
+
+- apps/react-app/src/Router/Router.tsx
+  * ACT 10: definir rutas privadas para HomePage, PostPage, CategoriesPage, LoginPage y NotFoundPage.
+  * Donde aplicar: configuración del router.
+
+- apps/react-app/src/components/Page/index.ts
+  * ACT 10: exportar NotFoundPage para que pueda usarse desde el router.
+
+VERIFICACIÓN DE EXPORTACIONES DE LA API (react-app)
+========================================================================
+- apps/react-app/src/api/services/index.ts: exporta correctamente auth, categories, comments y posts.
+- apps/react-app/src/api/endpoints/index.ts: exporta correctamente categories, comments, posts y auth.
+- apps/react-app/src/api/index.ts: re-exporta los helpers de services para imports como ../api.
+- No se detectaron exportaciones faltantes en la capa de API del frontend.
+- Si se requieren helpers de endpoints, deben importarse desde apps/react-app/src/api/endpoints.
+========================================================================

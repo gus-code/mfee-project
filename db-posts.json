@@ -1,0 +1,173 @@
+{
+  "posts": [
+    {
+      "title": "Colorful Birds on a Branch",
+      "category": "Birds",
+      "description": "A vibrant group of birds perched together, showcasing their beautiful plumage and unique personalities.",
+      "image": "https://images.unsplash.com/photo-1486365227551-f3f90034a57c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "i-kemcqUavzXh8mGPhsIw",
+      "comments": [
+        {
+          "content": "Such vivid colors! I love how they look together.",
+          "author": "Juan",
+          "id": "25aFh54LCcmpYdwoNIAAO",
+          "createdAt": "2025-07-06T18:06:57.170Z",
+          "updatedAt": "2025-07-06T18:06:57.170Z"
+        },
+        {
+          "content": "This image conveys so much joy, the birds seem to be chatting.",
+          "author": "Ana",
+          "id": "Ot2RxI72hbMiaRLss4--b",
+          "createdAt": "2025-07-06T18:07:53.395Z",
+          "updatedAt": "2025-07-06T18:07:53.395Z"
+        },
+        {
+          "content": "I would like to know which species are shown here. Beautiful photo!",
+          "author": "Luis",
+          "id": "4cLGU6A1bzIauFcDIZAoh",
+          "createdAt": "2025-07-06T18:08:20.763Z",
+          "updatedAt": "2025-07-06T18:08:20.763Z"
+        },
+        {
+          "content": "Perfect for a wallpaper, it transmits a lot of peace.",
+          "author": "Sofía",
+          "post_id": "i-kemcqUavzXh8mGPhsIw",
+          "id": "HEgp71Ft2MLHieE0SRVJQ",
+          "createdAt": "2025-07-06T18:12:46.440Z",
+          "updatedAt": "2025-07-06T18:12:46.440Z"
+        }
+      ],
+      "createdAt": "2025-05-19T03:32:48.525Z",
+      "updatedAt": "2025-07-06T18:12:46.454Z"
+    },
+    {
+      "title": "Blue Birds in the Wild",
+      "category": "Birds",
+      "description": "A stunning capture of blue birds resting on a branch, highlighting their delicate feathers and natural beauty.",
+      "image": "https://images.unsplash.com/photo-1551189013-03cf5bc1c73c?q=80&w=1206&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "x286_wjTy1zjDJJn-FULT",
+      "comments": [
+        {
+          "content": "The blue of their feathers is impressive, they look out of this world.",
+          "author": "Carlos",
+          "id": "c1",
+          "createdAt": "2025-07-07T10:10:00.000Z",
+          "updatedAt": "2025-07-07T10:10:00.000Z"
+        }
+      ],
+      "createdAt": "2025-05-19T03:34:46.166Z",
+      "updatedAt": "2025-05-19T03:34:46.166Z"
+    },
+    {
+      "title": "Birds in the Meadow",
+      "category": "Birds",
+      "description": "A peaceful scene of birds enjoying a sunny day in a lush green meadow.",
+      "image": "https://images.unsplash.com/photo-1497206365907-f5e630693df0?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "Q556Xdwcg9NNlmEW-l0XW",
+      "comments": [
+        {
+          "content": "Nature at its best. Beautiful photo!",
+          "author": "María",
+          "id": "c2",
+          "createdAt": "2025-07-07T11:15:00.000Z",
+          "updatedAt": "2025-07-07T11:15:00.000Z"
+        }
+      ],
+      "createdAt": "2025-05-19T03:35:54.850Z",
+      "updatedAt": "2025-05-19T03:35:54.850Z"
+    },
+    {
+      "title": "Birds at Sunset",
+      "category": "Birds",
+      "description": "A flock of birds flying across the sky as the sun sets, creating a breathtaking silhouette.",
+      "image": "https://images.unsplash.com/photo-1517362087576-65980c8a9e71?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
+      "id": "ULCsHB-o6bUFpJ4B514-U",
+      "comments": [
+        {
+          "content": "The contrast with the sunset is spectacular.",
+          "author": "Pedro",
+          "id": "c3",
+          "createdAt": "2025-07-07T12:20:00.000Z",
+          "updatedAt": "2025-07-07T12:20:00.000Z"
+        }
+      ],
+      "createdAt": "2025-06-29T22:54:35.730Z",
+      "updatedAt": "2025-06-29T22:54:35.730Z"
+    },
+    {
+      "title": "Mountain Bluebird",
+      "category": "Birds",
+      "description": "A close-up of a mountain bluebird, showing off its striking blue feathers and alert gaze.",
+      "image": "https://plus.unsplash.com/premium_photo-1728659148699-1024e5f64876?q=80&w=901&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
+      "id": "Xn-AF7YAiNnoR4LpXtmFa",
+      "comments": [
+        {
+          "content": "I've never seen such an intense blue on a bird.",
+          "author": "Lucía",
+          "id": "c4",
+          "createdAt": "2025-07-07T13:25:00.000Z",
+          "updatedAt": "2025-07-07T13:25:00.000Z"
+        }
+      ],
+      "createdAt": "2025-07-06T22:46:59.175Z",
+      "updatedAt": "2025-07-06T22:46:59.175Z"
+    },
+    {
+      "title": "Scarlet Macaw in Flight",
+      "category": "Birds",
+      "description": "A majestic scarlet macaw soaring through the rainforest, its red, yellow, and blue feathers shining in the sunlight.",
+      "image": "https://images.unsplash.com/photo-1517001657880-5608528ca7fb?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "new1",
+      "comments": [
+        {
+          "content": "What elegance in flight! The colors are amazing.",
+          "author": "Miguel",
+          "id": "c5",
+          "createdAt": "2025-07-07T14:30:00.000Z",
+          "updatedAt": "2025-07-07T14:30:00.000Z"
+        }
+      ],
+      "createdAt": "2025-07-07T14:00:00.000Z",
+      "updatedAt": "2025-07-06T23:44:53.259Z"
+    },
+    {
+      "title": "Hummingbird Feeding",
+      "category": "Birds",
+      "description": "A tiny hummingbird hovers in mid-air, sipping nectar from a vibrant flower.",
+      "image": "https://plus.unsplash.com/premium_photo-1666777246899-053e06efdb35?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+
+      "id": "new2",
+      "comments": [
+        {
+          "content": "The speed of these birds is amazing. Great shot!",
+          "author": "Elena",
+          "id": "c6",
+          "createdAt": "2025-07-07T15:35:00.000Z",
+          "updatedAt": "2025-07-07T15:35:00.000Z"
+        }
+      ],
+      "createdAt": "2025-07-07T15:00:00.000Z",
+      "updatedAt": "2025-07-06T23:47:09.715Z"
+    },
+    {
+      "title": "Kingfisher by the River",
+      "category": "Birds",
+      "description": "A kingfisher perched on a branch above the river, ready to dive for its next meal.",
+      "image": "https://images.unsplash.com/photo-1553264646-7eb44743436f?q=80&w=1131&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "new3",
+      "comments": [
+        {
+          "content": "I love the contrast between the blue and the green background.",
+          "author": "Andrés",
+          "id": "c7",
+          "createdAt": "2025-07-07T16:40:00.000Z",
+          "updatedAt": "2025-07-07T16:40:00.000Z"
+        }
+      ],
+      "createdAt": "2025-07-07T16:00:00.000Z",
+      "updatedAt": "2025-07-06T23:48:13.183Z"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "categories": [
+    {
+      "name": "Birds",
+      "id": "4gWjcyB1xwRSFo9_C_k7A",
+      "createdAt": "2025-06-30T10:35:42.430Z",
+      "updatedAt": "2025-06-30T10:53:54.265Z"
+    },
+    {
+      "name": "Food",
+      "id": "JgwNCH_sfW269ucIJRyxg",
+      "createdAt": "2025-07-06T16:09:43.250Z",
+      "updatedAt": "2025-07-06T16:09:56.631Z"
+    },
+    {
+      "name": "Technology",
+      "id": "T3chN0l0gy123456789",
+      "createdAt": "2025-07-10T12:00:00.000Z",
+      "updatedAt": "2025-07-10T12:00:00.000Z"
+    },
+    {
+      "name": "Sports",
+      "id": "Sp0rts987654321",
+      "createdAt": "2025-07-11T09:30:00.000Z",
+      "updatedAt": "2025-07-11T09:30:00.000Z"
+    },
+    {
+      "name": "Travel",
+      "id": "Tr4v3l246813579",
+      "createdAt": "2025-07-12T15:45:00.000Z",
+      "updatedAt": "2025-07-12T15:45:00.000Z"
+    }
+  ]
+}
