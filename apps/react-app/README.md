@@ -50,5 +50,5 @@
    ![Register User](assets/register-user.png)
 4. Use the credentials to generate a token using the "login" API
    ![Generate token](assets/generate-token.png)
-5. Configure accestoken variable. After updating the value you need to save it with `Ctrl + S`
+5. Configure accesstoken variable. After updating the value you need to save it with `Ctrl + S`
    ![Postman Variables](/assets/postman-variables.png)
