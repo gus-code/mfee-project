@@ -4,6 +4,11 @@ import { HomePage } from "./components/Page";
 // import { PageContainer } from "./components/Page/LoginPage/LoginPage.styles";
 import NavBar from "./components/NavBar";
 
+// import components
+import PostPage from "./components/Page/PostPage";
+import CategoriesPage from "./components/Page/CategoriesPage";
+import LoginPage from "./components/Page/LoginPage";
+
 function App() {
   const page: string = "HomePage";
   return (
@@ -21,15 +26,16 @@ function App() {
           }}
         >
           {page === "HomePage" && <HomePage />}
-          {/* ACT 1 - Render PostPage and CategoriesPage components */}
-          {/* ACT 2 - Move the following content to a new component called LoginPage and render it*/}
-          {/* ACT 4 - Add conditions to render PostPage, LoginPage and CategoriesPage components */}
-          {/* <PageContainer container>
-            Login Page
-            <Grid item md={4} xs={4} lg={4}>
-              //Form
-            </Grid>
-          </PageContainer> */}
+          {page === "PostPage" && <PostPage />}
+          {page === "CategoriesPage" && <CategoriesPage />}
+          {page === "LoginPage" && <LoginPage />}
+
+          {/* ListoACT 1 - Render PostPage and CategoriesPage components */}
+          <PostPage />
+          <CategoriesPage />
+          <LoginPage />
+          {/* ListoACT 2 - Move the following content to a new component called LoginPage and render it*/}
+          {/* ListoACT 4 - Add conditions to render PostPage, LoginPage and CategoriesPage components */}
         </Grid>
       </Grid>
     </>

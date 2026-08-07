@@ -23,6 +23,11 @@ export type Comment = {
   content: string;
 };
 
+export type CommentsList = {
+  commentsArray: Comment[];
+}
+
+
 export interface Alert {
   severity?: "error" | "warning" | "info" | "success";
   message: string;

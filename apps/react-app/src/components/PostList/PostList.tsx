@@ -2,7 +2,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid, IconButton, Typography } from "@mui/material";
 
-import { shorten } from "../../common/utils";
+import { shorten } from "../../utils";
 import {
   CardActions,
   CardContainer,
