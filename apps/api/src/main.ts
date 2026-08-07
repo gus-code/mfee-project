@@ -1,11 +1,19 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import mongoose from 'mongoose';
 
 import { corsOptions } from './config/corsConfig';
+import { verifyToken } from './middleware/auth';
+import auth from './routes/auth';
+import categories from './routes/categories';
+import posts from './routes/posts';
+import { errorHandler } from './middleware/error';
+
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+console.log(process.env.MONGO_URL);
 
 const app = express();
 
@@ -13,10 +21,22 @@ app.use(express.json());
 app.use(helmet());
 app.use(cors(corsOptions));
 
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello MFEE!' });
-});
+app.use('/api/auth', auth);
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+app.use(verifyToken);
+app.use('/api/categories', categories);
+
+app.use('/api/posts', posts)
+
+app.use(errorHandler);
+
+mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log("Connected to MongoDB")
+
+  app.listen(port, host, () => {
+    console.log(`[ ready ] http://${host}:${port}`);
+  });
+
+}).catch((e) => {
+  console.log(e.message)
+})
