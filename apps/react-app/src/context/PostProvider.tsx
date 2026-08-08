@@ -1,6 +1,7 @@
-import React, { createContext, useState, useCallback } from "react";
+import React, { createContext, useState, useCallback, useEffect } from "react";
 
 import { Post } from "../types";
+import SnackbarProvider from "./SnackbarProvider";
 
 interface PostContextProps {
   posts: Post[] | null;
@@ -70,6 +71,16 @@ export function PostProvider({
 }: PostProviderProps): React.JSX.Element {
   const [serverData, setServerData] = useState(postList);
   const [posts, setPosts] = useState<Post[] | null>(postList);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [getNamePost, setGetNamePost] = useState<string>("");
+
+  const createAlert = () => {
+    setIsDeleted(true);
+  }
+
+  const handleCloseAlert = () => {
+    setIsDeleted(false);
+  };
 
   const getPosts = useCallback(
     (categoryID?: string) => {
@@ -90,9 +101,14 @@ export function PostProvider({
       postID: string;
       selectedCategoryID?: string;
     }) => {
+      const postDeleted = serverData.find((post) => post.id=postID);
+      if (postDeleted) {
+        setGetNamePost(postDeleted.title)
+      }
       setServerData((prev) => prev.filter((post: Post) => post.id !== postID));
       getPosts(selectedCategoryID);
-      // ACT 7 - Use createAlert function to notify the user that the item was successfully deleted
+      // ListoACT 7 - Use createAlert function to notify the user that the item was successfully deleted
+      createAlert();
     },
     [getPosts]
   );
@@ -105,6 +121,7 @@ export function PostProvider({
         removePost,
       }}
     >
+      <SnackbarProvider open={isDeleted} onClose={handleCloseAlert} namePost={getNamePost}/>
       {children}
     </PostContext.Provider>
   );
