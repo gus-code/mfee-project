@@ -1,19 +1,17 @@
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useState, useCallback, useEffect } from "react";
 
-import { NewPost, Post } from "../types";
+import { Post } from "../types";
+import SnackbarProvider from "./SnackbarProvider";
 
 interface PostContextProps {
   posts: Post[] | null;
   getPosts: (categoryID?: string) => void;
-  removePost: (postID: string) => void;
-  createOrUpdatePost: ({
-    method,
-    newPost,
-    postID
+  removePost: ({
+    postID,
+    selectedCategoryID,
   }: {
-    method: "post" | "patch";
-    newPost: NewPost;
-    postID?:string
+    postID: string;
+    selectedCategoryID?: string;
   }) => void;
 }
 
@@ -25,7 +23,6 @@ export const PostContext = createContext<PostContextProps>({
   posts: [] || null,
   getPosts: () => {},
   removePost: () => {},
-  createOrUpdatePost: () => {},
 });
 
 const postList: Post[] = [
@@ -74,6 +71,16 @@ export function PostProvider({
 }: PostProviderProps): React.JSX.Element {
   const [serverData, setServerData] = useState(postList);
   const [posts, setPosts] = useState<Post[] | null>(postList);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [getNamePost, setGetNamePost] = useState<string>("");
+
+  const createAlert = () => {
+    setIsDeleted(true);
+  }
+
+  const handleCloseAlert = () => {
+    setIsDeleted(false);
+  };
 
   const getPosts = useCallback(
     (categoryID?: string) => {
@@ -86,48 +93,25 @@ export function PostProvider({
     [serverData]
   );
 
-  const createOrUpdatePost = useCallback(
+  const removePost = useCallback(
     ({
-      method,
-      newPost,
       postID,
+      selectedCategoryID,
     }: {
-      method: "post" | "patch";
-      newPost: NewPost;
-      postID?: string;
+      postID: string;
+      selectedCategoryID?: string;
     }) => {
-      const { category: postCategory, ...rest } = newPost;
-      const selectedCategory = postList
-        ?.map((post) => post.category)
-        .filter((category) => category?._id === postCategory)[0];
-      if (method === "post") {
-        const post: Post = {
-          id: Math.random().toString(),
-          category: selectedCategory,
-          comments: [],
-          ...rest,
-        };
-        setServerData((prev) => [...prev, post]);
+      const postDeleted = serverData.find((post) => post.id=postID);
+      if (postDeleted) {
+        setGetNamePost(postDeleted.title)
       }
-      if (method === "patch") {
-        setServerData((prev) =>
-          prev.map((post) =>
-            post.id === postID
-              ? { ...post, ...newPost, category: selectedCategory }
-              : post
-          )
-        );
-      }
+      setServerData((prev) => prev.filter((post: Post) => post.id !== postID));
+      getPosts(selectedCategoryID);
+      // ListoACT 7 - Use createAlert function to notify the user that the item was successfully deleted
+      createAlert();
     },
-    []
+    [getPosts]
   );
-
-  const removePost = useCallback((postID: string) => {
-    setServerData((prev) => prev.filter((post: Post) => post.id !== postID));
-    // ACT 7 - Use createAlert function to notify the user that the item was successfully deleted
-  }, []);
-
-  useEffect(() => setPosts(serverData), [serverData]);
 
   return (
     <PostContext.Provider
@@ -135,9 +119,9 @@ export function PostProvider({
         posts,
         getPosts,
         removePost,
-        createOrUpdatePost,
       }}
     >
+      <SnackbarProvider open={isDeleted} onClose={handleCloseAlert} namePost={getNamePost}/>
       {children}
     </PostContext.Provider>
   );
