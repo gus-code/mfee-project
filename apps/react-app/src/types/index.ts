@@ -46,6 +46,10 @@ export interface Category {
   updatedAt: string;
 }
 
+export interface NewCategory {
+  name: string;
+}
+
 export interface Comment {
   id: string;
   author: string;
@@ -56,7 +60,7 @@ export interface Comment {
 }
 
 export interface Post {
-  id: string;
+  _id: string;
   title: string;
   image: string;
   description: string;
@@ -68,7 +72,6 @@ export interface Post {
 
 // Payload types
 export interface RegisterPayload {
-  name: string;
   username: string;
   password: string;
 }
@@ -109,9 +112,44 @@ export interface CreateCommentPayload {
 
 // Response types
 export interface AuthResponse {
-  message: string;
+  accessToken: string;
+  message?: string;
 }
 
 export interface MeResponse {
   user: { name: string; username: string } | null;
+}
+
+// --- to use the endpoint getPost and category (Get)
+export interface CategoryN {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface CommentN {
+  _id: string;
+  author: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export type CommentsList = {
+  commentsArray: CommentN[];
+}
+
+export interface PostN {
+  _id: string;
+  title: string;
+  image: string;
+  description: string;
+  category: Category;
+  comments: Comment[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }

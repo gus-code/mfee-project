@@ -2,6 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 
 import axios from "../axios";
 import { AuthResponse, LoginPayload, RegisterPayload } from "../../types";
+import axiosInstance from "../axios";
 
 export const createUser = async ({
   newUser,
@@ -16,7 +17,7 @@ export const createUser = async ({
 }) => {
   onLoading && onLoading(true);
 
-  await axios({
+  await axiosInstance({
     method: "post",
     url: `/auth/register`,
     data: newUser,
@@ -33,9 +34,9 @@ export const createUser = async ({
 };
 
 export const login = async ({
-  user,
-  onSuccess,
-  onError,
+  user, 
+  onSuccess, 
+  onError, 
   onLoading,
 }: {
   user: LoginPayload;
@@ -45,7 +46,7 @@ export const login = async ({
 }) => {
   onLoading && onLoading(true);
 
-  await axios({
+  await axiosInstance({
     method: "post",
     url: `/auth/login`,
     data: user,
@@ -53,6 +54,7 @@ export const login = async ({
     .then((response: AxiosResponse) => {
       const data: AuthResponse = response.data;
       if (response.status === 200 && onSuccess) {
+        localStorage.setItem("token", data.accessToken);
         onSuccess(data);
       }
     })
@@ -74,7 +76,7 @@ export const logout = async ({
 }) => {
   onLoading && onLoading(true);
 
-  await axios({
+  await axiosInstance({
     url: `/auth/logout`,
     method: "post",
   })

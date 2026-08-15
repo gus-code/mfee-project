@@ -3,7 +3,10 @@ import { useState, useEffect} from "react";
 import { validator } from "../../../common/utils";
 import Paper from '@mui/material/Paper';
 import { Grid, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, SelectChangeEvent } from "@mui/material";
-import { Input } from "apps/react-app/src/types";
+import { AuthResponse, Input, NewCategory } from "apps/react-app/src/types";
+import {login, createUser} from "../../../api/endpoints/auth";
+import { useAuth } from "./../../../api/AuthContext";
+import PostPage from "../PostPage";
 
 interface LoginInterface {
   username: string;
@@ -16,32 +19,61 @@ interface SignupInterface {
 }
 
 const LoginPage = () => {
-  // ListoACT 9 - Use the login and register APIs
+  const { loginAuth, isAuthenticated } = useAuth();
   const [loginInfo, setLoginInfo] = useState<LoginInterface[]>([]);
   const [openLogin, setOpenLogin] = useState<boolean>(false);
+
+  {/* Manejo de data Login*/}
+  const [isLogginIn, setIsLogginIn] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [authData, setAuthData] = useState<AuthResponse | null>(null);
 
   const [signupInfo, setSignupInfo] = useState<SignupInterface[]>([]);
   const [opensignup, setOpenSignup] = useState<boolean>(false);
 
+  {/* Manejo de data Signup */}
+  const [signupError, setSignupError] = useState<string | null>(null);
+
   const handleSaveLogin = (data: NewLogin) => {
-    const newLogin: LoginInterface = {
-      username: data.username,
-      password: data.password,
-    };
-      
-    setLoginInfo((prev) => [...prev, newLogin]);
-    setOpenLogin(false);
+    setLoginError(null);
+
+    login({
+      user:{
+        username: data.username,
+        password: data.password,
+      },
+      onLoading: (loading) => setIsLogginIn(loading),
+      onSuccess: (authResponse)=>{
+        setAuthData(authResponse);
+        loginAuth(authResponse.accessToken)
+        setOpenLogin(false);
+      },
+      onError: (error) => {
+        setLoginError(
+          (error.response?.data as any)?.message ?? "credenciales inválidas"
+        );
+      },
+    });
   };
 
-  const handleSaveSignup = (data: NewSignup) => {
-    const newSignup: SignupInterface = {
-      username: data.username,
-      password: data.password,
-    };
-      
-    setSignupInfo((prev) => [...prev, newSignup]);
-    setOpenSignup(false);
+  const handelSaveSignup = (data: NewSignup) => {
+    createUser({
+      newUser: {username: data.username, password: data.password},
+      onSuccess: (authResponse)=>{
+        setAuthData(authResponse);
+        loginAuth(authResponse.accessToken)
+        setOpenSignup(false);
+      },
+      onError: (error) => {
+        setSignupError(
+          (error.response?.data as any)?.message ?? "Error al crear usuario"
+        );
+      },
+      onLoading: (loading) => setIsLogginIn(loading),
+    });
   };
+
+ 
 
   return (
     <PageContainer container>
@@ -49,20 +81,16 @@ const LoginPage = () => {
       <Grid item md={4} xs={4} lg={4}>
         {/* LsitoACT 8 - Create a form to Login and SignUp */}
        
-        <Button variant="contained" onClick={() => setOpenLogin(true)}>
-          Log in
-        </Button>
-        
-        {loginInfo.length > 0 && (
+        {!isAuthenticated && (
           <>
-            <h1>Login - Ready!</h1>
-            <p> Username: {loginInfo[loginInfo.length-1].username}</p>
+            <Button variant="contained" onClick={() => setOpenLogin(true)}>
+              Log in
+            </Button>
+            <Button variant="contained" onClick={() => setOpenSignup(true)}>
+              Sign up
+            </Button>
           </>
         )}
-
-        <Button variant="contained" onClick={() => setOpenSignup(true)}>
-          Sign up
-        </Button>
 
         {signupInfo.length > 0 && (
           <>
@@ -75,12 +103,16 @@ const LoginPage = () => {
           open={openLogin}
           setOpen={setOpenLogin}
           onSave={handleSaveLogin}
+          isLoading={isLogginIn}
+          errorMessage={loginError}
         />
 
         <SignupForm 
           open={opensignup}
           setOpen={setOpenSignup}
-          onSave={handleSaveSignup}
+          onSave={handelSaveSignup}
+          isLoading={isLogginIn}
+          errorMessage={signupError}
         />
       </Grid>
     </PageContainer>
@@ -109,9 +141,11 @@ interface LoginProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSave: (login: NewLogin) => void;
+  isLoading?: boolean;
+  errorMessage?: string | null;
 }
 
-function LoginForm({open, setOpen, onSave}:LoginProps) {
+function LoginForm({open, setOpen, onSave, isLoading, errorMessage}:LoginProps) {
   const [loginData, setLoginData] = useState<LoginInput>(emptyInputsLogin);
 
   const handleClose = () => {
@@ -124,6 +158,7 @@ function LoginForm({open, setOpen, onSave}:LoginProps) {
   
     const inputs = Object.values(loginData);
     const containError = inputs.map((input) => input.error).some((v) => !!v);
+    
     if (containError) return;
   
     const newLogin: NewLogin = {
@@ -132,7 +167,7 @@ function LoginForm({open, setOpen, onSave}:LoginProps) {
     };
 
     onSave(newLogin);
-    handleClose();
+    
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent) =>{
@@ -195,10 +230,13 @@ function LoginForm({open, setOpen, onSave}:LoginProps) {
           onChange={handleChange}
           onBlur={handleBlur}
         />
+        {errorMessage && (
+          <p style={{ color: "red" }}>{errorMessage}</p>
+        )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button type="submit">Login</Button>
+        <Button onClick={handleClose} disabled={isLoading}>Cancel</Button>
+        <Button type="submit" disabled={isLoading}>{isLoading ? "Cargando..." : "Login"}</Button>
       </DialogActions>
     </Dialog>
   );
@@ -227,9 +265,11 @@ interface SignupProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSave: (login: NewSignup) => void;
+  isLoading: boolean;
+  errorMessage: string | null;
 }
 
-function SignupForm({open, setOpen, onSave}:SignupProps) {
+function SignupForm({open, setOpen, onSave, isLoading, errorMessage}:SignupProps) {
   const [signupData, setSignupData] = useState<SignupInput>(emptyInputsSignup);
 
   const handleClose = () => {
@@ -315,8 +355,8 @@ function SignupForm({open, setOpen, onSave}:SignupProps) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button type="submit">Signup</Button>
+        <Button onClick={handleClose} disabled={isLoading}>Cancel</Button>
+        <Button type="submit" disabled={isLoading}>{isLoading ? "Cargando..." : "Signup"}</Button>
       </DialogActions>
     </Dialog>
   );
