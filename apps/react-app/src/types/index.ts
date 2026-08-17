@@ -118,3 +118,37 @@ export interface AuthResponse {
 export interface MeResponse {
   user: { name: string; username: string } | null;
 }
+
+// --- to use the endpoint getPost and category (Get)
+export interface CategoryN {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface CommentN {
+  _id: string;
+  author: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export type CommentsList = {
+  commentsArray: CommentN[];
+}
+
+export interface PostN {
+  _id: string;
+  title: string;
+  image: string;
+  description: string;
+  category: Category;
+  comments: Comment[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

@@ -3,15 +3,18 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { Container, Content, Author } from "./CommentCard.styles";
 
-// ACT 3 - Receive comment prop
+import { CommentN } from "../../types";
 
-function CommentCard() {
+// ListoACT 3 - Receive comment prop
+function CommentCard({_id, author, content, createdAt, updatedAt, __v}:CommentN) {
   return (
     <Container item sm={8}>
       <AccountCircleIcon />
       <Content>
-        <Author>{/* ACT 1 - Render comment author */}</Author>
-        <Typography>{/* ACT 1 - Render comment content */}</Typography>
+        {/* ListoACT 1 - Render comment author */}
+        <Author>{author}</Author>
+        {/* ListoACT 1 - Render comment content */}
+        <Typography>{content}</Typography>
       </Content>
     </Container>
   );

@@ -2,6 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 
 import axios from "../axios";
 import { AuthResponse, LoginPayload, RegisterPayload } from "../../types";
+import axiosInstance from "../axios";
 
 export const createUser = async ({
   newUser,
@@ -16,7 +17,7 @@ export const createUser = async ({
 }) => {
   onLoading && onLoading(true);
 
-  await axios({
+  await axiosInstance({
     method: "post",
     url: `/auth/register`,
     data: newUser,
@@ -45,7 +46,7 @@ export const login = async ({
 }) => {
   onLoading && onLoading(true);
 
-  await axios({
+  await axiosInstance({
     method: "post",
     url: `/auth/login`,
     data: user,
@@ -74,7 +75,7 @@ export const logout = async ({
 }) => {
   onLoading && onLoading(true);
 
-  await axios({
+  await axiosInstance({
     url: `/auth/logout`,
     method: "post",
   })
@@ -103,7 +104,7 @@ export const refreshToken = async ({
 }) => {
   onLoading && onLoading(true);
 
-  await axios({
+  await axiosInstance({
     url: `/auth/refresh`,
     method: "post",
   })

@@ -25,9 +25,8 @@ export function AuthProvider({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const validateToken = useCallback(async () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsYW5yYyIsImlhdCI6MTc1ODUyMDc4OSwiZXhwIjoxNzYxMTEyNzg5fQ.pPtq1A9_3yzKlo0rW-mvXfTnYB65Hk2IyIW6qkexb2c";
-      // ACT 11 - Get the token from localStorage
+    {/* ListoAct 11*/}
+    const token = localStorage.getItem("token")
     const onLoading = (isLoading: boolean) => setAuthLoading(isLoading);
 
     onLoading(true);

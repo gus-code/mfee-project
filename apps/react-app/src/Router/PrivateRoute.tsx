@@ -28,10 +28,12 @@ const PrivateRoute = ({ route }: PrivateRouteProps): JSX.Element => {
     );
   }
 
-  // ACT 11 - Navigate to /login when the user is not authenticated
-  return (
-    <>{isAuthenticated ? { ...route } : <Navigate to={"/"} replace />}</>
-  );
+  // ListoACT 11 - Navigate to /login when the user is not authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return route;
 };
 
 export default PrivateRoute;

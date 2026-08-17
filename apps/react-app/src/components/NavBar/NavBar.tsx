@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import { NavLink } from "react-router-dom";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
 export default function NavBar(): React.JSX.Element {
@@ -45,32 +45,47 @@ export default function NavBar(): React.JSX.Element {
           gap: 2,
         }}
       >
-        {/* ACT 10 - Use NavLink to navigate to categories page and change the backgroundcolor when is active */}
-        <Button
-          sx={{
+        {/* ListoACT 10 - Use NavLink to navigate to categories page and change the backgroundcolor when is active */}
+        <NavLink
+          to="/categories"
+          style={({isActive}) => ({
             textDecoration: "none",
             fontWeight: "bold",
             color: "white",
-            backgroundColor: "#1e8fff",
+            backgroundColor: isActive ? "#004ba0" : "#1e8fff",
             borderRadius: "8px",
             padding: "8px",
-          }}
+          })}
         >
           Categories
-        </Button>
-        {/* ACT 10 - Use NavLink to navigate to login page and change the backgroundcolor when is active*/}
-        <Button
-          sx={{
+        </NavLink>
+        {/* ListoACT 10 - Use NavLink to navigate to login page and change the backgroundcolor when is active*/}
+        <NavLink
+          to="/login"
+          style={({isActive}) => ({
             textDecoration: "none",
             fontWeight: "bold",
             color: "white",
-            backgroundColor: "#1e8fff",
+            backgroundColor: isActive ? "#004ba0" : "#1e8fff",
             borderRadius: "8px",
             padding: "8px",
-          }}
+          })}
         >
           Login
-        </Button>
+        </NavLink>
+        <NavLink
+          to="/post/0d4dc0777805c4321d6846e0"
+          style={({isActive}) => ({
+            textDecoration: "none",
+            fontWeight: "bold",
+            color: "white",
+            backgroundColor: isActive ? "#004ba0" : "#1e8fff",
+            borderRadius: "8px",
+            padding: "8px",
+          })}
+        >
+          Posts
+        </NavLink>
       </Box>
     </Grid>
   );

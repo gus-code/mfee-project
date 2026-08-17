@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect, useCallback } from "react";
-
 import Form from "../../Form";
 import PostList from "../../PostList";
 import CategoryButtonGroup from "../../CategoryButtonGroup";
@@ -7,7 +6,7 @@ import {
   PostContext,
   // SnackbarContext
 } from "../../../context";
-import { Category, Post } from "../../../types";
+import { CategoryN, Post } from "../../../types";
 import Loading from "../../Loading";
 import CreatePostButton from "../../CreatePostButton";
 import { getCategories } from "../../../api";
@@ -18,8 +17,8 @@ function HomePage() {
   const [open, setOpen] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  const [categories, setCategories] = useState<Category[] | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+  const [categories, setCategories] = useState<CategoryN[] | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryN | null>(
     null
   );
 
@@ -29,16 +28,16 @@ function HomePage() {
   };
 
   const handleSelectCategory = useCallback(
-    async (category: Category) => {
-      const isCategoryAlreadySelected = category.id === selectedCategory?.id;
-      await getPostList(isCategoryAlreadySelected ? undefined : category.id);
+    async (category: CategoryN) => {
+      const isCategoryAlreadySelected = category._id === selectedCategory?._id;
+      await getPostList(isCategoryAlreadySelected ? undefined : category._id);
       setSelectedCategory(isCategoryAlreadySelected ? null : category);
     },
     [selectedCategory, getPostList]
   );
 
   const getCategoriesList = useCallback(async () => {
-    const onSuccess = (data: Category[]) => {
+    const onSuccess = (data: CategoryN[]) => {
       setCategories(data);
     };
 

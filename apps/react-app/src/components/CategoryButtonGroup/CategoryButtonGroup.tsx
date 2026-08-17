@@ -1,12 +1,12 @@
 import { ButtonGroup } from "@mui/material";
 
 import { Container, StyledButton } from "./CategoryButtonGroup.styles";
-import { Category } from "../../types";
+import { CategoryN } from "../../types";
 
 interface CategoryButtonGroupProps {
-  categories: Category[];
-  selectedCategory: Category | null;
-  handleSelectCategory: (category: Category) => void;
+  categories: CategoryN[];
+  selectedCategory: CategoryN | null;
+  handleSelectCategory: (category: CategoryN) => void;
 }
 
 function CategoryButtonGroup({
@@ -20,7 +20,7 @@ function CategoryButtonGroup({
         {categories.map((category) => (
           <StyledButton
             type="button"
-            key={category.id}
+            key={category._id}
             selected={category.name === selectedCategory?.name}
             onClick={() => handleSelectCategory(category)}
           >

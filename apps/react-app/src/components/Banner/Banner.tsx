@@ -1,20 +1,29 @@
 import Button from "@mui/material/Button";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-
+import { Navigate, useNavigate } from "react-router-dom";
 import { BannerContent, BannerTitle, Container } from "./Banner.styles";
 
-// ACT 3 - Receive postImage and postTitle props
-function Banner() {
+// ListoACT 3 - Receive postImage and postTitle props
+interface PostProps {
+  postImage: string;
+  postTitle: string;
+}
+
+function Banner({postImage, postTitle}: PostProps) {
+  let navigate = useNavigate();
+
   return (
-    <Container image={""}>
-      {/* ACT 3 - Send postImage as image prop to Container component */}
+    <Container image={postImage}>
+      {/* ListoACT 3 - Send postImage as image prop to Container component */}
       <BannerContent>
         <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}
-        // ACT 10 - Navigate to Home page 
+        // ListoACT 10 - Navigate to Home page 
+          onClick={() => navigate("/")}
         >
           View Posts
         </Button>
-        <BannerTitle variant="h3">{/* ACT 1 - Render postTitle */}</BannerTitle>
+        {/* ListoACT 1 - Render postTitle */}
+        <BannerTitle variant="h3">{postTitle}</BannerTitle>
       </BannerContent>
     </Container>
   );

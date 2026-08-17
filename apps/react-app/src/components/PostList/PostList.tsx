@@ -1,10 +1,13 @@
 import { useContext } from "react";
+import Button from "@mui/material/Button";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid, IconButton, Typography } from "@mui/material";
 
 import { shorten } from "../../common/utils";
-import { Category, Post } from "../../types";
+import { CategoryN, Post } from "../../types";
 import { PostContext } from "../../context";
 import {
   CardActions,
@@ -15,12 +18,13 @@ import {
 
 interface PostListProps {
   posts: Post[];
-  selectedCategory: Category | null;
+  selectedCategory: CategoryN | null;
   handleOpenForm: (defaultValues?: Post) => void;
 }
 
 function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
   const { removePost } = useContext(PostContext);
+  let navigate = useNavigate();
 
   return (
     <Grid container columns={{ md: 12, xs: 12 }}>
@@ -31,8 +35,14 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
           key={post.id}
           image={post.image}
           md={posts.length === 1 ? 12 : 6}
-          // ACT 10 - Navigate to PostPage component and send postID as route params
+          // ListoACT 10 - Navigate to PostPage component and send postID as route params
         >
+          <Button sx={{ color: "white" }} startIcon={<ArrowBackIosIcon />}
+            onClick={() => navigate("/post/0d4dc0777805c4321d6846e0")}
+          >
+            View Posts
+          </Button>
+
           <CardContainer>
             <CardContent>
               <h1>{post.title}</h1>
@@ -59,7 +69,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                   e.stopPropagation();
                   removePost({
                     postID: post.id,
-                    selectedCategoryID: selectedCategory?.id,
+                    selectedCategoryID: selectedCategory?._id,
                   });
                 }}
               >

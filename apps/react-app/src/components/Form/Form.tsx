@@ -10,7 +10,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-import { Category, CreatePostPayload, Post } from "../../types";
+import { CategoryN, CreatePostPayload, Post } from "../../types";
 import { validator } from "../../common/utils";
 import { PostContext } from "../../context";
 import { FormInputs, Inputs } from "../../types";
@@ -56,8 +56,8 @@ const emptyInputs: FormInputs = {
 interface FormProps {
   open: boolean;
   post: Post | null;
-  categories: Category[] | null;
-  selectedCategory: Category | null;
+  categories: CategoryN[] | null;
+  selectedCategory: CategoryN | null;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedPost: (value: React.SetStateAction<Post | null>) => void;
 }
@@ -109,7 +109,7 @@ const Form = ({
     post
       ? await updatePostData({
           payload: { ...newPost, id: post.id },
-          selectedCategoryID: selectedCategory?.id
+          selectedCategoryID: selectedCategory?._id
         })
       : await addPost(newPost);
   };
@@ -188,7 +188,7 @@ const Form = ({
                 helperText={formData[input.name].error ?? " "}
               >
                 {categories?.map((option, idx) => (
-                  <MenuItem value={option.id ?? option.name} key={idx}>
+                  <MenuItem value={option._id ?? option.name} key={idx}>
                     {option.name}
                   </MenuItem>
                 ))}
