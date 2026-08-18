@@ -5,7 +5,7 @@ import React, {
   useCallback,
 } from "react";
 
-// import { SnackbarContext } from "../context";
+import SnackbarProvider from "./SnackbarProvider";
 import { CreatePostPayload, Post, UpdatePostPayload } from '../types';
 import {
   createPost,
@@ -55,6 +55,15 @@ export function PostProvider({
   // const createAlert = useContext(SnackbarContext);
   const [posts, setPosts] = useState<Post[] | null>(null);
   const [loadingPosts, setLoadingPosts] = useState(false);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  
+  const createAlert = () => {
+    setIsDeleted(true);
+  }
+
+  const handleCloseAlert = () => {
+    setIsDeleted(false);
+  };
 
   const onLoading = (isLoading: boolean) => {
     setLoadingPosts(isLoading);
@@ -133,9 +142,10 @@ export function PostProvider({
         // });
       };
       setLoadingPosts(true);
+      createAlert();
       await deletePost({ postID, onSuccess, onError });
     },
-    [onError, getPostList]
+    [onError, getPostList, getPosts]
   );
 
   return (
@@ -149,6 +159,7 @@ export function PostProvider({
         updatePostData,
       }}
     >
+      <SnackbarProvider open={isDeleted} onClose={handleCloseAlert} />
       {children}
     </PostContext.Provider>
   );

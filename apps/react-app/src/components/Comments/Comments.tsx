@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CommentsList, Comment, Input, CommentN } from "../../types";
+import { CommentsList, Comment, Input } from "../../types";
 import { validator } from "../../common/utils";
 import { Title, Container, FormContainer } from "./Comments.styles";
 import CommentCard from "../CommentCard";
@@ -30,12 +30,12 @@ interface CommentProps {
 
 // ListoACT 3 - Receive comments prop
 function Comments({commentsArray}:CommentsList) {
-  const [ comments, setComments ] = React.useState<CommentN[]>(commentsArray);
+  const [ comments, setComments ] = React.useState<Comment[]>(commentsArray);
   const [ openComment, setOpenComment] = React.useState<boolean>(false);
 
 
   const handleSave = (data:NewComment) => {
-    const newComment: CommentN = {
+    const newComment: Comment = {
       _id: Date.now().toString(),
       author: data.author,
       content: data.comment,

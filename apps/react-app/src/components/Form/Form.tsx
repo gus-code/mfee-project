@@ -10,10 +10,15 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-import { CategoryN, CreatePostPayload, Post } from "../../types";
+import {
+  Category,
+  CreatePostPayload,
+  FormInputs,
+  Inputs,
+  Post,
+} from "../../types";
 import { validator } from "../../common/utils";
 import { PostContext } from "../../context";
-import { FormInputs, Inputs } from "../../types";
 
 const inputs: Inputs = [
   {
@@ -56,10 +61,10 @@ const emptyInputs: FormInputs = {
 interface FormProps {
   open: boolean;
   post: Post | null;
-  categories: CategoryN[] | null;
-  selectedCategory: CategoryN | null;
+  categories: Category[] | null;
+  selectedCategory: Category | null;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedPost: (value: React.SetStateAction<Post | null>) => void;
+  setSelectedPost: React.Dispatch<React.SetStateAction<Post | null>>;
 }
 
 const Form = ({
@@ -75,10 +80,15 @@ const Form = ({
 
   React.useEffect(() => {
     if (!post) return;
+    const categoryValue =
+      typeof post.category === "string"
+        ? post.category
+        : post.category?._id ?? "";
+
     const existingPost = {
       title: { value: post.title, error: "" },
       description: { value: post.description, error: "" },
-      category: { value: post.category ?? "", error: "" },
+      category: { value: categoryValue, error: "" },
       image: { value: post.image, error: "" },
     };
     setFormData(existingPost);
@@ -108,7 +118,7 @@ const Form = ({
 
     post
       ? await updatePostData({
-          payload: { ...newPost, id: post.id },
+          payload: { ...newPost, id: post._id },
           selectedCategoryID: selectedCategory?._id
         })
       : await addPost(newPost);

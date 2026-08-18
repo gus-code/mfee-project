@@ -36,41 +36,39 @@ export type Inputs = {
   options?: { id?: string; name: string }[];
 }[];
 
+// for Table Category
+export interface TableCategoryProps {
+  categoriesList: Category[];
+}
+
+// for AddCategoryForm component
+export type CategoryInput = {
+  category: Input,
+}
+
+export type NewCategory = {
+  category: string,
+}
+
+export interface AddCategoryFormProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onSave: (category: NewCategory) => void;
+  initialData?: Category | null;
+}
+
+
+
 // TypeScript interfaces for BE models
 
-export interface Category {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Comment {
-  id: string;
-  author: string;
-  content: string;
-  post_id: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Post {
-  id: string;
-  title: string;
-  image: string;
-  description: string;
-  category: string;
-  comments: Comment[];
-  createdAt: string;
-  updatedAt: string;
-}
 
 // Payload types
 
 export interface RegisterPayload {
-  name: string;
   username: string;
   password: string;
+  name?: string;
+  lastname?: string; 
 }
 
 export interface LoginPayload {
@@ -113,14 +111,16 @@ export interface AuthResponse {
   message: string;
   accessToken: string;
   refreshToken: string;
+  username: string;
+  name?: string;
+  lastname?: string;
 }
 
 export interface MeResponse {
   user: { name: string; username: string } | null;
 }
 
-// --- to use the endpoint getPost and category (Get)
-export interface CategoryN {
+export interface Category {
   _id: string;
   name: string;
   createdAt: string;
@@ -128,7 +128,7 @@ export interface CategoryN {
   __v: number;
 }
 
-export interface CommentN {
+export interface Comment {
   _id: string;
   author: string;
   content: string;
@@ -138,10 +138,10 @@ export interface CommentN {
 }
 
 export type CommentsList = {
-  commentsArray: CommentN[];
+  commentsArray: Comment[];
 }
 
-export interface PostN {
+export interface Post {
   _id: string;
   title: string;
   image: string;
@@ -152,3 +152,27 @@ export interface PostN {
   updatedAt: string;
   __v: number;
 }
+
+
+// -- auth
+export interface AuthInterface {
+  username: string;
+  password: string;
+  name?: string;
+  lastnmae?: string;
+}
+
+export type AuthInput = {
+  username: Input,
+  password: Input,
+  name?: Input,
+  lastname?: Input,
+}
+
+export type NewAuth = {
+  username: string,
+  password: string,
+  name?: string;
+  lastname?: string,
+}
+

@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Page, { HomePage, PostPage, CategoriesPage, LoginPage, NotFoundPage, InicioPage } from "../components/Page";
+import Page, { HomePage, PostPage, CategoriesPage, LoginPage, NotFoundPage, InicioPage, ProfilePage } from "../components/Page";
+
 import PrivateRoute from "./PrivateRoute";
 
 const Router = createBrowserRouter([
-  // ListoACT 10 - Render LoginPage component inside a private route
   {
     path: "/",
     element: <Page page={<InicioPage />}/>,
@@ -12,12 +12,19 @@ const Router = createBrowserRouter([
     path: "/login",
     element: <Page page={<LoginPage />}/>,
   },
-    // ListoACT 10 - Render PostPage component inside a private route and mark postID as a params
+  // paths con Private route
+  {
+    path: "/home",
+    element: <PrivateRoute route={<Page page={<HomePage />} />}/>,
+  },
+  {
+    path: "/profile",
+    element: <PrivateRoute route={<Page page={<ProfilePage />} />}/>,
+  },
   {
     path: "/post/:ID",
     element: <PrivateRoute route={<Page page={<PostPage />} />}/>,
   },
-    // ListoACT 10 - Render CategoriesPage component inside a private route
   {
     path: "/categories",
     element: <PrivateRoute route={<Page page={<CategoriesPage />} />} />,
@@ -26,7 +33,6 @@ const Router = createBrowserRouter([
     path: "/home",
     element: <PrivateRoute route={<Page page={<HomePage />} />} />,
   }, 
-  // ListoACT 10 - Render NotFoundPage component for undefined routes
   {
     path: "*",
     element: <NotFoundPage />,

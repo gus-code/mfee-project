@@ -9,11 +9,10 @@ interface SnackbarProviderProps {
   open: boolean;
   onClose: () => void;
   message?: string;
-  namePost: string;
 }
 
-function SnackbarProvider({open, onClose, message="Un post ha sido eliminado", namePost}:SnackbarProviderProps) {
-  //const messageShow = `${message} -> ${namePost}`;
+function SnackbarProvider({open, onClose, message="Un post ha sido eliminado"}:SnackbarProviderProps) {
+
   const handleClose = (
     event: React.SyntheticEvent | Event,
     reason?: SnackbarCloseReason,

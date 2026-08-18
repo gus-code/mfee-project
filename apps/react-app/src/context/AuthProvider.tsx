@@ -1,6 +1,8 @@
 import axios, { AxiosResponse } from "axios";
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useCallback, useState, useContext } from "react";
 import { BASE_URL } from "../api/axios";
+
+
 
 interface AuthContextProps {
   authLoading: boolean;
@@ -51,4 +53,8 @@ export function AuthProvider({
       {children}
     </AuthContext.Provider>
   );
+}
+
+export const useAuth = () => {
+  return useContext(AuthContext)
 }

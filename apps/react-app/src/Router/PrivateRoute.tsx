@@ -10,8 +10,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ route }: PrivateRouteProps): JSX.Element => {
-  const { authLoading, isAuthenticated, validateToken } =
-    useContext(AuthContext);
+  const { authLoading, isAuthenticated, validateToken } = useContext(AuthContext);
 
   useEffect(() => {
     const initialize = async () => {

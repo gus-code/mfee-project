@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import axiosInstance from "../axios";
 
 import axios from "../axios";
-import { CategoryN } from "../../types";
+import { Category } from "../../types";
 
 export interface CreateCategoryPayload {
   name: string;
@@ -18,7 +18,7 @@ export const getCategories = async ({
   onError,
   onLoading,
 }: {
-  onSuccess?: (data: CategoryN[]) => void;
+  onSuccess?: (data: Category[]) => void;
   onError?: (error: AxiosError) => void;
   onLoading?: (isLoading: boolean) => void;
 }) => {
@@ -29,7 +29,7 @@ export const getCategories = async ({
     method: "get",
   })
     .then((response: AxiosResponse) => {
-      const data: CategoryN[] = response.data;
+      const data: Category[] = response.data;
       if (response.status === 200 && onSuccess) onSuccess(data);
     })
     .catch((error: AxiosError) => {
@@ -50,7 +50,7 @@ export const createCategory = async (
     onLoading
   }:{
     newCategory: CreateCategoryPayload;
-    onSuccess?: (data: CategoryN) => void;
+    onSuccess?: (data: Category) => void;
     onError?: (error: AxiosError) => void;
     onLoading?: (isLoading: boolean) => void;
   }
@@ -63,7 +63,7 @@ export const createCategory = async (
     data: newCategory
   })
     .then((response: AxiosResponse) => {
-      const data: CategoryN = response.data;
+      const data: Category = response.data;
       if (response.status === 201 && onSuccess) onSuccess(data);
     })
     .catch((error: AxiosError) => {
@@ -83,7 +83,7 @@ export const updateCategory = async (
     onLoading
   }:{
     payload: UpdateCategoryPayload;
-    onSuccess?: (data: CategoryN) => void;
+    onSuccess?: (data: Category) => void;
     onError?: (error: AxiosError) => void;
     onLoading?: (isLoading: boolean) => void;
   }
@@ -98,7 +98,7 @@ export const updateCategory = async (
     data: updateData
   })
     .then((response: AxiosResponse) => {
-      const data: CategoryN = response.data;
+      const data: Category = response.data;
       if (response.status === 200 && onSuccess) onSuccess(data);
     })
     .catch((error: AxiosError) => {

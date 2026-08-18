@@ -6,7 +6,7 @@ import {
   PostContext,
   // SnackbarContext
 } from "../../../context";
-import { CategoryN, Post } from "../../../types";
+import { Category, Post } from "../../../types";
 import Loading from "../../Loading";
 import CreatePostButton from "../../CreatePostButton";
 import { getCategories } from "../../../api";
@@ -17,8 +17,8 @@ function HomePage() {
   const [open, setOpen] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-  const [categories, setCategories] = useState<CategoryN[] | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryN | null>(
+  const [categories, setCategories] = useState<Category[] | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
   );
 
@@ -28,7 +28,7 @@ function HomePage() {
   };
 
   const handleSelectCategory = useCallback(
-    async (category: CategoryN) => {
+    async (category: Category) => {
       const isCategoryAlreadySelected = category._id === selectedCategory?._id;
       await getPostList(isCategoryAlreadySelected ? undefined : category._id);
       setSelectedCategory(isCategoryAlreadySelected ? null : category);
@@ -37,7 +37,7 @@ function HomePage() {
   );
 
   const getCategoriesList = useCallback(async () => {
-    const onSuccess = (data: CategoryN[]) => {
+    const onSuccess = (data: Category[]) => {
       setCategories(data);
     };
 
@@ -65,6 +65,7 @@ function HomePage() {
   return (
     <>
       <CreatePostButton handleOpenForm={handleOpenForm} />
+      
       <CategoryButtonGroup
         categories={categories}
         selectedCategory={selectedCategory}

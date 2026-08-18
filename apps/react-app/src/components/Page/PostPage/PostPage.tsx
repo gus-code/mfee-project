@@ -10,17 +10,17 @@ import {getPost} from "../../../api/services/posts";
 
 import Banner from "../../Banner";
 import Comments from "../../Comments";
-import { PostN } from "apps/react-app/src/types";
+import { Post } from "apps/react-app/src/types";
+import Loading from "../../Loading";
 
 
-// ListoACT 10 - Get postID from route params
 function PostPage(){
-  // ListoACT 9 - Use postID variable to fetch the post data
+  
   const { ID } = useParams();
   // usar el id predeterminado en la variable ID o ingresar un id desde la url en el navegador
-  const postId = ID ?? "60024592a4ce39d8173cdbf6";
+  const postId = ID ?? "f5a1d4abd168ba375a9c199a";
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [postData, setPostData] = useState<PostN | null>(null);
+  const [postData, setPostData] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleGetPosts = () => {
@@ -29,7 +29,7 @@ function PostPage(){
     getPost({
       postID: postId,
       onLoading: (loading) => setIsLoading(loading),
-      onSuccess: (data: PostN) => {
+      onSuccess: (data: Post) => {
         setPostData(data);
       },
       onError: (error) => {
@@ -44,7 +44,7 @@ function PostPage(){
     handleGetPosts();
   }, [ID]);
 
-  if (isLoading || !postData) return <p>Cargando...</p>;
+  if (isLoading || !postData) return <Loading/>;
   if (loginError) return <p>{loginError}</p>;
 
   return (

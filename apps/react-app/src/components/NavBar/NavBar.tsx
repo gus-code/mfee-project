@@ -3,8 +3,11 @@ import Grid from "@mui/material/Grid";
 import { NavLink } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import { useAuth } from "../../context/AuthProvider";
 
 export default function NavBar(): React.JSX.Element {
+  const {isAuthenticated} = useAuth();
+
   return (
     <Grid
       item
@@ -45,6 +48,19 @@ export default function NavBar(): React.JSX.Element {
           gap: 2,
         }}
       >
+        <NavLink
+          to="/home"
+          style={({isActive}) => ({
+            textDecoration: "none",
+            fontWeight: "bold",
+            color: "white",
+            backgroundColor: isActive ? "#004ba0" : "#1e8fff",
+            borderRadius: "8px",
+            padding: "8px",
+          })}
+        >
+          Home
+        </NavLink>
         {/* ListoACT 10 - Use NavLink to navigate to categories page and change the backgroundcolor when is active */}
         <NavLink
           to="/categories"
@@ -60,21 +76,39 @@ export default function NavBar(): React.JSX.Element {
           Categories
         </NavLink>
         {/* ListoACT 10 - Use NavLink to navigate to login page and change the backgroundcolor when is active*/}
+        {isAuthenticated ? (
+          <NavLink
+            to="/profile"
+            style={({isActive}) => ({
+              textDecoration: "none",
+              fontWeight: "bold",
+              color: "white",
+              backgroundColor: isActive ? "#004ba0" : "#1e8fff",
+              borderRadius: "8px",
+              padding: "8px",
+            })}
+          >
+            Profile
+          </NavLink>
+        ) : (
+          <NavLink
+            to="/login"
+            style={({isActive}) => ({
+              textDecoration: "none",
+              fontWeight: "bold",
+              color: "white",
+              backgroundColor: isActive ? "#004ba0" : "#1e8fff",
+              borderRadius: "8px",
+              padding: "8px",
+            })}
+          >
+            Login
+          </NavLink>
+        )}
+        
+
         <NavLink
-          to="/login"
-          style={({isActive}) => ({
-            textDecoration: "none",
-            fontWeight: "bold",
-            color: "white",
-            backgroundColor: isActive ? "#004ba0" : "#1e8fff",
-            borderRadius: "8px",
-            padding: "8px",
-          })}
-        >
-          Login
-        </NavLink>
-        <NavLink
-          to="/post/0d4dc0777805c4321d6846e0"
+          to="/post/f5a1d4abd168ba375a9c199a"
           style={({isActive}) => ({
             textDecoration: "none",
             fontWeight: "bold",

@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Grid, IconButton, Typography } from "@mui/material";
 
 import { shorten } from "../../common/utils";
-import { CategoryN, Post } from "../../types";
+import { Category, Post } from "../../types";
 import { PostContext } from "../../context";
 import {
   CardActions,
@@ -18,7 +18,7 @@ import {
 
 interface PostListProps {
   posts: Post[];
-  selectedCategory: CategoryN | null;
+  selectedCategory: Category | null;
   handleOpenForm: (defaultValues?: Post) => void;
 }
 
@@ -32,7 +32,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
         <PostCard
           item
           xs={12}
-          key={post.id}
+          key={post._id}
           image={post.image}
           md={posts.length === 1 ? 12 : 6}
           // ListoACT 10 - Navigate to PostPage component and send postID as route params
@@ -51,7 +51,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 {post.comments.length > 1 ? " Comments" : " Comment"}
               </h3>
               <h3>{shorten(post.description, 70)}</h3>
-              <Typography variant="overline">{post.category}</Typography>
+              <Typography variant="overline">{post.category.name}</Typography>
             </CardContent>
             <CardActions className="card-actions">
               <IconButton
@@ -68,7 +68,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 onClick={(e) => {
                   e.stopPropagation();
                   removePost({
-                    postID: post.id,
+                    postID: post._id,
                     selectedCategoryID: selectedCategory?._id,
                   });
                 }}
