@@ -21,7 +21,30 @@
 
 ## Challenges
 
-### Session *
+### Session 01
+
+- Create `route` for `posts` endpoint with the following methods:
+    - `GET /posts` Return an array of all the posts with status code 200
+    - `GET /posts/category/:category` Return an array of all the posts by category with status code 200
+    - `GET /posts/:id` Return a post by id with category object and each comment object in the array with status code 200
+    - `POST /posts` Create a new post and return the created post with status code 201
+    - `POST /posts/:id/comments` Create a comment inside the post and return the comment with status code 201
+    - `PATCH /posts/:id` Update post information and return the updated post with status code 200
+    - `DELETE /posts/:id` Delete the post and return the deleted post with status code 200 or 204 if you decide to not return anything
+    * *Add 404 validation where needed*
+
+- Post model
+    - id: string
+    - title: string
+    - image: string
+    - description: string
+    - category: string *Id of the category*
+    - comments: array *Array of comment ids*
+
+- Comment model
+    - id: string
+    - author: string
+    - content: string
 
 ## How to
 
