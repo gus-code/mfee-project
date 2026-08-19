@@ -6,7 +6,7 @@ export const getCategory = (id: string) => {
 
 const router = express.Router();
 // Initialize categories array to save data in memory
-const categories = [];
+const categories: { id: string; name: string }[] = [];
 
 // Get all categories
 router.get('/', (req, res) => {
