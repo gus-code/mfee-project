@@ -56,7 +56,6 @@ router.get('/:id', (req, res) => {
 });
 
 //creat a new post
-// Create category
 router.post('/', (req, res) => {
   const { title, image, description, category, comments = [] } = req.body;
 
