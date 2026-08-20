@@ -1,5 +1,6 @@
-// Initialize categories array to save data in memory
-const categories = [];
+import { Category } from "../models/category";
+
+const categories: Array<Category> = [];
 
 export const getCategory = (id: string) => {
   return categories.find((p) => p.id === id);
