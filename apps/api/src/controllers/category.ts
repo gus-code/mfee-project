@@ -1,9 +1,10 @@
 import Category from '../models/category';
 
+
 // Get all categories
 const getCategories = async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find;
     // Return all the categories with a 200 status code
     res.status(200).json(categories);
   } catch (error) {
