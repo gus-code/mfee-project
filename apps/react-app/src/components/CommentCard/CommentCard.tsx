@@ -3,15 +3,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { Container, Content, Author } from "./CommentCard.styles";
 
+import { Comment } from "../../types";
+
 interface CommentProp {
-  comment: {
-    _id: string,
-    author: string,
-    content: string,
-    createdAt: string,
-    updatedAt: string,
-    __v: string,
-  }
+  comment: Comment
 }
 
 function CommentCard({comment}: CommentProp) {

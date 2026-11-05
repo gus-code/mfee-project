@@ -4,7 +4,7 @@ import { PostProvider, SnackbarProvider } from "./context";
 import { Grid } from "@mui/material";
 
 function App() {
-  const page: string = "HomePage";
+  const page: string = "CategoriesPage";
   return (
     <SnackbarProvider>
       <PostProvider>

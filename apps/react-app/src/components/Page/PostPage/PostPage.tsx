@@ -38,7 +38,7 @@ function PostPage() {
     <Container container>
       Post page
       <BannerContainer item>
-        <Banner postTitle="Welcome To Act 1 from React" postImage="https://ts.accenture.com/sites/BrandSpace/Image%20Library/Agribusiness%20-%20GettyImages-613707708.jpg" />
+        <Banner postTitle={post.title} postImage={post.image} />
       </BannerContainer>
       <DescriptionContainer item>
         <p>{post.description}</p>

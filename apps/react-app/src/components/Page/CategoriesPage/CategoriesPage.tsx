@@ -2,13 +2,17 @@ import { Grid } from "@mui/material";
 
 import { PageContainer } from "./CategoriesPage.styles";
 import { useEffect, useState } from "react";
-import { Category } from "../../../types";
+import { Category, HeadCell } from "../../../types";
 
-import Table from "./../../Table";
+import {EnhancedTable} from "./../../Table";
 
 const categories: Category[] = [
   { id: "663fef70d513515319551d1f", name: "Travel" },
   { id: "663fef70d513515319546d1f", name: "Food" },
+];
+
+const headCells: HeadCell[] = [
+  {id: "name", label: "Category"}
 ];
 
 function CategoriesPage() {
@@ -26,7 +30,7 @@ function CategoriesPage() {
         //Add category (Icon button)
       </Grid>
       <Grid item sx={{ flexGrow: 1 }}>
-        <Table rows={rows} />
+        <EnhancedTable rows={rows} headCells={headCells} handleDeleteItem={handleDeleteItem} handleItem={handleEditItem} />
       </Grid>
       //Modal
     </PageContainer>
