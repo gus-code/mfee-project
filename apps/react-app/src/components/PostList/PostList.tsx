@@ -9,17 +9,16 @@ import {
   CardContent,
   PostCard,
 } from "./PostList.styles";
-import { Category, Post } from "../../types";
+import { Post } from "../../types";
 import { PostContext } from "../../context";
 import { useContext } from "react";
 
 interface PostListProps {
   posts: Post[];
-  selectedCategory: Category | null;
   handleOpenForm: (defaultValues?: Post) => void;
 }
 
-function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
+function PostList({ posts, handleOpenForm }: PostListProps) {
   const { removePost } = useContext(PostContext);
 
   return (
@@ -56,10 +55,7 @@ function PostList({ posts, selectedCategory, handleOpenForm }: PostListProps) {
                 color="inherit"
                 onClick={(e) => {
                   e.stopPropagation();
-                  removePost({
-                    postID: post.id,
-                    selectedCategoryID: selectedCategory?.id,
-                  });
+                  removePost(post.id);
                 }}
               >
                 <DeleteIcon />

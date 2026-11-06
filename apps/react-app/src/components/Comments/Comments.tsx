@@ -26,7 +26,7 @@ function Comments({comments}: CommentsProps) {
         <CommentCard key={comment._id} comment={comment}/>
       ))}
       <FormContainer item sm={8}>
-        Form
+        {/* ACT 8 - Create a form to add comments */}
       </FormContainer>
     </Container>
   );
