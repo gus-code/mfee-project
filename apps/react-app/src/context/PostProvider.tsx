@@ -72,11 +72,7 @@ export function PostProvider({
 }: PostProviderProps): React.JSX.Element {
   const [serverData, setServerData] = useState(postList);
   const [posts, setPosts] = useState<Post[] | null>(postList);
-  const {showSnackbar} = useContext(SnackbarContext);
-
-  const createAlert = (message:string) => {
-    showSnackbar(message);
-  };
+  const {createAlert} = useContext(SnackbarContext);
 
 
   const getPosts = useCallback(
@@ -100,7 +96,7 @@ export function PostProvider({
     }) => {
       setServerData((prev) => prev.filter((post: Post) => post.id !== postID));
       getPosts(selectedCategoryID);
-      createAlert('The item was successfully deleted');
+      createAlert('The item was successfully deleted', 'success');
     },
     [getPosts]
   );

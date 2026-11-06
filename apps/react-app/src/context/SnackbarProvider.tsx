@@ -1,11 +1,10 @@
 import React, {createContext, useCallback, useState} from 'react';
-import Button from '@mui/material/Button';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import Alert from '@mui/material/Alert';
+import { AlertColor } from '@mui/material';
 
 interface SnackbarContextProps {
-	showSnackbar:(message:string) => void;
+	createAlert:(message:string, severity:AlertColor) => void;
 }
 
 interface SnackbarProviderProps {
@@ -14,7 +13,7 @@ interface SnackbarProviderProps {
 
 
 export const SnackbarContext = createContext<SnackbarContextProps>({
-	showSnackbar: () => {}
+	createAlert: () => {}
 });
 
 export function SnackbarProvider({
@@ -22,14 +21,16 @@ export function SnackbarProvider({
 }: SnackbarProviderProps): React.JSX.Element {
 	const [open, setOpen] = useState(false);
 	const [message, setMessage] = useState('');
+  const [severity, setSeverity] = useState<AlertColor>();
 
-	const showSnackbar = useCallback((msg: string) => {
+	const createAlert = useCallback((msg: string, sevy:AlertColor) => {
 		setMessage(msg);
+    setSeverity(sevy);
 		setOpen(true);
 	}, []);
 
-	const handleClose = (
-    event: React.SyntheticEvent | Event,
+  const handleClose = (
+    event?: React.SyntheticEvent | Event | null,
     reason?: SnackbarCloseReason,
   ) => {
     if (reason === 'clickaway') {
@@ -39,32 +40,23 @@ export function SnackbarProvider({
     setOpen(false);
   };
 
-	const action = (
-    <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleClose}>
-        UNDO
-      </Button>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
-
   return (
-    <SnackbarContext.Provider value={{showSnackbar}}>
+    <SnackbarContext.Provider value={{createAlert}}>
 			{children}
 			<Snackbar
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
-        message={message}
-        action={action}
-      />
+      >
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
 		</SnackbarContext.Provider>
       
   );
