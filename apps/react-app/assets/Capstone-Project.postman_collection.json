@@ -1,0 +1,579 @@
+{
+	"info": {
+		"_postman_id": "973fac89-18c9-4051-a1a1-a481d1a292f1",
+		"name": "Capstone Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30322992"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"david@outlook.com\",\n    \"password\": \"4h%K.1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dev}}/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"david@outlook.com\",\n    \"password\": \"4h%K.1\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dev}}/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/auth/refresh",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/auth/logout",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "AllCategories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/categories",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/categories/663e7932d513515319551c1d",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"663e7932d513515319551c1d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateCategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Travel\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dev}}/api/categories",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCategory",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Sports\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dev}}/api/categories/663e7932d513515319551c1d",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"663e7932d513515319551c1d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/categories/663e796bd513515319551c24",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"663e796bd513515319551c24"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "AllPosts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/posts",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostByCategory",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/posts/category/663e7932d513515319551c1d",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"category",
+								"663e7932d513515319551c1d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/posts/663e7af3d513515319551c2b",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"663e7af3d513515319551c2b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePost",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Other post\",\r\n    \"image\": \"Image url\",\r\n    \"description\": \"Post description\",\r\n    \"category\": \"663e7932d513515319551c1d\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dev}}/api/posts",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePost",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"New Title\",\r\n    \"image\": \"New image URL\",\r\n    \"description\": \"New Description\",\r\n    \"category\": \"663e7932d513515319551c1d\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dev}}/api/posts/663e7b50d513515319551c31",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"663e7b50d513515319551c31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePost",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{dev}}/api/posts/663e7b96d513515319551c36",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"663e7b96d513515319551c36"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "CreateComment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "apitoken",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"author\": \"David\",\r\n \"content\": \"Hi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{dev}}/api/posts/663e7af3d513515319551c2b/comments",
+							"protocol": "https",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"posts",
+								"663e7af3d513515319551c2b",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjRoJUsuMSIsImlhdCI6MTcxNTczODE5NiwiZXhwIjoxNzE1NzQxNzk2fQ.5Eb8YtIVfJI1lvFMIsTQsUUDxc9-TmOkpCrmrhmuN-I",
+			"type": "string"
+		},
+		{
+			"key": "dev",
+			"value": "test.neuraac.com",
+			"type": "string"
+		}
+	]
+}
