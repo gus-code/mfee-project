@@ -1,5 +1,8 @@
 // Initialize categories array to save data in memory
-const categories = [];
+const categories : {
+  id: string;
+  name: string;
+}[] = [];
 
 export const getCategory = (id: string) => {
   return categories.find((p) => p.id === id);
