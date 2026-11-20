@@ -1,0 +1,8 @@
+<section class="mfee-category-container">
+  <ul class="mfee-category">
+    <li class="mfee-category__item" *ngFor="let category of categories" (click)="setCategory(category.id)"
+      [class.mfee-category__item--active]="selectedCategory === category.id">
+      {{ category.name }}
+    </li>
+  </ul>
+</section>

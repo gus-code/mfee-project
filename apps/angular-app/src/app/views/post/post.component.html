@@ -1,0 +1,43 @@
+<article class="mfee-post" *ngIf="post$ | async as post">
+  <header class="mfee-post__header" [ngStyle]="{ 'background-image': 'url(' + post.image + ')' }">
+    <nav class="mfee-post__actions">
+      <a class="mfee-post__action" [routerLink]="['/']"><i class="material-icons"> keyboard_arrow_left </i>View
+        posts</a>
+    </nav>
+    <h2 class="mfee-post__title">{{ post.title }}</h2>
+  </header>
+  <main class="mfee-post__content-wrapper">
+    <section class="mfee-post__content">
+      <p class="mfee-post__description">{{ post.description }}</p>
+
+      <div class="mfee-post-comments">
+        <h4>Comments</h4>
+
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmit(post.id)">
+          <label class="mfee-form-control">
+            <textarea class="mfee-form-control__input" type="text" formControlName="comment"
+              placeholder="Write a comment" required></textarea>
+            <span *ngIf="
+                (comment.dirty || comment.touched) &&
+                comment.invalid &&
+                comment.errors['required']
+              " class="mfee-form-control__error">Comment is required.</span>
+          </label>
+
+          <button class="mfee-button" type="submit" [disabled]="!commentForm.valid">
+            Add
+          </button>
+        </form>
+        <ul class="mfee-post__comment-wrapper">
+          <li *ngFor="let comment of post.comments.data" class="mfee-post__comment">
+            <div class="mfee-post__comment-name">
+              <i class="material-icons mfee-post__comment-avatar">person</i>
+              {{ comment.author }}
+            </div>
+            <p class="mfee-post__comment-description">{{ comment.content }}</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</article>
