@@ -1,6 +1,5 @@
 import express from 'express';
 import Post from '../models/Post';
-import { getCategory } from '../controllers/category';
 import postController from '../controllers/post';
 
 const router = express.Router();
