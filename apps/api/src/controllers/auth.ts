@@ -1,33 +1,30 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/user';
 import { RequestHandler } from 'express';
+import UserSchema from '../schemas/User';
 
-const users: User[] = [];
-
-const register = async (req: any, res: any) => {
+const register: RequestHandler = async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({
-      message: 'Username and password are required'
-    });
-  }
-
-  const duplicate = users.find((u) => u.username === username);
-
-  if (duplicate) {
-    return res.status(409).json({
-      message: 'User already exists'
-    });
-  }
-
   try {
+    const existingUser = await UserSchema.findOne({ username });
+
+    if (existingUser) {
+      return res.status(409).json({
+        message: 'User already exists'
+      });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    users.push({ username, password: hashedPassword });
+    const user = await UserSchema.create({ username, password: hashedPassword });
 
-    res.status(201).json({ message: 'User registered successfully' });
+    return res.status(201).json({
+      message: 'User created successfully',
+      user: {
+        id: user._id,
+        username: user.username
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: 'SOmething WenT WRoNG' });
   }
@@ -36,13 +33,7 @@ const register = async (req: any, res: any) => {
 const login: RequestHandler = async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({
-      message: 'Username and password are required'
-    });
-  }
-
-  const user = users.find((u) => u.username === username);
+  const user = await UserSchema.findOne({ username });
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ message: 'Invalid credentials' });
