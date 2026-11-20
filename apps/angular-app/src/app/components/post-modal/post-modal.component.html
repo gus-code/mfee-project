@@ -1,0 +1,61 @@
+<div class="mfee-modal" *ngIf="postModalService.display$ | async">
+  <div class="mfee-modal__content">
+    <h4 class="mfee-modal__title">{{ postModalService.title$ | async }}</h4>
+
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()" class="mfee-modal__form">
+      <label class="mfee-form-control">
+        Title
+        <input class="mfee-form-control__input" type="text" formControlName="title" required />
+        <span *ngIf="
+            (title.dirty || title.touched) &&
+            title.invalid &&
+            title.errors['required']
+          " class="mfee-form-control__error">Title is required.</span>
+      </label>
+
+      <label class="mfee-form-control">
+        Description
+        <textarea class="mfee-form-control__input" formControlName="description"></textarea>
+        <span *ngIf="
+            (description.dirty || description.touched) &&
+            description.invalid &&
+            description.errors['required']
+          " class="mfee-form-control__error">Description is required.</span>
+      </label>
+
+      <label class="mfee-form-control">
+        Category
+        <select class="mfee-form-control__input" formControlName="category" required>
+          <option [ngValue]="null">Choose one...</option>
+          <option *ngFor="let category of categories$ | async" [value]="category.id">{{
+            category.name
+            }}</option>
+        </select>
+        <span *ngIf="
+            (category.dirty || category.touched) &&
+            category.invalid &&
+            category.errors['required']
+          " class="mfee-form-control__error">Category is required.</span>
+      </label>
+
+      <label class="mfee-form-control">
+        URL of the image
+        <input class="mfee-form-control__input" type="url" formControlName="image" />
+        <span *ngIf="
+            (image.dirty || image.touched) &&
+            image.invalid &&
+            image.errors['invalidUrl']
+          " class="mfee-form-control__error">Image URL is not valid.</span>
+      </label>
+
+      <div class="mfee-modal__footer">
+        <button class="mfee-button mfee-button--link" (click)="close()">
+          Cancel
+        </button>
+        <button class="mfee-button" type="submit" [disabled]="!postForm.valid">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
