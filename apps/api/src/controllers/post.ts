@@ -1,154 +1,139 @@
 import { RequestHandler } from 'express';
-import { Comment } from '../models/comment';
-import { Post } from '../models/post';
-import { getCategory } from './category';
+import PostSchema from '../schemas/Post';
+import CommentSchema from '../schemas/Comment';
 
-const posts: Post[] = [];
-
-const comments: Comment[] = [];
-
-const getPosts = (req: any, res: any) => {
-  res.status(200).json(posts);
+const getPosts: RequestHandler = async (req, res) => {
+  try {
+    const posts = await PostSchema.find();
+    res.status(200).json(posts);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: 'Unexpected error' });
+    }
+  }
 };
 
-const savePost: RequestHandler = (req, res) => {
-  const { title, image, description, category } = req.body;
-
-  if (!title || !title.trim()) {
-    return res.status(400).json({ message: 'title is required!' });
+const savePost: RequestHandler = async (req, res) => {
+  try {
+    const post = await PostSchema.create(req.body);
+    return res.status(201).json(post);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: 'Unexpected error' });
+    }
   }
-
-  if (!description || !description.trim()) {
-    return res.status(400).json({ message: 'Description is required!' });
-  }
-
-  if (category && !getCategory(category)) {
-    return res.status(400).json({ message: 'Invalid category!' });
-  }
-
-  const newPost: Post = {
-    id: Date.now().toString(),
-    title: title.trim(),
-    image: image || '',
-    description: description.trim(),
-    category: category || '',
-    comments: []
-  };
-
-  posts.push(newPost);
-
-  return res.status(201).json(newPost);
 };
 
-const getPostsByCategory = (req: any, res: any) => {
+const getPostsByCategory: RequestHandler = async (req, res) => {
   const { category } = req.params;
 
-  const filteredPosts = posts.filter((p) => p.category === category);
+  try {
+    const posts = await PostSchema.find({ category });
 
-  res.status(200).json(filteredPosts);
-};
-
-const getPostById = (req: any, res: any) => {
-  const { id } = req.params;
-
-  const post = posts.find((p) => p.id === id);
-
-  if (!post) {
-    return res.status(404).json({ message: 'Post not found!' });
-  }
-
-  const category = getCategory(post.category);
-
-  const postComments = post.comments
-    .map((commentId) => comments.find((comment) => comment.id === commentId))
-    .filter((comment): comment is Comment => comment !== undefined);
-
-  res.status(200).json({ ...post, category, comments: postComments });
-};
-
-const savePostComment = (req: any, res: any) => {
-  const { author, content } = req.body;
-  const { id } = req.params;
-
-  const post = posts.find((p) => p.id === id);
-
-  if (!post) {
-    return res.status(404).json({ message: 'Post not found' });
-  }
-
-  if (!author || !author.trim()) {
-    return res.status(400).json({ message: 'Author cannot be null' });
-  }
-
-  if (!content || !content.trim()) {
-    return res.status(400).json({ message: 'Content cannot be null' });
-  }
-
-  const newComment: Comment = {
-    id: Date.now().toString(),
-    author: author.trim(),
-    content: content.trim()
-  };
-
-  comments.push(newComment);
-  post.comments.push(newComment.id);
-
-  return res.status(201).json(newComment);
-};
-
-const deletePostById = (req: any, res: any) => {
-  const { id } = req.params;
-
-  const postIndex = posts.findIndex((p) => p.id === id);
-
-  if (postIndex === -1) {
-    return res.status(404).json({ message: `Post with id ${id} not found!` });
-  }
-
-  posts.splice(postIndex, 1);
-
-  res.status(200).send();
-};
-
-const editPostById = (req: any, res: any) => {
-  const { id } = req.params;
-
-  const postIndex = posts.findIndex((p) => p.id === id);
-
-  if (postIndex === -1) {
-    return res.status(404).json({ message: `Post with id ${id} not found!` });
-  }
-
-  const { title, description, image, category } = req.body;
-
-  const updatedPost = { ...posts[postIndex] };
-
-  if (title !== undefined) {
-    if (!title || !title.trim()) {
-      return res.status(400).json({ message: 'Title cannot be empty!' });
+    return res.status(200).json(posts);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: 'Unexpected error' });
     }
-    updatedPost.title = title.trim();
   }
+};
 
-  if (description !== undefined) {
-    if (!description || !description.trim()) {
-      return res.status(400).json({ message: 'Description cannot be empty!' });
+const getPostById: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await PostSchema.findById(id).populate('category').populate('comments');
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found!' });
     }
-    updatedPost.description = description.trim();
-  }
 
-  if (image !== undefined) updatedPost.image = image || '';
-
-  if (category !== undefined) {
-    if (category && !getCategory(category)) {
-      return res.status(400).json({ message: 'Invalid category!' });
+    res.status(200).json(post);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: 'Unexpected error' });
     }
-    updatedPost.category = category || '';
   }
+};
 
-  posts[postIndex] = updatedPost;
+const savePostComment: RequestHandler = async (req, res) => {
+  const { id } = req.params;
 
-  return res.status(200).json(updatedPost);
+  try {
+    const post = await PostSchema.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found!' });
+    }
+
+    const comment = await CommentSchema.create(req.body);
+
+    post.comments.push(comment._id.toString());
+
+    await post.save();
+
+    return res.status(201).json(comment);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: 'Unexpected error' });
+    }
+  }
+};
+
+const deletePostById: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await PostSchema.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found!' });
+    }
+
+    await CommentSchema.deleteMany({
+      _id: { $in: post.comments }
+    });
+
+    await post.deleteOne();
+
+    res.status(200).send({ message: 'Post deleted successfully!' });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: 'Unexpected error' });
+    }
+  }
+};
+
+const editPostById: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await PostSchema.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found!' });
+    }
+
+    res.status(200).json(post);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).send({ message: error.message });
+    } else {
+      res.status(500).send({ message: 'Unexpected error' });
+    }
+  }
 };
 
 export default { getPosts, savePost, getPostsByCategory, getPostById, savePostComment, deletePostById, editPostById };

@@ -6,6 +6,8 @@ import categories from './routes/categories';
 import posts from './routes/posts';
 import auth from './routes/auth';
 import { verifyToken } from './middleware/auth';
+import { errorHandler } from './middleware/errorHandler';
+import mongoose from 'mongoose';
 
 const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
@@ -23,6 +25,14 @@ app.use(verifyToken);
 app.use('/api/categories', categories);
 app.use('/api/posts', posts);
 
-app.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
-});
+app.use(errorHandler);
+
+mongoose.connect(process.env.MONGO_URL!).then(() => {
+  console.log('Connected to MongoDB');
+
+  app.listen(port, host, () => {
+    console.log(`[ ready ] http://${host}:${port}`);
+  });
+}).catch((e) => {
+  console.log(e);
+})
